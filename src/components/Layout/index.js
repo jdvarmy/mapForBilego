@@ -4,9 +4,7 @@ function Layout(props){
     const {data} = props;
 
     return(
-        <div>
-
-        </div>
+        <div className="event-layout"></div>
     );
 }
 
