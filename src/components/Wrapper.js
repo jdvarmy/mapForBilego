@@ -8,7 +8,7 @@ export default class Wrapper extends React.Component{
         let {data} = this.props;
 
         return(
-            <div className={['event-content-container', data.type].join(' ')}>
+            <div className={['event-content-container', data.type].join(' ')} data-type={data.type}>
                 <div className={['event-wrapper', data.type].join(' ')}>
                     {data.type === 'map' ? <Map data={data}/> : <Set data={data}/>}
                     <Basket />

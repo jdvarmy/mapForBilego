@@ -1,12 +1,62 @@
 #bilego-sell-tickets{background-color: #fff;border-bottom: 1px solid #ededed;position:relative;width: 73%;}
-.bilego-tickets-map{height:535px;width:100%;margin-top:10px;margin-bottom:10px;-webkit-font-smoothing:antialiased;position:relative}
-.bilego-tickets-map > * {opacity: 1;transition: opacity 0.6s}
-.bilego-tickets-map input,
-.bilego-tickets-map button,
-.bilego-tickets-map a,
-.bilego-tickets-map a:hover,
-.bilego-tickets-map a:active,
-.bilego-tickets-map a:focus{outline:none;box-shadow:none;-webkit-box-shadow:none;}
-.bilego-tickets-map-container, .thankyou {display: inline-block;overflow: hidden;position: relative;width: 100%;height: 100%;}
-.bilego-tickets-map-map {position: absolute;  left: 0;  top: 0;overflow: visible !important;width: 100%;height: 100%;  }
-.bilego-tickets-map-map .bilego-tickets-map-map-image {  position: absolute;  width: 100%;  height: 100%;  -webkit-touch-callout: none;  -webkit-user-select: none;  -khtml-user-select: none;  -moz-user-select: none;  -ms-user-select: none;  user-select: none;  }
+.bt-map{height:535px;width:100%;-webkit-font-smoothing:antialiased;position:relative}
+.bt-map > * {opacity: 1;transition: opacity 0.6s}
+.bt-map input,
+.bt-map button,
+.bt-map a,
+.bt-map a:hover,
+.bt-map a:active,
+.bt-map a:focus{outline:none;box-shadow:none;-webkit-box-shadow:none;}
+/*.bt-map-container, .thankyou {display: inline-block;overflow: hidden;position: relative;width: 100%;height: 100%;}*/
+/*.thankyou{display:block;position:absolute;top:0;left:0;background-color: #fff;z-index: 1;}*/
+/*.thankyou span{vertical-align: middle;height: 100%;line-height: 585px;text-align: center;display: block;}*/
+.btm-map {position: absolute;  left: 0;  top: 0;overflow: visible !important;width: 100%;height: 100%;  }
+.btm-map .btm-map-image {  position: absolute;  width: 100%;  height: 100%;  -webkit-touch-callout: none;  -webkit-user-select: none;  -khtml-user-select: none;  -moz-user-select: none;  -ms-user-select: none;  user-select: none;  }
+
+/*#load-animation{position:absolute;top:0;left:0;background-color:#f7f7f7;z-index:9}*/
+
+#bts-tickets-map{background:center center no-repeat;background-size:contain;width:100%;height:100%;/*position:absolute*/}
+#bts-tickets-map .poligon{fill:transparent;-webkit-transition:all .3s;-moz-transition:all .3s;-ms-transition:all .3s;-o-transition:all .3s;transition:all .3s}
+#bts-tickets-map .poligon.active{fill:transparent;opacity:1;stroke:#1e73be !important;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:.7;cursor:pointer}
+
+.bt-map-minimap{position:absolute;top:0;right:20px;background-repeat:no-repeat;opacity:1;overflow:hidden;-webkit-transition:opacity .6s;-moz-transition:opacity .6s;transition:opacity .6s;-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;border:1px solid rgba(0,0,0,0.1)}
+.svg--overlay{background-color:rgba(0,0,0,0.19);position:absolute;width:100%;height:100%;top:0;left:0}
+/*minimap*/
+.svg-minimap .svg-minimap-active{position:absolute;opacity:1;top:0;left:0}
+.svg-clip-transition{-webkit-transition:clip .1s;-moz-transition:clip .1s;transition:clip .1s}
+.svg-minimap-background{width:140px!important;-webkit-filter:blur(2px)}
+
+.svg-tooltip .container{visibility:visible;padding:6px;margin:0;position:absolute;z-index:9999;width:170px;font-family:Arial,"Helvetica Neue",Helvetica,sans-serif;text-rendering:optimizeLegibility;text-size-adjust:100%;-webkit-font-smoothing:antialiased}
+.svg-tooltip-container{background:rgba(0,0,0,0.1);padding:1px;position:relative}
+.svg-tooltip-container::after,.svg-tooltip-container::before{content:'';width:0;height:0;display:block;overflow:hidden;border-width:6px;border-style:solid;margin-top:0;margin-left:-6px;position:absolute;top:100%;right:50%;bottom:auto;left:50%}
+.svg-tooltip-container::after{border-color:#fff transparent transparent;z-index:4;-webkit-transform:translate(0,-1px);-ms-transform:translate(0,-1px);transform:translate(0,-1px)}
+.svg-tooltip-container::before{border-color:rgba(0,0,0,0.1) transparent transparent;z-index:2}
+.svg-tooltip-arrow{width:6px;height:6px;display:block;overflow:hidden;border-radius:100%;box-shadow:0 4px 10px rgba(0,0,0,0.15);margin:-3px;position:absolute;top:100%;right:50%;bottom:auto;left:50%;z-index:1}
+.svg-tooltip-shadow{color:#111;background:#fff;box-shadow:0 4px 10px rgba(0,0,0,0.15);position:relative;z-index:3}
+.svg-tooltip-content{padding:12px;text-align:center;line-height:1.18em}
+.svg-tooltip-h,.svg-tooltip-c{color:#111;display:block;font-size:14px}
+.svg-tooltip-c{margin-top:3px}
+.svg-tooltip-p{color:rgba(0,0,0,0.4);display:block;font-size:12px;margin-top:3px}
+.svg-tooltip .container.seat-tooltip{width:150px}
+.hidden, .bilego-section .ui-datepicker-trigger{display:none}
+
+.ready-for-sale{cursor: pointer}
+.event-layout{text-align:right;margin:3px 20px 0;font-size: 0.85em;line-height:45px;;color:#444}
+.event-layout > span{float:left}
+/*zoom*/
+.svg-zoom-buttons{margin:20px;position:absolute;left:0;top:0}
+.svg-zoom-buttons a:hover, .minus:hover, .plus:hover{background-color: #ffb637}
+.svg-zoom-buttons a, .minus, .plus{background-repeat:no-repeat;background-position:center;color:#0c5a40;display:block;cursor:pointer;text-align:center;text-decoration:none;font-size:24px;width:40px;height:40px;line-height:42px;background-color:#f7f7f7;position:relative;border-radius:100%;margin-bottom:12px}
+.svg-zoom-buttons a:active, .minus:active, .plus:active{background-color:#f4f4f4}
+.svg-zoom-buttons a.svg-disabled{background-color:#eee;cursor:default}
+a.svg-zoomin-button,a.svg-zoomout-button{background-size:10px 10px}
+a.svg-zoomin-button::after,a.svg-zoomout-button::after{vertical-align:top}
+a.svg-zoomin-button::after, .plus::after{content:'+';position:relative;bottom:2px}
+a.svg-zoomout-button::after, .minus::after{content:'-';position:relative;bottom:2px}
+/**/
+/*.map-meta{margin-top:10px;height:62px;background-color:#f7f7f7}*/
+.top-menu{background-color:#fff}
+.top-menu-inner{width:100%;max-width:400px;padding:0;margin:0 auto}
+.el-menu{display: inline-block;}
+.el-menu span{text-align: center; display: block;font-size: 13px;color: #222;}
+.el-menu div{height: 2px;margin: 2px;margin-top: 25px;}
