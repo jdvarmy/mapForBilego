@@ -11,6 +11,5 @@ function delayer(data) {
 
 export function fetchCurrenciesList() {
     const testData = { type: 'map', svg: '<svg></svg>' };
-
     return new Promise(delayer(testData));
 }
