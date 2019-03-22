@@ -19,24 +19,21 @@ const zoomTo = (domEl, x, y, w, h, scale, d, easing) => {
     }
 };
 
-class Map extends React.Component{
+export default class Map extends React.Component{
     constructor(props){
         super(props);
 
         this.state = {
-            container: {
-                width: parseInt(this.props.data.map_data.data.width),
-                height: parseInt(this.props.data.map_data.data.height),
-                top: 0,
-                left: 0,
-            },
-            dimensions: {
-                x: 0,
-                y: 0,
-                scale: 1,
-                fitscale: 0,
-                maxscale: 5,
-            }
+            width: parseInt(this.props.data.map_data.data.width),
+            height: parseInt(this.props.data.map_data.data.height),
+            top: 0,
+            left: 0,
+
+            x: 0,
+            y: 0,
+            scale: 1,
+            fitscale: 0,
+            maxscale: 5,
         }
     }
 
@@ -45,22 +42,17 @@ class Map extends React.Component{
     }
 
     dimensions = () =>{
-        let w = window.innerWidth,
-            h = window.innerHeight;
-
-        let wr = t.container.el.width() / this.state.container.width,
-            hr = t.container.el.height() / this.state.container.height;
-
-        // if (wr < hr) t.options.fitscale = wr;
-        // else t.options.fitscale = hr;
+        console.log(this)
+        // let w = window.innerWidth,
+        //     h = window.innerHeight;
         //
-        // if (t.container.oldW != t.container.el.width() || t.container.oldH != t.container.el.height()) {
+        // let wr = this.containerMap.offsetWidth / this.state.width,
+        //     hr = this.containerMap.offsetHeight / this.state.height;
         //
-        //     t.container.oldW = t.container.el.width();
-        //     t.container.oldH = t.container.el.height();
+        // if (wr < hr) this.setState( { fitscale: wr });
+        // else this.setState( { fitscale: hr });
         //
-        //     t.container.resetZoom();
-        // }
+        // console.log(this.containerMap)
     }
 
     render(){
@@ -79,12 +71,12 @@ class Map extends React.Component{
             <>
                 <Menu />
                 <div id="bt--tickets-views" data-type={data.type} className="bt-map">
-                    <div className="bt-container map">
+                    <div className="bt-container map" onLoad={this.dimensions} ref={(input)=>{this.containerMap = input}}>
                         <div className="btm-map btm-zoomable" style={{
-                            width: this.state.container.width,
-                            height: this.state.container.height,
-                            top: this.state.container.top,
-                            left: this.state.container.left
+                            width: this.state.width,
+                            height: this.state.height,
+                            top: this.state.top,
+                            left: this.state.left
                         }}>
                             <div className="btm-map-image">
                                 {createSvg()}
@@ -98,5 +90,3 @@ class Map extends React.Component{
         );
     }
 }
-
-export default Map;
