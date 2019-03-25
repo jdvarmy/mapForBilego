@@ -1,26 +1,28 @@
 import React, { Component } from 'react'
-import { fetchCurrenciesList } from './../data/fetch'
+import { getData } from './../data/fetch'
 import Loading from './Loading'
 import Wrapper from './Wrapper'
 import './chooser.css'
-import Layout from './Layout'
+
+// import {observable} from 'mobx'
+// import {observer} from 'mobx-react'
+
 
 class Chooser extends Component {
     state = {
         data: null
     };
 
-    componentWillMount() {
-        fetchCurrenciesList().then((data) => {
-            this.setState({data: data});
+    componentDidMount() {
+        getData().then((data) => {
+            this.setState( {data: data} )
         });
     }
 
     render() {
         return (
             <div id="bilego-sell-tickets">
-                { this.state.data && (this.state.data.type === 'map' || this.state.data.type === 'set') ? <Wrapper data={this.state.data} /> : <Loading /> }
-                <Layout />
+                {this.state.data ? <Wrapper data={this.state.data} /> : <Loading />}
             </div>
         );
     }

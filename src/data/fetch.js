@@ -9,7 +9,7 @@
 //     }
 // }
 
-export function fetchCurrenciesList() {
+export function getData() {
     const bilegoMap = {
         "url":"https://spb.bilego.ru/wp-admin/admin-ajax.php",
         "_nonce_":"d0b066cb19",
