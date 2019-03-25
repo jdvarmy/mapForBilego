@@ -1,13 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-function Set(props){
-    const {data} = props;
-
+export default function CreateSet(props){
     return(
-        <div>
-            {console.log(data)}
-        </div>
+        <>
+            {console.log('Set', props)}
+        </>
     );
 }
-
-export default Set;

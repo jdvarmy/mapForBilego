@@ -1,9 +1,10 @@
 import React from 'react';
 
-function Menu(props){
+export default function Menu(props){
     return(
-        <div className="meta map-meta"></div>
+        <>
+            {console.log('Menu', props)}
+            <div className="meta map-meta"></div>
+        </>
     );
 }
-
-export default Menu;

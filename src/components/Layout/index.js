@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-function Layout(props){
-    const {data} = props;
+export default function Layout(props){
 
     return(
-        <div className="event-layout"></div>
+        <>
+            {console.log('Layout', props)}
+            <div className="event-layout"></div>
+        </>
     );
 }
-
-export default Layout;

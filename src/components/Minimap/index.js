@@ -1,11 +1,9 @@
 import React from 'react';
 
-function Minimap(props){
+export default function Minimap(props){
     return(
         <>
-
+            {console.log('Minimap', props)}
         </>
     );
 }
-
-export default Minimap;
