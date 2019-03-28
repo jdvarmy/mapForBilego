@@ -33,12 +33,15 @@ html, body {
     background-position: center;
 }
 
-#hud {
-    /*background: rgba(0,0,0,0.6);*/
-    position: absolute;
-    padding: 10px 20px;
-    color: #FFF;
-    font-family: sans-serif;
-    font-size: 1.2em;
-    pointer-events: none;
+
+
+
+
+.fade-appear{
+    opacity: 0;
+}
+.fade-appear.fade-appear-active{
+    opacity: 1;
+    -webkit-transition: opacity 800ms linear;
+    transition: opacity 800ms linear;
 }

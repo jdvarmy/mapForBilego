@@ -1,36 +1,36 @@
 import React from 'react';
 import './function.css'
-// import PinchZoomPan from './../functions/PinchZoomPan'
-
 import CreateSeats from './CreateSeats'
 import CreatePath from './CreatePath'
 
-export default class Map extends React.Component{
+// import { observable } from 'mobx'
+import { observer } from 'mobx-react'
+// import { Transition, CSSTransition, ReplaceTransition, TransitionGroup } from 'react-transition-group'
+
+// обьявить в родителе функцию, прокинуть ее до дочернего элемента и в дочернем элементе вызвать родительскую функцию
+
+import { MapStore } from '../Store/MapStore'
+
+const mapStates = new MapStore();
+
+@observer
+class Map extends React.Component{
 
     render() {
-        const {elSeats, elPath, elLabels, svgData: {width, height}} = this.props;
+        const {elSeats, elPath, elLabels, svgData, bgmap} = this.props;
+        const {states: {x, y, scale}} = mapStates;
 
         return (
             <>
-                {console.log('Map', this.props)}
-                <div className="btm-map btm-zoomable">
+                <div className="btm-map" style={{
+                    transform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`,
+                    transformOrigin: '0 0',
+                }}>
                     <div className="btm-map-image">
-                        {/*<PinchZoomPan width={parseInt(width)} height={parseInt(height)}>*/}
-                            {/*{(x, y, scale) =>(*/}
-                                {/*<svg {...this.props.svgData} style={{*/}
-                                    {/*backgroundImage: `url(${this.props.bgmap})`,*/}
-                                    {/*pointerEvents: scale === 1 ? 'auto' : 'none',*/}
-                                    {/*transform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`,*/}
-                                    {/*transformOrigin: '0 0',*/}
-                                {/*}} >*/}
-                                    {/*<CreateSeats el={elSeats} />*/}
-                                {/*</svg>*/}
-                            {/*)}*/}
-                        {/*</PinchZoomPan>*/}
-
-                        <svg {...this.props.svgData} style={{backgroundImage: `url(${this.props.bgmap})`}} >
+                        <svg id="bts-tickets-map" {...svgData} /*style={{backgroundImage: `url(${bgmap})`}}*/ >
+                            <defs></defs>
                             <CreateSeats el={elSeats} />
-                            <CreatePath el={elPath} />
+                            <CreatePath mapStates={{...mapStates.states}} el={elPath} />
                         </svg>
                     </div>
                 </div>
@@ -38,3 +38,5 @@ export default class Map extends React.Component{
         );
     }
 }
+
+export default Map;

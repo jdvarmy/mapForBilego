@@ -1,15 +1,21 @@
 import React from 'react'
+import Path from './Path'
 
-const CreateSeats = (props) => {
-    const { el } = props;
+class CreateSeats extends React.Component {
+    render() {
+        const {el: {path, path_free}, mapStates} = this.props;
 
-    console.log(el)
-
-    return(
-        <g id="poligons">
-
-        </g>
-    );
+        return (
+            <g id="poligons">
+                {path.map((e, k) => {
+                    return <Path mapStates={mapStates} el={e} key={e.id} />
+                })}
+                {path_free.map((e, k) => {
+                    return <Path mapStates={mapStates} el={e} key={e.id} classes={['svg-poligon-free']}/>
+                })}
+            </g>
+        );
+    }
 }
 
 export default CreateSeats;

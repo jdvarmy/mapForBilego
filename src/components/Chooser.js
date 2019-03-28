@@ -1,28 +1,21 @@
 import React, { Component } from 'react'
-import { getData } from './../data/fetch'
 import Loading from './Loading'
 import Wrapper from './Wrapper'
 import './chooser.css'
+import { observer } from 'mobx-react'
+import { ServerStore } from './Store/ServerStore'
 
-// import {observable} from 'mobx'
-// import {observer} from 'mobx-react'
 
+const store = new ServerStore();
+store.getPostData();
 
+@observer
 class Chooser extends Component {
-    state = {
-        data: null
-    };
-
-    componentDidMount() {
-        getData().then((data) => {
-            this.setState( {data: data} )
-        });
-    }
 
     render() {
         return (
             <div id="bilego-sell-tickets">
-                {this.state.data ? <Wrapper data={this.state.data} /> : <Loading />}
+                {store.data ? <Wrapper data={store.data} /> : <Loading />}
             </div>
         );
     }

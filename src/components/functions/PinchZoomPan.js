@@ -44,9 +44,13 @@ class PinchZoomPan extends React.Component {
         super(...arguments);
         this.state = this.getInititalState();
 
+        console.log(this.state)
+
         this.handleTouchStart = this.handleTouchStart.bind(this);
         this.handleTouchMove = this.handleTouchMove.bind(this);
         this.handleTouchEnd = this.handleTouchEnd.bind(this);
+
+        this.handleClick = this.handleClick.bind(this);
     }
 
     zoomTo(scale, midpoint) {
@@ -192,6 +196,7 @@ class PinchZoomPan extends React.Component {
                 onTouchStart={this.handleTouchStart}
                 onTouchMove={this.handleTouchMove}
                 onTouchEnd={this.handleTouchEnd}
+                onClick={this.handleClick}
                 style={{
                     overflow: 'hidden',
                     // width: this.props.width,
@@ -201,6 +206,12 @@ class PinchZoomPan extends React.Component {
                 {this.props.children(this.state.x, this.state.y, this.state.scale)}
             </div>
         );
+    }
+
+
+    handleClick(event) {
+        console.log(event.clientX)
+        this.zoom(2, {x: event.clientX, y: event.clientY})
     }
 }
 
