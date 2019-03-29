@@ -3,11 +3,7 @@ import Loading from './Loading'
 import Wrapper from './Wrapper'
 import './chooser.css'
 import { observer } from 'mobx-react'
-import { ServerStore } from './Store/ServerStore'
-
-
-const store = new ServerStore();
-store.getPostData();
+import serverStore from './Store/ServerStore'
 
 @observer
 class Chooser extends Component {
@@ -15,7 +11,7 @@ class Chooser extends Component {
     render() {
         return (
             <div id="bilego-sell-tickets">
-                {store.data ? <Wrapper data={store.data} /> : <Loading />}
+                {serverStore.data ? <Wrapper data={serverStore.data} /> : <Loading />}
             </div>
         );
     }

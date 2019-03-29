@@ -7,30 +7,36 @@ import CreatePath from './CreatePath'
 import { observer } from 'mobx-react'
 // import { Transition, CSSTransition, ReplaceTransition, TransitionGroup } from 'react-transition-group'
 
-// обьявить в родителе функцию, прокинуть ее до дочернего элемента и в дочернем элементе вызвать родительскую функцию
-
-import { MapStore } from '../Store/MapStore'
-
-const mapStates = new MapStore();
+import mapStore from '../Store/MapStore'
 
 @observer
 class Map extends React.Component{
 
+    componentDidMount(): void {
+        const container = document.getElementById('btm-map');
+
+        mapStore.containerW = container.offsetWidth;
+        mapStore.containerH = container.offsetHeight;
+        mapStore.contentW = parseInt( this.props.svgData.width );
+        mapStore.contentH = parseInt( this.props.svgData.height );
+    }
+
     render() {
         const {elSeats, elPath, elLabels, svgData, bgmap} = this.props;
-        const {states: {x, y, scale}} = mapStates;
+        const {x, y, scale, centerX, centerY} = mapStore;
 
         return (
             <>
-                <div className="btm-map" style={{
+                <div id="btm-map" className="btm-map" style={{
                     transform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`,
-                    transformOrigin: '0 0',
+                    transformOrigin: `${centerX}% ${centerY}%`,
+                    transition: '0.1s all ease-out',
                 }}>
                     <div className="btm-map-image">
                         <svg id="bts-tickets-map" {...svgData} /*style={{backgroundImage: `url(${bgmap})`}}*/ >
                             <defs></defs>
                             <CreateSeats el={elSeats} />
-                            <CreatePath mapStates={{...mapStates.states}} el={elPath} />
+                            <CreatePath el={elPath} />
                         </svg>
                     </div>
                 </div>

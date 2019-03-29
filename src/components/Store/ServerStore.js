@@ -1,7 +1,7 @@
 import { observable, action } from 'mobx'
 import { getData } from '../../data/fetch'
 
-export class ServerStore{
+class ServerStore{
     @observable data = null;
 
     @action.bound
@@ -11,3 +11,8 @@ export class ServerStore{
         })
     }
 }
+
+const serverStore = new ServerStore();
+serverStore.getPostData();
+
+export default serverStore;
