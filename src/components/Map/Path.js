@@ -22,6 +22,7 @@ class Path extends React.Component {
             // onTouchMove={mapStore.handleTouchMove}
             // onTouchEnd={mapStore.handleTouchEnd}
             onClick={mapStore.handleClick}
+
             >
             </path>
         )
