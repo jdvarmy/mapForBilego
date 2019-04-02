@@ -9,19 +9,21 @@ class Path extends React.Component {
 
     render() {
         const {el: {d, id}, classes} = this.props;
+        const {pathDisplay} = mapStore;
 
         return (
             <path
-            id={id}
-            d={d}
-            className={'poligon'+ (classes ? ' ' + classes.toString() : '') + (this.hover ? ' active' : '')}
-            onMouseOver={()=>this.hover = true}
-            onMouseLeave={()=>this.hover = false}
+                id={id}
+                d={d}
+                className={'poligon'+ (classes ? ' ' + classes.toString() : '') + (this.hover ? ' active' : '')}
+                onMouseOver={()=>this.hover = true}
+                onMouseLeave={()=>this.hover = false}
+                style={pathDisplay ? {'display': 'none'} : {}}
 
-            // onTouchStart={mapStore.handleTouchStart}
-            // onTouchMove={mapStore.handleTouchMove}
-            // onTouchEnd={mapStore.handleTouchEnd}
-            onClick={mapStore.handleClick}
+                // onTouchStart={mapStore.handleTouchStart}
+                // onTouchMove={mapStore.handleTouchMove}
+                // onTouchEnd={mapStore.handleTouchEnd}
+                onClick={mapStore.handleClick}
 
             >
             </path>

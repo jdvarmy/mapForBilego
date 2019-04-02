@@ -5,7 +5,7 @@ export const Seat = (props) => {
     const { el: {cx, cy, r, name, comp} } = props;
 
     return <circle
-        key={createSeatUID(cx, cy)}
+        // key={createSeatUID(cx, cy)}
         cx={cx}
         cy={cy}
         r={r}
