@@ -20,13 +20,17 @@ class MapStore{
     maxscale = 4;
     zoommargin = 0;
     container = undefined;
+    map = undefined;
+    // dragging = false;
+    position = {x: 0, y: 0}
+    initial = {x: 0, y: 0}
 
     // path store
     @observable pathDisplay = false;
 
     @action.bound
     handleClick(e){
-        // this.stopMomentum();
+        this.stopMomentum();
         this.delay = 400/1000;
 
         const scale = this.scale;
@@ -38,80 +42,84 @@ class MapStore{
         this.scale > this.maxscale-2.5 ? this.pathDisplay = true : this.pathDisplay = false;
     }
 
-    // handleMouseDown(e){
-    //     console.log(e)
-    //     this.dragging = false;
-    //     this.map.addClass('mapplic-dragging');
-    //
-    //     var initial = {x: e.pageX, y: e.pageY};
-    //
-    //     // this.stopMomentum();
-    //     this.mouse.x = this.normalizeX(e.pageX - initial.x + this.x);
-    //     this.mouse.y = this.normalizeY(e.pageY - initial.y + this.y);
-    //     this.momentumStep();
-    //
-    //     this.map.on('mousemove', function(e) {
-    //         this.dragging = true;
-    //
-    //         mouse.x = normalizeX(e.pageX - initial.x + this.x);
-    //         mouse.y = normalizeY(e.pageY - initial.y + this.y);
-    //     });
-    //
-    //     $(document).on('mouseup', function() {
-    //         this.map.off('mousemove');
-    //         $(document).off('mouseup');
-    //
-    //         this.map.removeClass('mapplic-dragging');
-    //     });
-    // }
-    //
-    // // momentum
-    // friction = 0.85;
-    // mouse = {x: 0, y: 0};
-    // previous = {x: this.position.x, y: this.position.y};
-    // velocity = {x: 0, y: 0};
-    //
-    // momentumStep() {
-    //     this.momentum = requestAnimationFrame(momentumStep);
-    //
-    //     if (this.map.hasClass('mapplic-dragging')) {
-    //         this.previous.x = this.position.x;
-    //         this.previous.y = this.position.y;
-    //
-    //         this.position.x = this.mouse.x;
-    //         this.position.y = this.mouse.y;
-    //
-    //         this.velocity.x = (this.position.x - this.previous.x);
-    //         this.velocity.y = (this.position.y - this.previous.y);
-    //     }
-    //     else {
-    //         this.position.x += this.velocity.x;
-    //         this.position.y += this.velocity.y;
-    //
-    //         this.velocity.x *= this.friction;
-    //         this.velocity.y *= this.friction;
-    //
-    //         if (Math.abs(this.velocity.x) + Math.abs(this.velocity.y) < 0.1) {
-    //             this.stopMomentum();
-    //             this.x = this.position.x;
-    //             this.y = this.position.y;
-    //         }
-    //     }
-    //     this.position.x = this.normalizeX(this.position.x);
-    //     this.position.y = this.normalizeY(this.position.y);
-    //
-    //     // zoomTo(this.position.x, this.position.y);
-    // }
-    //
-    // stopMomentum() {
-    //     cancelAnimationFrame(this.momentum);
-    //     if (this.momentum != null) {
-    //         this.x = this.position.x;
-    //         this.y = this.position.y;
-    //     }
-    //     this.momentum = null;
-    // }
-    
+    @action.bound
+    handleMouseDown(e){
+        // this.dragging = false;
+        this.map.classList.add('dragging');
+
+        let initial = {x: e.pageX, y: e.pageY};
+        this.initial = initial;
+
+        this.stopMomentum();
+        this.mouse.x = this.normalizeX(e.pageX - initial.x + this.x);
+        this.mouse.y = this.normalizeY(e.pageY - initial.y + this.y);
+        this.momentumStep();
+
+        document.addEventListener('mousemove', this.onMouseMove);
+        document.addEventListener('mouseup', this.onMouseUp);
+    }
+
+    onMouseMove = e => {
+        // this.dragging = true;
+        this.mouse.x = this.normalizeX(e.pageX - this.initial.x + this.x);
+        this.mouse.y = this.normalizeY(e.pageY - this.initial.y + this.y);
+
+        console.log(e.pageX, e.pageY)
+    };
+    onMouseUp = e => {
+        document.removeEventListener('mousemove', this.onMouseMove);
+        document.removeEventListener('mouseup', this.onMouseUp);
+        this.map.classList.remove('dragging');
+        e.preventDefault();
+    };
+
+    // momentum
+    friction = 0.85;
+    mouse = {x: 0, y: 0};
+    previous = {x: this.position.x, y: this.position.y};
+    velocity = {x: 0, y: 0};
+    momentumStep = () => {
+        this.momentum = requestAnimationFrame(this.momentumStep);
+
+        if ( this.map.classList.contains('dragging') ) {
+            this.previous.x = this.position.x;
+            this.previous.y = this.position.y;
+
+            this.position.x = this.mouse.x;
+            this.position.y = this.mouse.y;
+
+            this.velocity.x = (this.position.x - this.previous.x);
+            this.velocity.y = (this.position.y - this.previous.y);
+        } else {
+            this.position.x += this.velocity.x;
+            this.position.y += this.velocity.y;
+
+            this.velocity.x *= this.friction;
+            this.velocity.y *= this.friction;
+
+            if (Math.abs(this.velocity.x) + Math.abs(this.velocity.y) < 0.1) {
+                this.stopMomentum();
+                this.x = this.position.x;
+                this.y = this.position.y;
+            }
+        }
+        this.position.x = this.normalizeX(this.position.x);
+        this.position.y = this.normalizeY(this.position.y);
+
+        // zoomTo(this.position.x, this.position.y);
+        // this.delay = 0;
+        // this.x = this.position.x;
+        // this.y = this.position.y;
+    };
+    stopMomentum = () => {
+        cancelAnimationFrame(this.momentum);
+        if (this.momentum !== null) {
+            this.x = this.position.x;
+            this.y = this.position.y;
+        }
+        this.momentum = null;
+    };
+
 
 
 
@@ -190,7 +198,6 @@ class MapStore{
         this.x = this.normalizeX(this.containerW * 0.5 - this.scale * this.contentW * x);
         this.y = this.normalizeY(this.containerH * ry - this.scale * this.contentH * y);
     };
-
 
     normalizeX = (x) => {
         let minX = (this.containerW - this.contentW * this.scale);

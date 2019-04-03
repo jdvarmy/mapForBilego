@@ -21,6 +21,7 @@ class Map extends React.Component{
 
     componentDidMount(): void {
         mapStore.container = document.querySelector('.bt-container.map');
+        mapStore.map = document.querySelector('#btm-map');
 
         mapStore.contentW = parseInt( this.props.svgData.width );
         mapStore.contentH = parseInt( this.props.svgData.height );
