@@ -17,7 +17,8 @@ export function getData() {
         "_nonce3_":"8bdb077c8b",
         "_tc_nonce_":"d1ec74be0d",
         "map_images":{
-            "minimap":["302","https://spb.bilego.ru/wp-content/uploads/2018/08/JFC3mini.svg"],
+            // "minimap":["302","https://spb.bilego.ru/wp-content/uploads/2018/08/JFC3mini.svg"],
+            "minimap":["302","https://scontent.fhen1-1.fna.fbcdn.net/v/t1.0-1/41092117_955415924660499_601044015529328640_n.png?_nc_cat=105&_nc_ht=scontent.fhen1-1.fna&oh=165c11d71bae37f602d25e6551e6866f&oe=5D3DF64C"],
             "bgmap":["302","https://spb.bilego.ru/wp-content/uploads/2018/08/JFC3mini.svg"],
             "map":["328","https://spb.bilego.ru/wp-content/uploads/2018/08/JFC3.svg"]
         },

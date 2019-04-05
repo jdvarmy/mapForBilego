@@ -19,10 +19,6 @@ class Path extends React.Component {
                 onMouseOver={()=>this.hover = true}
                 onMouseLeave={()=>this.hover = false}
                 style={pathDisplay ? {'display': 'none'} : {}}
-
-                // onTouchStart={mapStore.handleTouchStart}
-                // onTouchMove={mapStore.handleTouchMove}
-                // onTouchEnd={mapStore.handleTouchEnd}
                 onClick={mapStore.handleClick}
 
             >

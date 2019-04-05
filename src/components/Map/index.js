@@ -1,7 +1,7 @@
 import React from 'react';
 import Map from './Map'
 import Menu from './Menu'
-import Minimap from './../Minimap'
+import MiniMap from './../Minimap'
 
 const CreateMap = (props) => {
     const { map_data, map_images:{map, bgmap, minimap} } = props.data;
@@ -19,7 +19,7 @@ const CreateMap = (props) => {
                         elPath={map_data.elems_path}
                         elSeats={map_data.elems_seats}
                     />
-                    <Minimap map={minimap[1]}/>
+                    <MiniMap map={minimap[1]}/>
                 </div>
             </div>
         </>
