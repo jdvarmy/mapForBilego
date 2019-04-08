@@ -14,7 +14,6 @@ class MapStore{
     /**
      * map
      */
-
     containerW = 0;
     containerH = 0;
     contentW = 0;
@@ -43,10 +42,12 @@ class MapStore{
         const scale = this.scale;
         this.scale = this.normalizeScale(scale + scale * (scale+1));
 
-        this.x = this.normalizeX(this.x - (e.pageX - this.container.getBoundingClientRect().left - this.x) * (this.scale/scale - 1));
-        this.y = this.normalizeY(this.y - (e.pageY - this.container.getBoundingClientRect().top - this.y) * (this.scale/scale - 1));
-
-        this.scale > this.maxscale-2.5 ? this.pathDisplay = true : this.pathDisplay = false;
+        this.zoomTo(
+            this.normalizeX(this.x - (e.pageX - this.container.getBoundingClientRect().left - this.x) * (this.scale/scale - 1)),
+            this.normalizeY(this.y - (e.pageY - this.container.getBoundingClientRect().top - this.y) * (this.scale/scale - 1)),
+            undefined,
+            400
+        );
     }
 
     @action.bound
@@ -88,10 +89,6 @@ class MapStore{
             undefined,
             400
         );
-        // this.x = this.normalizeX(this.x - (e.pageX - this.container.getBoundingClientRect().left - this.x) * (this.scale/scale - 1));
-        // this.y = this.normalizeY(this.y - (e.pageY - this.container.getBoundingClientRect().top - this.y) * (this.scale/scale - 1));
-
-        this.scale > this.maxscale-2.5 ? this.pathDisplay = true : this.pathDisplay = false;
     }
 
     @action.bound
@@ -164,8 +161,8 @@ class MapStore{
         this.scale = this.normalizeScale(this.initScale * dist);
 
         this.zoomTo(
-            this.normalizeX(this.x - (pos.x  - this.container.el.offset().left - this.x) * (this.scale/scale - 1)),
-            this.normalizeY(this.y - (pos.y - this.container.el.offset().top - this.y) * (this.scale/scale - 1))
+            this.normalizeX(this.x - (pos.x  - this.container.getBoundingClientRect().left - this.x) * (this.scale/scale - 1)),
+            this.normalizeY(this.y - (pos.y - this.container.getBoundingClientRect().top - this.y) * (this.scale/scale - 1))
         );
     };
     onTouchEndZoom = e => {
@@ -251,6 +248,8 @@ class MapStore{
         if(this.containerMinimap !== undefined) {
             this.updateMinimap();
         }
+
+        this.scale > this.maxscale-2.5 ? this.pathDisplay = true : this.pathDisplay = false;
     };
 
     //
@@ -285,25 +284,61 @@ class MapStore{
     /**
      * minimap
      */
-
     containerMinimap = undefined;
+    opacity = null;
     @observable miniMap = {top: 0, left: 0, right: 0, bottom: 0};
 
     updateMinimap = () => {
         const width = (this.containerW / this.contentW / this.scale * this.containerMinimap.offsetWidth),
             height = (this.containerH / this.contentH / this.scale * this.containerMinimap.offsetHeight);
 
-            this.miniMap.top = (-this.y / this.contentH / this.scale * this.containerMinimap.offsetWidth);
-            this.miniMap.left = (-this.x / this.contentW / this.scale * this.containerMinimap.offsetHeight);
-            this.miniMap.right = this.miniMap.left + width;
-            this.miniMap.bottom = this.miniMap.top + height;
+        this.miniMap.top = (-this.y / this.contentH / this.scale * this.containerMinimap.offsetWidth);
+        this.miniMap.left = (-this.x / this.contentW / this.scale * this.containerMinimap.offsetHeight);
+        this.miniMap.right = this.miniMap.left + width;
+        this.miniMap.bottom = this.miniMap.top + height;
 
-            // console.log(width, height)
-            // console.log({...this.miniMap})
-            console.log(this.containerH)
-            console.log(this.contentH)
-            console.log(this.scale)
-            console.log(this.containerMinimap.offsetHeight)
+        this.containerMinimap.style.opacity = 0.5;
+        clearTimeout(this.opacity);
+        this.opacity = setTimeout(()=>{
+            this.containerMinimap.style.opacity = 0;
+        }, 3000)
+    };
+
+
+    /**
+    * control buttons
+    */
+    @action.bound
+    handleClickZoomIn(e){
+        e.preventDefault();
+
+        this.stopMomentum();
+
+        const scale = this.scale;
+        this.scale = this.normalizeScale(scale + scale * 0.8);
+
+        this.zoomTo(
+            this.normalizeX(this.x - (this.containerW / 2 - this.x) * (this.scale / scale - 1)),
+            this.normalizeY(this.y - (this.containerH / 2 - this.y) * (this.scale / scale - 1)),
+            undefined,
+            400,
+            );
+    };
+    @action.bound
+    handleClickZoomOut(e){
+        e.preventDefault();
+
+        this.stopMomentum();
+
+        const scale = this.scale;
+        this.scale = this.normalizeScale(scale - scale * 0.5);
+
+        this.zoomTo(
+            this.normalizeX(this.x - (this.containerW / 2 - this.x) * (this.scale / scale - 1)),
+            this.normalizeY(this.y - (this.containerH / 2 - this.y) * (this.scale / scale - 1)),
+            undefined,
+            400,
+        );
     };
 
 }

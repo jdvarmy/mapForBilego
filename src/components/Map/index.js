@@ -2,6 +2,7 @@ import React from 'react';
 import Map from './Map'
 import Menu from './Menu'
 import MiniMap from './../Minimap'
+import ZoomInOutBtns from './../ZoomInOutBtns'
 
 const CreateMap = (props) => {
     const { map_data, map_images:{map, bgmap, minimap} } = props.data;
@@ -20,6 +21,7 @@ const CreateMap = (props) => {
                         elSeats={map_data.elems_seats}
                     />
                     <MiniMap map={minimap[1]}/>
+                    <ZoomInOutBtns />
                 </div>
             </div>
         </>

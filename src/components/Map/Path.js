@@ -20,7 +20,7 @@ class Path extends React.Component {
                 onMouseLeave={()=>this.hover = false}
                 style={pathDisplay ? {'display': 'none'} : {}}
                 onClick={mapStore.handleClick}
-
+                onTouchStart={mapStore.handleClick}
             >
             </path>
         )

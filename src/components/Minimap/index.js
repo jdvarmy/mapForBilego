@@ -7,7 +7,6 @@ import mapStore from '../Store/MapStore'
 class MiniMap extends React.Component {
     componentDidMount(): void {
         mapStore.containerMinimap = document.querySelector('.bt-minimap');
-        mapStore.updateMinimap();
     }
     
     render() {
@@ -24,7 +23,7 @@ class MiniMap extends React.Component {
                         alt="map image active"
                         style={{
                             clip: `rect(${top}px, ${right}px, ${bottom}px, ${left}px)`,
-                            transition: `.2s all ease`,
+                            transition: `.1s all ease`,
                         }}
                     />
                 </div>
