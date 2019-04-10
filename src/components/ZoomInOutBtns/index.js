@@ -1,14 +1,9 @@
 import React from 'react';
 import {observer} from "mobx-react";
-import {observable} from "mobx";
 import mapStore from '../Store/MapStore'
 
 @observer
 class ZoomInOutBtns extends React.Component {
-    componentDidMount(): void {
-
-    }
-
     render() {
         const disabledIn = mapStore.scale === mapStore.maxscale ? 'disabled' : '';
         const disabledOut = mapStore.scale === mapStore.fitscale ? 'disabled' : '';

@@ -28,7 +28,7 @@ class Map extends React.Component{
     }
 
     render() {
-        const {elSeats, elPath, elLabels, svgData, bgmap, svgData:{width, height}} = this.props;
+        const {elSeats, elPath, svgData, bgmap, svgData:{width, height}, tickets} = this.props;
         const {x, y, scale, delay} = mapStore;
 
         return (
@@ -48,8 +48,8 @@ class Map extends React.Component{
                     >
                         <svg id="bts-tickets-map" {...svgData} /*style={{backgroundImage: `url(${bgmap})`}} */>
                             <defs></defs>
-                            <CreateSeats el={elSeats} />
-                            <CreatePath el={elPath} />
+                            <CreateSeats el={elSeats} tickets={tickets} />
+                            <CreatePath el={elPath} tickets={tickets} />
                         </svg>
                     </div>
                 </div>

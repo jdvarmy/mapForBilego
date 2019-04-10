@@ -3,15 +3,11 @@ import Path from './Path'
 
 class CreateSeats extends React.Component {
     render() {
-        const {el: {path, path_free}} = this.props;
-
+        const {el, tickets} = this.props;
         return (
             <g id="poligons">
-                {path.map((e, k) => {
-                    return <Path el={e} key={e.id} />
-                })}
-                {path_free.map((e, k) => {
-                    return <Path el={e} key={e.id} classes={['svg-poligon-free']}/>
+                {el.map((e, k) => {
+                    return <Path el={e} key={e.id} tickets={tickets} />
                 })}
             </g>
         );

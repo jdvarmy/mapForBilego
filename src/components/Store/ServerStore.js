@@ -7,7 +7,7 @@ class ServerStore{
     @action.bound
     getPostData(){
         getData().then((data) => {
-            this.data = data
+            this.data = data;
         })
     }
 }

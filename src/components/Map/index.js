@@ -5,7 +5,8 @@ import MiniMap from './../Minimap'
 import ZoomInOutBtns from './../ZoomInOutBtns'
 
 const CreateMap = (props) => {
-    const { map_data, map_images:{map, bgmap, minimap} } = props.data;
+    const { map_data, map_images:{map, bgmap, minimap}, tickets } = props.data;
+
 
     return (
         <>
@@ -19,6 +20,7 @@ const CreateMap = (props) => {
                         elLabels={map_data.elems_labels}
                         elPath={map_data.elems_path}
                         elSeats={map_data.elems_seats}
+                        tickets={tickets}
                     />
                     <MiniMap map={minimap[1]}/>
                     <ZoomInOutBtns />
