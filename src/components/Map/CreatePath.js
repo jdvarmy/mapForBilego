@@ -1,7 +1,7 @@
 import React from 'react'
 import Path from './Path'
 
-class CreateSeats extends React.Component {
+class CreateSeats extends React.PureComponent {
     render() {
         const {el, tickets} = this.props;
         return (

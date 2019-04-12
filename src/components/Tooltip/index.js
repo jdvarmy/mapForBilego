@@ -1,9 +1,12 @@
-import React from "react"
-import ReactDOM from "react-dom"
-import { observer } from "mobx-react"
-import { observable, action } from "mobx"
+// import React from "react"
+// import ReactDOM from "react-dom"
+// import { observer } from "mobx-react"
+// import { observable, action, $mobx } from "mobx"
+import mapStore from '../Store/MapStore'
+
 
 class Tooltip {
+
     constructor(){
         const id = 'bt-tooltip';
         this.domNode = document.querySelector(`#${id}`);
@@ -16,6 +19,7 @@ class Tooltip {
     }
 
     create = ( el, tickets, text ) => {
+        // console.log(mapStore.scale)
         let count=0, priceMin, priceMax, title, content, descr;
 
         const wrap = document.createElement('div'),
@@ -35,7 +39,7 @@ class Tooltip {
 
         if( el.nodeName === 'path' ){
             title = text;
-            tickets.map((e)=>{
+            tickets.map(e=>{
                 count += e.stock;
                 if( priceMin === undefined ) priceMin = e.price_regular;
                 if( priceMax === undefined ) priceMax = e.price_regular;
@@ -43,15 +47,30 @@ class Tooltip {
                 if( priceMax < e.price_regular ) priceMax = e.price_regular;
             });
 
+            wrap.classList.add('bt-tooltip-wrap-sector');
+
             titl.appendChild( document.createTextNode(title) );
             if( count > 0 ) {
-                if (priceMin === priceMax) cont.appendChild(document.createTextNode(`Цена ${priceMin}`));
-                else cont.appendChild(document.createTextNode(`Цена ${priceMin} - ${priceMax}`));
+                if (priceMin === priceMax) cont.appendChild(document.createTextNode(`${priceMin} ₽`));
+                else cont.appendChild(document.createTextNode(`${priceMin} - ${priceMax} ₽`));
                 desc.appendChild(document.createTextNode(`Свободных мест ${count}`));
             }else desc.appendChild(document.createTextNode(`Свободных мест нет`));
         }else if( el.nodeName === 'circle' ){
+            title = `${tickets.price_regular} ₽`;
+            const c = `${tickets.sector_name}`;
+            const d = `ряд ${tickets.row_name} место ${tickets.seat_name}`;
 
+            wrap.classList.add('bt-tooltip-wrap-seat');
+            titl.appendChild( document.createTextNode(title) );
+            cont.appendChild( document.createTextNode(c) );
+            desc.appendChild( document.createTextNode(d) );
         }
+
+        const rect = el.getBoundingClientRect();
+        let x = rect.x - this.domNode.offsetWidth * 0.5 + rect.width * 0.5,
+            y = rect.y - this.domNode.offsetHeight - 18 - 2*mapStore.scale;
+
+        this.domNode.setAttribute('style', `left: ${x}px; top: ${y}px`);
 
         // React.createElement (
         //     <div className="bt-tooltip-wrap">
@@ -63,8 +82,8 @@ class Tooltip {
         // )
     };
     delete = () => {
-        console.log('delete')
-        // this.domNode.firstChild.remove();
+        if( this.domNode.firstChild )
+            this.domNode.firstChild.remove();
     };
 
     // render(){

@@ -13,7 +13,6 @@ class Map extends React.Component{
         this.oldSize = {w: 0, h: 0}
     }
 
-
     componentDidMount(): void {
         mapStore.container = document.querySelector('.bt-container.map');
         mapStore.map = document.querySelector('#btm-map');

@@ -37,10 +37,18 @@
     left: 0;}
 /*!*minimap*!*/
 .bt-minimap .bt-minimap-active{position:absolute;opacity:1;top:0;left:0}
-.bt-minimap-background{width:140px!important;-webkit-filter:blur(2px)}
+.bt-minimap-background{width:140px!important;-webkit-filter:blur(2px);filter:blur(2px)}
 
-#bt-tooltip{margin:0;position:absolute;z-index:9999;width:170px;-webkit-font-smoothing:antialiased; top:250px;left:150px}
-.bt-tooltip-wrap{background:rgba(255,255,255,0.1);padding:1px;position:relative;box-shadow:0 4px 10px rgba(0,0,0,0.15);}
+circle{transition: all 0.1s cubic-bezier(0.39, 0.575, 0.565, 1)}
+.shadow {
+    cursor: pointer;
+    -webkit-filter: drop-shadow( 0 4px 10px rgba(0,0,0,0.15) );
+    filter: drop-shadow( 0 4px 10px rgba(0,0,0,0.15) );
+    box-shadow:0 4px 10px rgba(0,0,0,0.15);
+}
+
+#bt-tooltip{margin:0;position:absolute;z-index:9999;width:170px;-webkit-font-smoothing:antialiased;}
+.bt-tooltip-wrap{background:rgba(255,255,255,0.9);padding:1px;position:relative;box-shadow:0 4px 10px rgba(0,0,0,0.15);}
 .bt-tooltip-wrap::after,.bt-tooltip-wrap::before{content:'';width:0;height:0;display:block;overflow:hidden;border-width:6px;border-style:solid;margin-top:0;margin-left:-6px;position:absolute;top:100%;right:50%;bottom:auto;left:50%}
 .bt-tooltip-wrap::after{border-color:#fff transparent transparent;z-index:4;-webkit-transform:translate(0,-1px);-ms-transform:translate(0,-1px);transform:translate(0,-1px)}
 .bt-tooltip-wrap::before{border-color:rgba(0,0,0,0.1) transparent transparent;z-index:2}
@@ -48,8 +56,10 @@
 /*.bt-tooltip-shadow{color:#111;background:#fff;box-shadow:0 4px 10px rgba(0,0,0,0.15);position:relative;z-index:3}*/
 .bt-tooltip-wrap{padding:12px;text-align:center;line-height:1.18em}
 .bt-tooltip-wrap .title,.bt-tooltip-wrap .content{color:#111;display:block;font-size:14px}
-.bt-tooltip-wrap .content{margin-top:3px}
-/*#bt-tooltip-p{color:rgba(0,0,0,0.4);display:block;font-size:12px;margin-top:3px}*/
+.bt-tooltip-wrap .title{font-weight: 500}
+.bt-tooltip-wrap .descr, .bt-tooltip-wrap.bt-tooltip-wrap-seat .content{color:rgba(0,0,0,0.4);display:block;font-size:12px;margin-top:0px}
+.bt-tooltip-wrap .content, .bt-tooltip-wrap.bt-tooltip-wrap-seat .content{margin-top:3px}
+.bt-tooltip-wrap-seat{font-weight: 500}
 #bt-tooltip .container.seat-tooltip{width:150px}
 /*.hidden, .bilego-section .ui-datepicker-trigger{display:none}*/
 

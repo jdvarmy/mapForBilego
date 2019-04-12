@@ -37,9 +37,7 @@ class Path extends React.Component {
                     d={d}
                     className={'poligon'+ (classes ? ' ' + classes.toString() : '') + (this.hover ? ' active' : '')}
                     onMouseOver={this.handleHover}
-                    // onMouseOver={()=>{this.hover = true}}
                     onMouseLeave={this.handleUnhover}
-                    // onMouseLeave={()=>{this.hover = false}}
                     style={pathDisplay ? {'display': 'none'} : {}}
                     onClick={mapStore.handleClick}
                     onTouchStart={mapStore.handleClick}
