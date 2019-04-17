@@ -45,7 +45,7 @@ class Map extends React.Component{
                         onMouseDown={mapStore.handleMouseDown}
                         onTouchStart={mapStore.handleTouchStart}
                     >
-                        <svg id="bts-tickets-map" {...svgData} /*style={{backgroundImage: `url(${bgmap})`}} */>
+                        <svg id="bts-tickets-map" {...svgData} style={{backgroundImage: `url(${bgmap})`}}>
                             <defs></defs>
                             <CreateSeats el={elSeats} tickets={tickets} />
                             <CreatePath el={elPath} tickets={tickets} />

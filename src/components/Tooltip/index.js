@@ -10,6 +10,7 @@ class Tooltip {
     constructor(){
         const id = 'bt-tooltip';
         this.domNode = document.querySelector(`#${id}`);
+        this.el = undefined;
 
         if( !this.domNode ) {
             this.domNode = document.createElement('div');
@@ -19,7 +20,7 @@ class Tooltip {
     }
 
     create = ( el, tickets, text ) => {
-        // console.log(mapStore.scale)
+        this.el = el;
         let count=0, priceMin, priceMax, title, content, descr;
 
         const wrap = document.createElement('div'),
@@ -37,7 +38,7 @@ class Tooltip {
         cont.classList.add('content');
         desc.classList.add('descr');
 
-        if( el.nodeName === 'path' ){
+        if( this.el.nodeName === 'path' ){
             title = text;
             tickets.map(e=>{
                 count += e.stock;
@@ -55,7 +56,7 @@ class Tooltip {
                 else cont.appendChild(document.createTextNode(`${priceMin} - ${priceMax} ₽`));
                 desc.appendChild(document.createTextNode(`Свободных мест ${count}`));
             }else desc.appendChild(document.createTextNode(`Свободных мест нет`));
-        }else if( el.nodeName === 'circle' ){
+        }else if( this.el.nodeName === 'circle' || this.el.nodeName === 'g' ){
             title = `${tickets.price_regular} ₽`;
             const c = `${tickets.sector_name}`;
             const d = `ряд ${tickets.row_name} место ${tickets.seat_name}`;
@@ -66,30 +67,25 @@ class Tooltip {
             desc.appendChild( document.createTextNode(d) );
         }
 
-        const rect = el.getBoundingClientRect();
-        let x = rect.x - this.domNode.offsetWidth * 0.5 + rect.width * 0.5,
-            y = rect.y - this.domNode.offsetHeight - 18 - 2*mapStore.scale;
-
-        this.domNode.setAttribute('style', `left: ${x}px; top: ${y}px`);
-
-        // React.createElement (
-        //     <div className="bt-tooltip-wrap">
-        //         <div className="bt-tooltip-title">title</div>
-        //         <div className="bt-tooltip-content">content</div>
-        //         <div className="bt-tooltip-descr">descr</div>
-        //     </div>,
-        //     this.domNode
-        // )
+        this.update();
     };
     delete = () => {
         if( this.domNode.firstChild )
             this.domNode.firstChild.remove();
-    };
 
-    // render(){
-    //     return this.props.children
-    //     // return [this.props.children, this.create(), this.delete()]
-    // }
+        this.el = undefined;
+    };
+    update = (errorY) => {
+        errorY = typeof errorY === 'undefined' ? 0 : errorY;
+
+        if( this.el !== undefined ) {
+            const rect = this.el.getBoundingClientRect();
+            let x = rect.x - this.domNode.offsetWidth * 0.5 + rect.width * 0.5,
+                y = rect.y + errorY - this.domNode.offsetHeight - 18 - 2 * mapStore.scale;
+
+            this.domNode.setAttribute('style', `left: ${x}px; top: ${y}px`);
+        }
+    }
 }
 
-export default new Tooltip();
+export const tooltip = new Tooltip();

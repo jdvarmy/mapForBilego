@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { observer } from "mobx-react";
 import { observable } from "mobx";
 import mapStore from '../Store/MapStore';
-import Tooltip from '../Tooltip'
+import { tooltip } from '../Tooltip'
 
 
 @observer
@@ -19,11 +19,11 @@ class Path extends React.Component {
         tickets.map( e => {
             if( e.sector === id) pathTickets.push(e)
         } );
-        Tooltip.create(el, pathTickets, text);
+        tooltip.create(el, pathTickets, text);
     };
     handleUnhover = () => {
         this.hover = false;
-        Tooltip.delete();
+        tooltip.delete();
     };
 
     render() {

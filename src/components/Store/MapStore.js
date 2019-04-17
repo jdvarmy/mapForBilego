@@ -1,5 +1,5 @@
 import {action, observable} from 'mobx'
-// import * as Hammer from 'hammerjs';
+import { tooltip } from '../Tooltip'
 
 
 const inverse = (x) => x * -1;
@@ -66,6 +66,9 @@ class MapStore{
         document.addEventListener('mouseup', this.onMouseUp);
     }
     onMouseMove = e => {
+        // todo: update tooltip position
+        tooltip.update(8.5);
+
         this.mouse.x = this.normalizeX(e.pageX - this.initial.x + this.current.x);
         this.mouse.y = this.normalizeY(e.pageY - this.initial.y + this.current.y);
     };
@@ -73,7 +76,6 @@ class MapStore{
         this.map.removeEventListener('mousemove', this.onMouseMove);
         document.removeEventListener('mouseup', this.onMouseUp);
         this.map.classList.remove('dragging');
-        e.preventDefault();
     };
 
     @action.bound
@@ -91,6 +93,8 @@ class MapStore{
         );
     }
 
+
+    // todo: test mobile device
     @action.bound
     handleTouchStart(e){
         const orig = e.touches,
@@ -137,15 +141,15 @@ class MapStore{
             this.mouse.x = this.normalizeX(orig[0].pageX - this.init1.x);
             this.mouse.y = this.normalizeY(orig[0].pageY - this.init1.y);
         }
+
+        tooltip.update(8.5);
     };
     onTouchEnd = e => {
-        e.preventDefault();
         this.map.removeEventListener('touchmove', this.onTouchMove);
         document.removeEventListener('touchend', this.onTouchEnd);
         this.map.classList.remove('dragging');
     };
     onTouchMoveZoom = e => {
-        e.preventDefault();
 
         const orig = e.touches,
             touches = orig.length;
@@ -166,7 +170,6 @@ class MapStore{
         );
     };
     onTouchEndZoom = e => {
-        e.preventDefault();
         this.map.removeEventListener('touchmove', this.onTouchMoveZoom);
         document.removeEventListener('touchend', this.onTouchEndZoom);
         this.map.classList.remove('dragging');
@@ -310,8 +313,6 @@ class MapStore{
     */
     @action.bound
     handleClickZoomIn(e){
-        e.preventDefault();
-
         this.stopMomentum();
 
         const scale = this.scale;
@@ -326,8 +327,6 @@ class MapStore{
     };
     @action.bound
     handleClickZoomOut(e){
-        e.preventDefault();
-
         this.stopMomentum();
 
         const scale = this.scale;

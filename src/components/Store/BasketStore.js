@@ -1,10 +1,13 @@
 import {action, observable} from 'mobx'
 
 class BasketStore{
-    @observable buyingTicketsArr = [];
+    @observable buyingTickets = [];
 
     @action.bound
-    addToBasket(ticket){}
+    addToBasket(ticket){
+        this.buyingTickets.push(ticket);
+        console.log(this.buyingTickets)
+    }
 
     @action.bound
     deleteFromBasket(){}
