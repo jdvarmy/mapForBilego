@@ -1,22 +1,22 @@
 import {action, observable} from 'mobx'
 
 class BasketStore{
-    @observable buyingTickets = [];
+    @observable tickets = [];
 
-    @action.bound
-    addToBasket(ticket){
-        this.buyingTickets.push(ticket);
-        console.log(this.buyingTickets)
-    }
+    @action
+    addToBasket = ticket => {
+        this.tickets.push(ticket);
+        console.log(this.tickets)
+    };
 
-    @action.bound
-    deleteFromBasket(){}
+    @action
+    deleteFromBasket = () => {};
 
-    @action.bound
-    getBasketForm(){}
+    @action
+    getBasketForm = () => {};
 
-    @action.bound
-    getPayForm(){}
+    @action
+    getPayForm = () => {};
 }
 
 const basketStore = new BasketStore();

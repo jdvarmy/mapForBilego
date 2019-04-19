@@ -27,6 +27,7 @@ class CreateMap extends React.PureComponent{
                         <ZoomInOutBtns/>
                     </div>
                 </div>
+
             </>
         );
     }

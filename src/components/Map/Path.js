@@ -1,41 +1,51 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
 import { observer } from "mobx-react";
-import { observable } from "mobx";
 import mapStore from '../Store/MapStore';
-import { tooltip } from '../Tooltip'
+import { PathStore } from '../Store/PathStore';
+import { TooltipPath } from '../Tooltip/TooltipPath'
 
 
 @observer
 class Path extends React.Component {
-    @observable hover = false;
+    constructor(props){
+        super(props);
+
+        this.pathStore = new PathStore();
+    }
+
+    componentDidMount(): void {
+        const { tickets, el: {text, id} } = this.props,
+            el = ReactDOM.findDOMNode(this);
+        let ticketArr = [];
+
+        tickets.map( e => {
+            if( e.sector === id) ticketArr.push(e)
+        } );
+
+        this.tooltip = new TooltipPath({el, ticketArr, text});
+    }
 
     handleHover = () => {
-        this.hover = true;
-
-        const { tickets, el: {text, id} } = this.props;
-        const el = ReactDOM.findDOMNode(this);
-        let pathTickets = [];
-        tickets.map( e => {
-            if( e.sector === id) pathTickets.push(e)
-        } );
-        tooltip.create(el, pathTickets, text);
+        this.pathStore.onEnter();
+        this.tooltip.create();
     };
     handleUnhover = () => {
-        this.hover = false;
-        tooltip.delete();
+        this.pathStore.onOver();
+        this.tooltip.delete();
     };
 
     render() {
-        const {el: {d, id}, classes} = this.props;
-        const {pathDisplay} = mapStore;
+        const { el: {d, id}, classes } = this.props,
+            { pathDisplay } = mapStore,
+            { hover } = this.pathStore;
 
         return (
             <>
                 <path
                     id={id}
                     d={d}
-                    className={'poligon'+ (classes ? ' ' + classes.toString() : '') + (this.hover ? ' active' : '')}
+                    className={'poligon'+ (classes ? ' ' + classes.toString() : '') + (hover ? ' active' : '')}
                     onMouseOver={this.handleHover}
                     onMouseLeave={this.handleUnhover}
                     style={pathDisplay ? {'display': 'none'} : {}}

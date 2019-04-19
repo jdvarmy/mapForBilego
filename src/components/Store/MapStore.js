@@ -1,9 +1,6 @@
 import {action, observable} from 'mobx'
-import { tooltip } from '../Tooltip'
-
 
 const inverse = (x) => x * -1;
-
 
 class MapStore{
     @observable x = 0;
@@ -11,9 +8,7 @@ class MapStore{
     @observable scale = 1;
     @observable delay = 0;
 
-    /**
-     * map
-     */
+    // map
     containerW = 0;
     containerH = 0;
     contentW = 0;
@@ -54,8 +49,8 @@ class MapStore{
     handleMouseDown(e){
         this.map.classList.add('dragging');
 
-        this.initial = {x: e.pageX, y: e.pageY}
-        this.current = {x: this.x, y: this.y}
+        this.initial = {x: e.pageX, y: e.pageY};
+        this.current = {x: this.x, y: this.y};
 
         this.stopMomentum();
         this.mouse.x = this.normalizeX(e.pageX - this.initial.x + this.current.x);
@@ -66,8 +61,9 @@ class MapStore{
         document.addEventListener('mouseup', this.onMouseUp);
     }
     onMouseMove = e => {
-        // todo: update tooltip position
-        tooltip.update(8.5);
+        const domNode = document.querySelector(`#bt-tooltip`);
+        if( domNode.firstChild )
+            domNode.firstChild.remove();
 
         this.mouse.x = this.normalizeX(e.pageX - this.initial.x + this.current.x);
         this.mouse.y = this.normalizeY(e.pageY - this.initial.y + this.current.y);
@@ -142,7 +138,9 @@ class MapStore{
             this.mouse.y = this.normalizeY(orig[0].pageY - this.init1.y);
         }
 
-        tooltip.update(8.5);
+        const domNode = document.querySelector(`#bt-tooltip`);
+        if( domNode.firstChild )
+            domNode.firstChild.remove();
     };
     onTouchEnd = e => {
         this.map.removeEventListener('touchmove', this.onTouchMove);
@@ -284,9 +282,7 @@ class MapStore{
     };
 
 
-    /**
-     * minimap
-     */
+    // minimap
     containerMinimap = undefined;
     opacity = null;
     @observable miniMap = {top: 0, left: 0, right: 0, bottom: 0};
@@ -308,9 +304,7 @@ class MapStore{
     };
 
 
-    /**
-    * control buttons
-    */
+    // control buttons
     @action.bound
     handleClickZoomIn(e){
         this.stopMomentum();
