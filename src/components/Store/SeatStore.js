@@ -27,4 +27,9 @@ export class SeatStore {
     onOver = () => {
         this.hover = false;
     };
+
+    @action
+    onClick = () => {
+        this.click = !this.click;
+    }
 }

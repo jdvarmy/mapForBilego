@@ -1,6 +1,6 @@
 import React from 'react'
 import Seat from './Seat'
-import {createSeatUID} from "../functions/functions"
+// import {createSeatUID} from "../functions/functions"
 
 class CreateSeats extends React.PureComponent{
     render() {

@@ -6,7 +6,6 @@ class BasketStore{
     @action
     addToBasket = ticket => {
         this.tickets.push(ticket);
-        console.log(this.tickets)
     };
 
     @action

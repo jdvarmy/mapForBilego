@@ -32,7 +32,9 @@ class Seat extends React.Component {
     handlerHover = e => {
         if(this.seatStore.ticket) {
             this.seatStore.onEnter();
-            this.tooltip.create( - 2 * mapStore.scale );
+
+            const errorY = this.seatStore.click ? 0 : - 2 * mapStore.scale;
+            this.tooltip.create( errorY );
         }
     };
     handlerUnhover = e => {
@@ -40,36 +42,53 @@ class Seat extends React.Component {
         if(this.seatStore.ticket) this.tooltip.delete();
     };
 
+    handlerClick = e => {
+        basketStore.addToBasket( this.seatStore.ticket );
+        this.seatStore.onClick();
+    };
+
     render(){
-        let {el: {cx, cy, r, name, comp}, id} = this.props;
-        let text;
-        const { hover, ticket } = this.seatStore;
+        const {el: {cx, cy, r, name, comp}, id} = this.props;
+        let text, radius, style;
+        const { hover, ticket, click } = this.seatStore;
         const { scale } = mapStore;
 
-        if(ticket) r = hover ? r*1.8 : r;
-        else r = r*0.8;
-
-        if(ticket)
-            text = <text className="circle-text" fontSize={(r*1 + scale*2.2).toFixed(2)} x={cx} y={(cy*1 + 2.4*scale).toFixed(2)}>
+        if( ticket ) {
+            text = <text className="circle-text" fontSize={(r*1.8 + scale*2.2).toFixed(2)} x={cx} y={(cy*1 + 2.4*scale).toFixed(2)}>
                 {ticket.seat_name}
             </text>;
+
+            if ( (click && hover) || click ) {
+                radius = (r*1.3).toFixed(2);
+                style = {fill: 'white', stroke: ticket.color, strokeWidth: `${r}px`}
+            }else if( hover ){
+                radius = (r*1.8).toFixed(2);
+                style = {fill: ticket.color};
+            }else{
+                radius = r;
+                style = {fill: ticket.color};
+            }
+        }else{
+            radius = (r*0.8).toFixed(2);
+            style = {fill: '#e5e5e5'};
+        }
 
         return (
             <g onMouseEnter={this.handlerHover}
                 onMouseLeave={this.handlerUnhover}
                 data-name={name}
                 data-component={comp}
-                onClick={basketStore.addToBasket}
+                onClick={this.handlerClick}
                 // todo: add to basket from mobile device
             >
                 <circle id={id}
                     cx={cx}
                     cy={cy}
-                    r={(r*1).toFixed(2)}
-                    style={ticket ? {fill: ticket.color} : {fill: '#e5e5e5'}}
-                    className={hover ? 'circle' : ''}
+                    r={radius}
+                    style={style}
+                    className={click || hover ? 'circle' : ''}
                 />
-                {hover && text}
+                {(!click && hover) && text}
             </g>
         )
     }
