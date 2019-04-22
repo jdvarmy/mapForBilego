@@ -16,6 +16,32 @@ export const createSeatUID = (x, y) => {
     return result;
 };
 
+export const getStrEnding = function(number, endings){
+    let buffy, i;
+    number = number % 100;
+    if (number>=11 && number<=19)
+        buffy=endings[2];
+    else{
+        i = number % 10;
+        switch(i){
+            case (1): buffy = endings[0]; break;
+            case (2):
+            case (3):
+            case (4): buffy = endings[1]; break;
+            default: buffy = endings[2];
+        }
+    }
+    return buffy;
+};
+
+export const moneyFormating = function(string, simbol){
+    let int = string + '';
+    int = int.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
+    if( simbol ) int = int + ' ₽';
+
+    return int;
+};
+
 const createid = () => {
     let text = "";
     const possible = "abcdefghijklmnopqrstuvwxyz";

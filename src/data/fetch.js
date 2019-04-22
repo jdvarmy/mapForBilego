@@ -3194,7 +3194,8 @@ export function getData() {
                         {"uid":"FCDCFBBH","name":"3","comp":"seat","r":"56","cx":"7115.5","cy":"2325.8999"}]}]},
                 {"el":"12","id":"free","comp":"sector",
                     "rows":[{"el":"1","name":"A","comp":"row",
-                    "seats":[{"uid":"JJHBABAI","name":"free-seat","comp":"seat","r":"56","cx":"8010","cy":"1799"}]}]}
+                    "seats":[
+                        {"uid":"free","name":"free-seat","comp":"seat","r":"56","cx":"8010","cy":"1799"}]}]}
             ]
         },
         "post_id":1447,
@@ -3210,7 +3211,7 @@ export function getData() {
         "tickets":[
             {
                 ID: 303,
-                UID: "free",
+                UID: "free", // todo: У сетов UID должен совпадать с ID сектора!!!
                 description: "Лебединое озеро, free",
                 end_date_time: null,
                 name: "free",
@@ -3230,6 +3231,7 @@ export function getData() {
                 stock: 19,
                 stock_status: "instock",
                 type: "with_map_sector",
+                color: "grey"
             },
             {
                 ID: 306,

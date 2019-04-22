@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
-import { observer } from "mobx-react";
-import mapStore from '../Store/MapStore';
-import { PathStore } from '../Store/PathStore';
-import { TooltipPath } from '../Tooltip/TooltipPath'
+import { observer } from "mobx-react/index";
+import mapStore from '../../Store/MapStore';
+import { PathStore } from '../../Store/PathStore';
+import { TooltipPath } from '../../Tooltip/TooltipPath'
 
 
 @observer

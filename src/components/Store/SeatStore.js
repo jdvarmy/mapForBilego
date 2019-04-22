@@ -5,9 +5,15 @@ export class SeatStore {
     init = props => {
         const { tickets, id } = props;
         tickets.map(e => {
-            if( id === e.UID) this.ticket = e
+            if( id === e.UID) this.ticket = e;
         });
     };
+
+    @observable
+    setWindowMode = false;
+
+    @observable
+    specialType = false;
 
     @observable
     ticket = undefined;
@@ -17,6 +23,16 @@ export class SeatStore {
 
     @observable
     click = false;
+
+    @action
+    setSetWindowMode = val => {
+        this.setWindowMode = val;
+    };
+
+    @action
+    addSpecialType = () => {
+        this.specialType = true;
+    };
 
     @action
     onEnter = () => {

@@ -35,7 +35,8 @@ export class TooltipSeat extends Tooltip{
         wrap.classList.add('bt-tooltip-wrap-seat');
         titl.appendChild( document.createTextNode(title) );
         cont.appendChild( document.createTextNode(c) );
-        desc.appendChild( document.createTextNode(d) );
+        if( row_name && seat_name )
+            desc.appendChild( document.createTextNode(d) );
 
         this.update( errorY );
     };

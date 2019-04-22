@@ -1,12 +1,12 @@
 import React from 'react'
-import { observer } from "mobx-react";
+import { observer } from "mobx-react/index";
 import ReactDOM from "react-dom";
-import mapStore from "../Store/MapStore";
+import mapStore from "../../Store/MapStore";
 
-import basketStore from "../Store/BasketStore"
+import basketStore from "../../Store/BasketStore"
 
-import { SeatStore } from "../Store/SeatStore"
-import { TooltipSeat } from "../Tooltip/TooltipSeat"
+import { SeatStore } from "../../Store/SeatStore"
+import { TooltipSeat } from "../../Tooltip/TooltipSeat"
 
 @observer
 class Seat extends React.Component {
@@ -16,6 +16,9 @@ class Seat extends React.Component {
 
         this.seatStore = new SeatStore();
         this.seatStore.init( { id, tickets } );
+        if( this.seatStore.ticket && this.seatStore.ticket.type === 'with_map_sector' )
+            this.seatStore.addSpecialType();
+        this.scale = 1;
     }
 
     componentDidMount(): void {
@@ -31,10 +34,12 @@ class Seat extends React.Component {
 
     handlerHover = e => {
         if(this.seatStore.ticket) {
+            this.scale = mapStore.scale;
             this.seatStore.onEnter();
 
-            const errorY = this.seatStore.click ? 0 : - 2 * mapStore.scale;
+            const errorY = this.seatStore.click ? 0 : - 2 * this.scale;
             this.tooltip.create( errorY );
+
         }
     };
     handlerUnhover = e => {
@@ -43,15 +48,21 @@ class Seat extends React.Component {
     };
 
     handlerClick = e => {
-        basketStore.addToBasket( this.seatStore.ticket );
-        this.seatStore.onClick();
+        const { onClick, ticket } = this.seatStore;
+        onClick();
+        basketStore.toBasket( ticket, this.seatStore.click );
+    };
+
+    handlerSpecialClick = e => {
+        const { setSetWindowMode } = this.seatStore;
+        setSetWindowMode(true);
     };
 
     render(){
         const {el: {cx, cy, r, name, comp}, id} = this.props;
         let text, radius, style;
-        const { hover, ticket, click } = this.seatStore;
-        const { scale } = mapStore;
+        const { hover, ticket, click, specialType } = this.seatStore;
+        const scale = this.scale;
 
         if( ticket ) {
             text = <text className="circle-text" fontSize={(r*1.8 + scale*2.2).toFixed(2)} x={cx} y={(cy*1 + 2.4*scale).toFixed(2)}>
@@ -78,7 +89,7 @@ class Seat extends React.Component {
                 onMouseLeave={this.handlerUnhover}
                 data-name={name}
                 data-component={comp}
-                onClick={this.handlerClick}
+                onClick={ !specialType ? this.handlerClick : this.handlerSpecialClick}
                 // todo: add to basket from mobile device
             >
                 <circle id={id}

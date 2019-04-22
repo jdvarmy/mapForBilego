@@ -1,18 +1,22 @@
 import React from 'react';
+import basketStore from '../Store/BasketStore'
+import { observer } from "mobx-react"
+import Form from './Form'
 
-export default function Basket(props){
-    return(
-        <>
-            <div className="basket map-meta">
-                <form id="map-ticket-form"
-                      action="<?php echo get_site_url(null, '/cart') ?>"
-                      className=""
-                      method="post"
-                      encType='multipart/form-data'>
-                    <div className="basket-content"></div>
-                </form>
+@observer
+class Basket extends React.Component{
+    render(){
+        const { count } = basketStore;
+
+        return (
+            <>
+                <div className="basket map-meta">
+                    { count > 0 && <Form /> }
+                </div>
                 <div className="basket-meta"></div>
-            </div>
-        </>
-    );
+            </>
+        );
+    }
 }
+
+export default Basket;

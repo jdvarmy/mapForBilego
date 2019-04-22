@@ -1,5 +1,5 @@
 #bilego-sell-tickets{background-color: #fff;position:relative;width: 73%;overflow: hidden;}
-.bt-map{height:535px;width:100%;-webkit-font-smoothing:antialiased;position:relative; overflow: hidden}
+.bt-map{height:595px;width:100%;-webkit-font-smoothing:antialiased;position:relative; overflow: hidden}
 .bt-map > * {opacity: 1;transition: opacity 0.6s}
 .bt-map input, .bt-map button, .bt-map a, .bt-map a:hover, .bt-map a:active, .bt-map a:focus{outline:none;box-shadow:none;-webkit-box-shadow:none;}
 
@@ -11,7 +11,7 @@
 #bts-tickets-map{background:center center no-repeat;background-size:contain;width:100%;height:100%;/*position:absolute*/}
 #bts-tickets-map .poligon{fill:transparent;-webkit-transition:all .3s;-moz-transition:all .3s;-ms-transition:all .3s;-o-transition:all .3s;transition:all .3s}
 #bts-tickets-map .poligon.active{fill:transparent;opacity:1;stroke:#1e73be !important;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:.7;cursor:pointer}
-
+.event-wrapper{position: relative}
 .bt-minimap{
     border: 1px solid rgba(0, 0, 0, 0.1);
     position: absolute;
@@ -19,6 +19,7 @@
     right: -1px;
     opacity: 0;
     overflow: hidden;
+    -webkit-transition: opacity 0.4s;
     transition: opacity 0.4s;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -90,3 +91,86 @@ a.bt-zoomout-button::after{content:'-';}
 /*.el-menu div{height: 2px;margin: 2px;margin-top: 25px;}*/
 
 
+/*Basket*/
+#map-ticket-form{
+    width: 100%;
+    display: block;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    border-top: 1px solid rgba(0,0,0,0.1);
+}
+.active-form{animation-duration:.1s;animation-fill-mode:both;animation-name:in}
+@keyframes in {
+    from{opacity:0;transform:translate3d(0,50%,0)}
+    to{opacity:1;transform:none}
+}
+.basket-content{
+    max-width: 1200px;
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    display: table;
+}
+.basket-content > span{
+    display: table-row;
+    padding: 0;
+    margin: 0;
+}
+.basket-content-footer-button{
+    width: 112px;
+    padding-right: 20px;
+    height: 73px;
+    display: table-cell;
+    vertical-align: middle;
+    margin: 0;
+}
+.basket-content-footer-summary{
+    height: 73px;
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0;
+    margin: 0;
+    text-align: right;
+    white-space: nowrap;
+    word-spacing: -2px;
+}
+.basket-content-footer{
+    width: 100%;
+    display: table-cell;
+    vertical-align: top;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+
+button{
+    position: relative;
+    color: rgb(51, 51, 51);
+    font-family: "Ys Text", sans-serif;
+    font-size: 15px;
+    font-weight: normal;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 112px;
+    height: 36px;
+    display: inline-block;
+    line-height: 34px;
+    box-sizing: border-box;
+    box-shadow: none;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    overflow: hidden;
+    background: rgb(255, 217, 87);
+    outline: 0px;
+    border-style: solid;
+    border-radius: 2px;
+    padding: 0px 8px;
+    border-color: rgb(255, 217, 87);
+    border-width: 1px;
+}

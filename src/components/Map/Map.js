@@ -1,7 +1,7 @@
 import React from 'react';
 import './function.css'
-import CreateSeats from './CreateSeats'
-import CreatePath from './CreatePath'
+import CreateSeats from './seat/CreateSeats'
+import CreatePath from './path/CreatePath'
 import { observer } from 'mobx-react'
 import mapStore from '../Store/MapStore'
 
