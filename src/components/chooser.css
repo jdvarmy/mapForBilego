@@ -174,3 +174,54 @@ button{
     border-color: rgb(255, 217, 87);
     border-width: 1px;
 }
+
+/*blocking*/
+.blocking{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.7);
+}
+/* tickets set */
+.bt-sc{width:290px;height:140px;background-color:#fff;position:absolute;top:calc(50% - 70px);left:calc(50% - 145px);z-index:1;overflow:hidden}
+.bt-sc-h{width:100%;height:40%;border-bottom:1px solid rgba(0,0,0,0.05);padding:10px 54px 7px 24px;box-sizing:border-box;position:relative}
+.bt-sc-h-h{color:#111;font-size:18px;line-height:190%}
+.bt-sc-h-e{width:24px;height:24px;position:absolute;top:16px;right:18px;text-align:center;font-size:24px;font-weight:400;color:rgba(0,0,0,0.2);cursor:pointer;-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);-ms-transform:rotate(45deg);-o-transform:rotate(45deg);transform:rotate(45deg);-webkit-transition:color .2s;-moz-transition:color .2s;-ms-transition:color .2s;-o-transition:color .2s;transition:color .2s}
+.bt-sc-h-e:hover{color:#222}
+
+.bt-q-control.sector-item-qb-c div{display: inline-block;  margin-bottom: 0;}
+.bt-sc-content .bt-number{
+    margin: 0 15px;
+    font-size: 18px;
+    color:#111;
+}
+.bt-sc-content .bt-number span{
+    user-select: none;
+}
+.bt-sc-content > div{
+    vertical-align: middle;
+    display: inline-block;
+    height: 45px;
+    padding: 20px 0;
+}
+.bt-sc-content .bt-money-control{
+    font-size: 15px;
+    line-height: 17px;
+    text-align: left;
+    padding-right: 28px;
+}
+.bt-money-control .money span:first-child{
+    vertical-align: text-bottom;
+    font-size: 18px;
+}
+.bt-money-control .money span:last-child{
+    color: #999;
+    font-size: 13px;
+    margin-top: 5px;
+    display: inline-block;
+}
+.map-row text{
+    font-weight: bold;
+}

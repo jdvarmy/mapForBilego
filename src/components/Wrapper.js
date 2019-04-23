@@ -4,6 +4,8 @@ import CreateSet from './Set'
 import Basket from './Basket'
 import Layout from './Layout'
 import { CSSTransition } from 'react-transition-group'
+import SelectingSetTickets from './Map/SelectingSetTickets'
+import Block from './Map/Block'
 
 
 class Wrapper extends React.Component{
@@ -24,6 +26,8 @@ class Wrapper extends React.Component{
                             <Basket />
                         </div>
                     </div>
+                    <Block />
+                    <SelectingSetTickets />
                     <Layout />
                 </>
             </CSSTransition>

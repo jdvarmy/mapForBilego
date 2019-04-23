@@ -11,7 +11,7 @@ class Products extends React.Component{
         const { tickets } = basketStore;
 
         tickets.forEach( el => {
-            summary += el.price_regular*1;
+            summary += el.price*1;
         } );
 
         return summary;
@@ -32,7 +32,7 @@ class Products extends React.Component{
                 </div>
                 <div className="basket-content-footer-summary">{summary} ₽</div>
                 <div className="basket-content-footer">
-                    { ticketsArr.map( el => <Product key={el.ID} ticket={el} /> ) }
+                    { ticketsArr.map( el => <Product key={el.id} ticket={el} /> ) }
                 </div>
             </span>
         );

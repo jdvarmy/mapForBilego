@@ -10,9 +10,6 @@ export class SeatStore {
     };
 
     @observable
-    setWindowMode = false;
-
-    @observable
     specialType = false;
 
     @observable
@@ -23,11 +20,6 @@ export class SeatStore {
 
     @observable
     click = false;
-
-    @action
-    setSetWindowMode = val => {
-        this.setWindowMode = val;
-    };
 
     @action
     addSpecialType = () => {

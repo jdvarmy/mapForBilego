@@ -54,8 +54,9 @@ class Seat extends React.Component {
     };
 
     handlerSpecialClick = e => {
-        const { setSetWindowMode } = this.seatStore;
-        setSetWindowMode(true);
+        const { setSetWindowMode } = basketStore;
+        const { ticket } = this.seatStore;
+        setSetWindowMode(true, ticket);
     };
 
     render(){

@@ -3,7 +3,6 @@ import Map from './Map'
 import Menu from './menu/Menu'
 import MiniMap from './../Minimap'
 import ZoomInOutBtns from './../ZoomInOutBtns'
-import SelectingSetTickets from "./SelectingSetTickets";
 
 class CreateMap extends React.PureComponent{
 
@@ -28,7 +27,6 @@ class CreateMap extends React.PureComponent{
                         <ZoomInOutBtns/>
                     </div>
                 </div>
-                <SelectingSetTickets />
             </>
         );
     }
