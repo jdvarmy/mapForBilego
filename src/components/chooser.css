@@ -225,3 +225,7 @@ button{
 .map-row text{
     font-weight: bold;
 }
+
+
+/*bascket*/
+.basket-content-footer > div{font-size:14px;display:inline-block;float:right;text-align:right;width:100px;}

@@ -4,14 +4,17 @@ import { observer } from "mobx-react/index";
 import mapStore from '../../Store/MapStore';
 import { PathStore } from '../../Store/PathStore';
 import { TooltipPath } from '../../Tooltip/TooltipPath'
+import basketStore from "../../Store/BasketStore";
 
 
 @observer
 class Path extends React.Component {
     constructor(props){
         super(props);
+        const {el:{ id }, tickets} = this.props;
 
         this.pathStore = new PathStore();
+        this.pathStore.init({tickets, id});
     }
 
     componentDidMount(): void {
@@ -35,10 +38,16 @@ class Path extends React.Component {
         this.tooltip.delete();
     };
 
+    handlerSpecialClick = () => {
+        const { setSetWindowMode } = basketStore;
+        const { ticket } = this.pathStore;
+        setSetWindowMode(true, ticket);
+    };
+
     render() {
         const { el: {d, id}, classes } = this.props,
             { pathDisplay } = mapStore,
-            { hover } = this.pathStore;
+            { hover, ticket } = this.pathStore;
 
         return (
             <>
@@ -49,8 +58,8 @@ class Path extends React.Component {
                     onMouseOver={this.handleHover}
                     onMouseLeave={this.handleUnhover}
                     style={pathDisplay ? {'display': 'none'} : {}}
-                    onClick={mapStore.handleClick}
-                    onTouchStart={mapStore.handleClick}
+                    onClick={ticket ? this.handlerSpecialClick : mapStore.handleClick}
+                    onTouchStart={ticket ? this.handlerSpecialClick : mapStore.handleClick}
                 >
                 </path>
             </>

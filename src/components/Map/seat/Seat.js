@@ -39,7 +39,6 @@ class Seat extends React.Component {
 
             const errorY = this.seatStore.click ? 0 : - 2 * this.scale;
             this.tooltip.create( errorY );
-
         }
     };
     handlerUnhover = e => {
@@ -48,15 +47,31 @@ class Seat extends React.Component {
     };
 
     handlerClick = e => {
-        const { onClick, ticket } = this.seatStore;
+        const {onClick, ticket, click} = this.seatStore;
+        const {count, maxCount} = basketStore;
+
+        console.log(click)
+        console.log(count)
+        if( !click || count+1 > maxCount ) return false;
+
         onClick();
-        basketStore.toBasket( ticket, this.seatStore.click );
+        basketStore.toBasket(ticket, this.seatStore.click);
+
     };
 
     handlerSpecialClick = e => {
         const { setSetWindowMode } = basketStore;
         const { ticket } = this.seatStore;
         setSetWindowMode(true, ticket);
+    };
+
+    findTicketInBascket = () => {
+        let t = false;
+        basketStore.tickets.forEach(e => {
+            if(e.id === this.seatStore.ticket.ID)
+                t = e
+        });
+        return t;
     };
 
     render(){
@@ -85,6 +100,18 @@ class Seat extends React.Component {
             style = {fill: '#e5e5e5'};
         }
 
+        if(specialType){
+            const ticketInBasket = this.findTicketInBascket();
+
+            if(ticketInBasket) {
+                text = (<text className="circle-text" fontSize={(r * 1.8 + scale * 2.2).toFixed(2)} x={cx}
+                             y={(cy * 1 + 2.4 * scale).toFixed(2)}>
+                    {ticketInBasket.count}
+                </text>);
+                radius = (r * 1.9).toFixed(2);
+            }
+        }
+
         return (
             <g onMouseEnter={this.handlerHover}
                 onMouseLeave={this.handlerUnhover}
@@ -100,7 +127,8 @@ class Seat extends React.Component {
                     style={style}
                     className={click || hover ? 'circle' : ''}
                 />
-                {(!click && hover) && text}
+                {(!click && hover && !specialType) && text}
+                {specialType && text}
             </g>
         )
     }

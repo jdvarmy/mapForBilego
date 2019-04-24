@@ -3228,7 +3228,7 @@ export function getData() {
                 sector_name: "free",
                 sku: "303-2-free",
                 start_date_time: null,
-                stock: 19,
+                stock: 4,
                 stock_status: "instock",
                 type: "with_map_sector",
                 color: "grey"

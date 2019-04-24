@@ -5,7 +5,6 @@ import { moneyFormating } from '../functions/functions'
 
 @observer
 class SelectingSetTickets extends React.Component{
-
     constructor(props){
         super(props);
 
@@ -18,20 +17,12 @@ class SelectingSetTickets extends React.Component{
     };
 
     countPlus = () => {
-        const { currentTicketsSet, tickets } = BasketStore;
-        const count = this.findCount( currentTicketsSet, tickets )
-        console.log(count)
-        // todo: остановились здесь. нужно взять каунт прибавить один и засунуть обратно в баскет при этом. подумать, нужно ли заморачиваться с кол-вом в билете. может просто сделать массив?
+        const { currentTicketsSet, toBasket } = BasketStore;
+        toBasket( currentTicketsSet, true );
     };
-
-    findCount = (ticket, set) => {
-        let c = 0;
-        set.forEach( el => {
-            if( el.id === ticket.ID )
-                c = el.count;
-        } );
-
-        return c;
+    countMinus = () => {
+        const { currentTicketsSet, toBasket } = BasketStore;
+        toBasket( currentTicketsSet, false );
     };
 
     render(){
@@ -52,9 +43,9 @@ class SelectingSetTickets extends React.Component{
                             <div className="money"><span>{moneyFormating(price, true)}</span></div>
                         </div>
                         <div className="bt-q-control sector-item-qb-c">
-                            <div className="minus">-</div>
+                            <div className="minus" onClick={this.countMinus}>-</div>
                             <div className="bt-number"><span></span></div>
-                            <div className="plus">+</div>
+                            <div className="plus" onClick={this.countPlus}>+</div>
                         </div>
                     </div>
                 </div>
