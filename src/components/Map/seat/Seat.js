@@ -48,15 +48,15 @@ class Seat extends React.Component {
 
     handlerClick = e => {
         const {onClick, ticket, click} = this.seatStore;
-        const {count, maxCount} = basketStore;
+        const {count, isFull} = basketStore;
 
-        console.log(click)
-        console.log(count)
-        if( !click || count+1 > maxCount ) return false;
-
-        onClick();
-        basketStore.toBasket(ticket, this.seatStore.click);
-
+        console.log("isFull", isFull)
+        console.log("click", click)
+        console.log(!click && !isFull)
+        if( (!click && !isFull) || ((click && !isFull)) || (click && isFull) ) {
+            onClick();
+            basketStore.toBasket(ticket, this.seatStore.click);
+        }
     };
 
     handlerSpecialClick = e => {

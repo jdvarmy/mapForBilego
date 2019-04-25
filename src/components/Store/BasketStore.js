@@ -4,7 +4,9 @@ class BasketStore{
     @observable tickets = new Map();
     @observable count = 0;
     @observable productInBasket = false;
-    maxCount = 6;
+    @observable isFull = false;
+
+    maxCountInBasket = 6;
 
     @action
     toBasket = (ticket, action) => {
@@ -16,7 +18,7 @@ class BasketStore{
         if(action) count = tickets.has(ticket.ID) ? tickets.get(ticket.ID).count + 1 : 1;
         else count = tickets.has(ticket.ID) ? tickets.get(ticket.ID).count - 1 : 0;
 
-        if( this.count+1 > this.maxCount || ticket.stock < count) return false;
+        if( ticket.stock < count || ( this.isFull && action ) ) return false;
 
         const {ID, UID, name, price_regular, row_name, seat_name, sector_name, color} = ticket;
 
@@ -36,7 +38,8 @@ class BasketStore{
                 c += parseInt( el.count );
             }
         );
-        this.count = c > this.maxCount ? this.maxCount : c;
+        this.count = c ;
+        this.isFull = c >= this.maxCountInBasket;
     };
 
     // work with @set@ tickets
