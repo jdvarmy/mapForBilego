@@ -50,9 +50,6 @@ class Seat extends React.Component {
         const {onClick, ticket, click} = this.seatStore;
         const {count, isFull} = basketStore;
 
-        console.log("isFull", isFull)
-        console.log("click", click)
-        console.log(!click && !isFull)
         if( (!click && !isFull) || ((click && !isFull)) || (click && isFull) ) {
             onClick();
             basketStore.toBasket(ticket, this.seatStore.click);

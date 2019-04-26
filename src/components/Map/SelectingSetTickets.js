@@ -30,7 +30,7 @@ class SelectingSetTickets extends React.Component{
         const { setWindowMode, currentTicketsSet } = BasketStore;
 
         if( setWindowMode && currentTicketsSet ) {
-            const { name, price, count } = currentTicketsSet;
+            const { name, price } = currentTicketsSet;
 
             buffy = (
                 <div className="bt-sc active-form">
