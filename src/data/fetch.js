@@ -1,14 +1,3 @@
-// function delayer(data) {
-//     return function (resolve, reject) {
-//         setTimeout(
-//             function(){
-//                 resolve(data)
-//             },
-//             2000
-//         );
-//     }
-// }
-
 export function getData() {
     const bilegoMap = {
         "url":"https://spb.bilego.ru/wp-admin/admin-ajax.php",
@@ -3530,8 +3519,6 @@ export function getData() {
             }
         ]
     };
-
-    // return new Promise(delayer(bilegoMap));
 
     return new Promise(
         (resolve, reject)=>setTimeout( ()=>resolve(bilegoMap), 2000 )

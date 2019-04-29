@@ -1,4 +1,4 @@
-#bilego-sell-tickets{background-color: #fff;position:relative;width: 73%;overflow: hidden;}
+/*#bilego-sell-tickets{background-color: #fff;position:relative;width: 73%;overflow: hidden;}*/
 .bt-map{height:595px;width:100%;-webkit-font-smoothing:antialiased;position:relative; overflow: hidden}
 .bt-map > * {opacity: 1;transition: opacity 0.6s}
 .bt-map input, .bt-map button, .bt-map a, .bt-map a:hover, .bt-map a:active, .bt-map a:focus{outline:none;box-shadow:none;-webkit-box-shadow:none;}
