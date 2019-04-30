@@ -1,10 +1,10 @@
 import React from 'react';
-import { observer } from "mobx-react";
-import BasketStore from '../Store/BasketStore'
-import { moneyFormating } from '../functions/functions'
+import { observer } from "mobx-react/index";
+import BasketStore from '../../Store/BasketStore'
+import { moneyFormating } from '../../functions/functions'
 
 @observer
-class SelectingSetTickets extends React.Component{
+class Popups extends React.Component{
     constructor(props){
         super(props);
 
@@ -56,4 +56,4 @@ class SelectingSetTickets extends React.Component{
     }
 }
 
-export default SelectingSetTickets;
+export default Popups;
