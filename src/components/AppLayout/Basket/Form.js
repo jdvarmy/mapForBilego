@@ -25,7 +25,11 @@ const Container = styled('div')`
     position: relative;
     margin: 0 auto;
     width: 100%;
-    display: table;
+    display: grid;
+    grid-template-columns: 172px 118px auto;
+    grid-template-rows: 75px;
+    justify-items: center;
+    align-items: center;
 `;
 
 @inject('basketStore')

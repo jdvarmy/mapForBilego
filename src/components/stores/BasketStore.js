@@ -15,8 +15,8 @@ class BasketStore{
         const {ID, price_regular, row_name, seat_name, sector_name} = ticket;
         let oldTicket, newTicket = {id: ID, price: price_regular, row:row_name, seat: seat_name, sector: sector_name, count: 1};
 
-        if( this.isFull && action ) return false;
-        // if( ticket.stock < count ) return false;
+        if( action && this.isFull ) return false;
+        if( action && this.ticketsMap.get(ID) && ticket.stock < this.ticketsMap.get(ID).count+1 ) return false;
 
         /*ticketsMap*/
         if(action){
@@ -58,9 +58,9 @@ class BasketStore{
 
     // work with @set@ tickets
     @observable
-    setWindowMode = false;
+    blockTicketsForm = false;
     @observable
-    currentTicketsSet = [];
+    currentTicketsSet = null;
 
     @action
     updateCount = () => {
@@ -68,10 +68,16 @@ class BasketStore{
     };
 
     @action
+    blockingForm = (val) => {
+        this.blockTicketsForm = val;
+    };
+
+    @action
     setSetWindowMode = (val, currentTicketSet) => {
-        this.setWindowMode = val;
+        this.blockingForm(val);
         this.currentTicketsSet = currentTicketSet;
     };
+
 }
 
 export const basketStore = new BasketStore();

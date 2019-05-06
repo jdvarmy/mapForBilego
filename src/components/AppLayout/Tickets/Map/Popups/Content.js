@@ -62,9 +62,22 @@ const Control = styled('div')`
     }
 `;
 
+const style = `background-color: #fff;cursor:default;&:hover{background-color: #fff}`;
+
+const Minus = styled(Control)`
+    ${props => props.block && style};
+`;
+const Plus = styled(Control)`
+    ${props => props.block && style};
+`;
+
 export default class Content extends React.Component{
     render(){
-        const { price, minus, plus } = this.props;
+        const { price, minus, plus, tickets, maxCountInBasket, maxCountTicket } = this.props;
+        const count = tickets.length ? tickets.length : 0;
+
+        const blockMinus = count===0;
+        const blockPlus = count===maxCountInBasket || count >= maxCountTicket;
 
         return(
             <Wrapper>
@@ -76,9 +89,9 @@ export default class Content extends React.Component{
                     </Money>
                 </MoneyWrap>
                 <ControlWrap>
-                    <Control onClick={minus}>-</Control>
-                    <Number><span></span></Number>
-                    <Control onClick={plus}>+</Control>
+                    <Minus block={blockMinus} onClick={minus}>-</Minus>
+                    <Number><span>{count}</span></Number>
+                    <Plus block={blockPlus} onClick={plus}>+</Plus>
                 </ControlWrap>
             </Wrapper>
         );

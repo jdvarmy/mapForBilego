@@ -28,9 +28,19 @@ class Popups extends React.Component{
         this.count = 0;
     }
 
+    getTicketsById(id) {
+        let nodes = [];
+        const { basketStore:{ tickets } } = this.props;
+        tickets.map(ticket=>{
+            if(ticket.id === id) nodes.push(ticket)
+        });
+
+        return nodes
+    }
+
     close = () => {
         const { basketStore:{ setSetWindowMode } } = this.props;
-        setSetWindowMode(false, []);
+        setSetWindowMode(false, null);
     };
 
     countPlus = () => {
@@ -45,15 +55,21 @@ class Popups extends React.Component{
 
     render(){
         let buffy = null;
-        const { basketStore:{ setWindowMode, currentTicketsSet } } = this.props;
+        const { basketStore:{ blockTicketsForm, currentTicketsSet, maxCountInBasket } } = this.props;
 
-        if( setWindowMode && currentTicketsSet ) {
-            const { name, price } = currentTicketsSet;
+        if( blockTicketsForm && currentTicketsSet ) {
+            const { name, price, stock } = currentTicketsSet;
 
             buffy = (
                 <Wrapper>
                     <Header name={name} close={this.close}/>
-                    <Content price={price} minus={this.countMinus} plus={this.countPlus}/>
+                    <Content
+                        price={price}
+                        minus={this.countMinus}
+                        plus={this.countPlus}
+                        tickets={this.getTicketsById(currentTicketsSet.ID)}
+                        maxCountInBasket={maxCountInBasket}
+                        maxCountTicket={stock}/>
                 </Wrapper>
             );
         }

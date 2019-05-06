@@ -4,24 +4,15 @@ import styled from 'styled-components';
 
 import { Product } from './Product';
 
-const Wrapper = styled('span')`
-    display: table-row;
-    padding: 0;
-    margin: 0;
-`;
-
 const Div = styled('div')`
-    display: table-cell;
     padding: 0;
     margin: 0;
-    vertical-align: middle;
 `;
 
 const ButtonWrap = styled(Div)`
-    width: 112px;
-    padding-right: 20px;
-    height: 73px;
     margin: 0;
+    width: 100%;
+    height: 100%;
 `;
 
 const Button = styled('button')`
@@ -45,7 +36,6 @@ const Button = styled('button')`
 `;
 
 const Summary = styled(Div)`
-    height: 73px;
     text-align: right;
     white-space: nowrap;
     word-spacing: -2px;
@@ -53,19 +43,26 @@ const Summary = styled(Div)`
 
 const Content = styled(Div)`
     width: 100%;
-    vertical-align: top;
     position: relative;
 `;
 
-@inject('basketStore')
+@inject('basketStore', 'serverDataStore')
 @observer
 class Products extends React.Component{
+
+    sendForm = e => {
+        e.preventDefault();
+        const { basketStore:{ tickets, blockingForm }, serverDataStore:{ getWoocommerceCheckout } } = this.props;
+
+        blockingForm(true);
+        getWoocommerceCheckout(tickets);
+    };
 
     countSummary = () => {
         let summary = 0;
         const { basketStore:{ tickets } } = this.props;
         tickets.forEach( el => {
-            summary += el.price*1*el.count;
+            summary += el.price*1;
         } );
         return summary;
     };
@@ -74,15 +71,15 @@ class Products extends React.Component{
         const { basketStore:{ tickets } } = this.props;
 
         return(
-            <Wrapper>
+            <>
                 <ButtonWrap>
-                    <Button>Купить билеты</Button>
+                    <Button onClick={this.sendForm}>Купить билеты</Button>
                 </ButtonWrap>
                 <Summary>{this.countSummary()} ₽</Summary>
                 <Content>
                     { tickets.map( ( el, k ) => <Product key={el.id.toString() + k} ticket={el} /> ) }
                 </Content>
-            </Wrapper>
+            </>
         );
     }
 }

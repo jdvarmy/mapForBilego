@@ -41,12 +41,14 @@ const ZoomIn = styled(A)`
     &:after{
         content:'+';
     }
+    ${props=>props.disabled && `&:hover{background-color: #fff;}`}
 `;
 
 const ZoomOut = styled(A)`
     &:after{
         content:'-';
     }
+    ${props => props.disabled && `&:hover{background-color: #fff;}`}
 `;
 
 @inject('mapStore')

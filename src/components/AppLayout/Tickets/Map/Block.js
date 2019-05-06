@@ -16,14 +16,14 @@ const Blocking = styled('div')`
 class Block extends React.Component{
     close = () => {
         const { basketStore:{ setSetWindowMode } } = this.props;
-        setSetWindowMode(false, []);
+        setSetWindowMode(false, null);
     };
 
     render(){
-        const { basketStore:{ setWindowMode } } = this.props;
+        const { basketStore:{ blockTicketsForm } } = this.props;
         let buffy = null;
 
-        if( setWindowMode )
+        if( blockTicketsForm )
             buffy = ( <Blocking onClick={this.close} /> );
 
         return <>{buffy}</>;
