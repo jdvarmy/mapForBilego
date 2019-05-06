@@ -1,21 +1,40 @@
 import React from 'react'
-import { observer } from "mobx-react/index";
-import ReactDOM from "react-dom";
-import mapStore from "../../Store/MapStore";
+import { inject, observer } from 'mobx-react';
+import ReactDOM from 'react-dom';
+import styled from "styled-components";
 
-import basketStore from "../../Store/BasketStore"
+import { SeatStore } from '../stores/SeatStore'
+import { TooltipSeat } from '../Tooltip/TooltipSeat'
 
-import { SeatStore } from "../../Store/SeatStore"
-import { TooltipSeat } from "../../Tooltip/TooltipSeat"
+const Wrapper = styled('g')``;
 
+const Circle = styled('circle')`
+    transition: all 0.1s cubic-bezier(0.39, 0.575, 0.565, 1);
+    ${props => props.showText && `
+        cursor: pointer;
+        filter: drop-shadow( 0px 0px 10px rgba(0,0,0,.1) );`
+    }
+`;
+
+const Text = styled('text')`
+    text-anchor: middle;
+    vertical-align: middle;
+    alignment-baseline: middle;
+    font-weight: 700;
+    fill: #fff;
+    cursor: pointer;
+`;
+
+@inject('serverDataStore', 'mapStore', 'basketStore')
 @observer
 class Seat extends React.Component {
     constructor(props){
         super(props);
-        const { id, tickets } = props;
+        const { id, serverDataStore:{ data: { tickets } } } = props;
 
         this.seatStore = new SeatStore();
         this.seatStore.init( { id, tickets } );
+
         if( this.seatStore.ticket && this.seatStore.ticket.type === 'with_map_sector' )
             this.seatStore.addSpecialType();
         this.scale = 1;
@@ -34,13 +53,14 @@ class Seat extends React.Component {
 
     handlerHover = e => {
         if(this.seatStore.ticket) {
-            this.scale = mapStore.scale;
+            this.scale = this.props.mapStore.scale;
             this.seatStore.onEnter();
 
             const errorY = this.seatStore.click ? 0 : - 2 * this.scale;
             this.tooltip.create( errorY );
         }
     };
+
     handlerUnhover = e => {
         this.seatStore.onOver();
         if(this.seatStore.ticket) this.tooltip.delete();
@@ -48,23 +68,23 @@ class Seat extends React.Component {
 
     handlerClick = e => {
         const {onClick, ticket, click} = this.seatStore;
-        const {count, isFull} = basketStore;
+        const { basketStore:{ isFull, toBasket } } = this.props;
 
         if( (!click && !isFull) || ((click && !isFull)) || (click && isFull) ) {
             onClick();
-            basketStore.toBasket(ticket, this.seatStore.click);
+            toBasket(ticket, this.seatStore.click);
         }
     };
 
     handlerSpecialClick = e => {
-        const { setSetWindowMode } = basketStore;
+        const { basketStore:{ setSetWindowMode } } = this.props;
         const { ticket } = this.seatStore;
         setSetWindowMode(true, ticket);
     };
 
     findTicketInBascket = () => {
         let t = false;
-        basketStore.tickets.forEach(e => {
+        this.props.basketStore.ticketsMap.forEach(e => {
             if(e.id === this.seatStore.ticket.ID)
                 t = e
         });
@@ -73,14 +93,14 @@ class Seat extends React.Component {
 
     render(){
         const {el: {cx, cy, r, name, comp}, id} = this.props;
-        let text, radius, style;
         const { hover, ticket, click, specialType } = this.seatStore;
         const scale = this.scale;
+        let text, radius, style;
 
         if( ticket ) {
-            text = <text className="circle-text" fontSize={(r*1.8 + scale*2.2).toFixed(2)} x={cx} y={(cy*1 + 2.4*scale).toFixed(2)}>
+            text = <Text fontSize={(r*1.8 + scale*2.2).toFixed(2)} x={cx} y={(cy*1 + 2.4*scale).toFixed(2)}>
                 {ticket.seat_name}
-            </text>;
+            </Text>;
 
             if ( (click && hover) || click ) {
                 radius = (r*1.3).toFixed(2);
@@ -101,32 +121,33 @@ class Seat extends React.Component {
             const ticketInBasket = this.findTicketInBascket();
 
             if(ticketInBasket) {
-                text = (<text className="circle-text" fontSize={(r * 1.8 + scale * 2.2).toFixed(2)} x={cx}
-                             y={(cy * 1 + 2.4 * scale).toFixed(2)}>
+                text = (<Text fontSize={(r * 1.8 + scale * 2.2).toFixed(2)} x={cx} y={(cy * 1 + 2.4 * scale).toFixed(2)}>
                     {ticketInBasket.count}
-                </text>);
+                </Text>);
                 radius = (r * 1.9).toFixed(2);
             }
         }
 
         return (
-            <g onMouseEnter={this.handlerHover}
-                onMouseLeave={this.handlerUnhover}
+            <Wrapper
                 data-name={name}
                 data-component={comp}
+                onMouseEnter={this.handlerHover}
+                onMouseLeave={this.handlerUnhover}
                 onClick={ !specialType ? this.handlerClick : this.handlerSpecialClick}
                 // todo: add to basket from mobile device
             >
-                <circle id={id}
+                <Circle
+                    id={id}
                     cx={cx}
                     cy={cy}
                     r={radius}
                     style={style}
-                    className={click || hover ? 'circle' : ''}
+                    showText={click || hover}
                 />
                 {(!click && hover && !specialType) && text}
                 {specialType && text}
-            </g>
+            </Wrapper>
         )
     }
 }

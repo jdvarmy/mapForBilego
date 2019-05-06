@@ -4,7 +4,7 @@ export default function Layout(props){
 
     return(
         <>
-            <div className="event-layout"></div>
+            <div className="event-layout" />
         </>
     );
 }

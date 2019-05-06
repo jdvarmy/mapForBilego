@@ -9,16 +9,16 @@ class MapStore{
     @observable delay = 0;
 
     // map
-    containerW = 0;
-    containerH = 0;
-    contentW = 0;
-    contentH = 0;
+    @observable containerW = 0;
+    @observable containerH = 0;
+    @observable contentW = 0;
+    @observable contentH = 0;
 
-    fitscale = this.scale;
+    @observable fitscale = this.scale;
     maxscale = 4;
     zoommargin = 0;
-    container = undefined;
-    map = undefined;
+    @observable container = undefined;
+    @observable map = undefined;
 
     // touch
     init1 = null;
@@ -28,6 +28,29 @@ class MapStore{
 
     // Path store
     @observable pathDisplay = false;
+
+    @action
+    setFitscale = scale => {
+        this.fitscale = scale;
+    };
+    @action
+    setContainer = element => {
+        this.container = element;
+    };
+    @action
+    setMap = element => {
+        this.map = element;
+    };
+    @action
+    setContentDimensions = (w, h) => {
+        this.contentW = w;
+        this.contentH = h;
+    };
+    @action
+    setContainerDimensions = (w, h) => {
+        this.containerW = w;
+        this.containerH = h;
+    };
 
     @action.bound
     handleClick(e){
@@ -283,9 +306,14 @@ class MapStore{
 
 
     // minimap
-    containerMinimap = undefined;
+    @observable containerMinimap = undefined;
     opacity = null;
     @observable miniMap = {top: 0, left: 0, right: 0, bottom: 0};
+
+    @action
+    setContainerMinimap = element => {
+        this.containerMinimap = element;
+    };
 
     updateMinimap = () => {
         const width = (this.containerW / this.contentW / this.scale * this.containerMinimap.offsetWidth),
@@ -307,6 +335,8 @@ class MapStore{
     // control buttons
     @action.bound
     handleClickZoomIn(e){
+        e.preventDefault();
+
         this.stopMomentum();
 
         const scale = this.scale;
@@ -321,6 +351,8 @@ class MapStore{
     };
     @action.bound
     handleClickZoomOut(e){
+        e.preventDefault();
+
         this.stopMomentum();
 
         const scale = this.scale;

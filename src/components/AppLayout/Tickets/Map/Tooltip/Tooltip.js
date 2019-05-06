@@ -1,5 +1,4 @@
 export default class Tooltip {
-
     constructor(){
         const id = 'bt-tooltip';
         this.domNode = document.querySelector(`#${id}`);

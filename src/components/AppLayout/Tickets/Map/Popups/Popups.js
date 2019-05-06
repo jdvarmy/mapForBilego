@@ -1,8 +1,25 @@
 import React from 'react';
-import { observer } from "mobx-react/index";
-import BasketStore from '../../Store/BasketStore'
-import { moneyFormating } from '../../functions/functions'
+import { observer, inject } from 'mobx-react/index';
+import styled from 'styled-components'
 
+import Header from './Header';
+import Content from './Content';
+
+const Wrapper = styled('div')`
+    width: 290px;
+    height: 140px;
+    background-color: #fff;
+    position: absolute;
+    top: calc(50% - 70px);
+    left: calc(50% - 145px);
+    z-index: 1;
+    overflow: hidden;
+    animation-duration: .1s;
+    animation-fill-mode: both;
+    animation-name: in;
+`;
+
+@inject('basketStore')
 @observer
 class Popups extends React.Component{
     constructor(props){
@@ -12,43 +29,32 @@ class Popups extends React.Component{
     }
 
     close = () => {
-        const { setSetWindowMode } = BasketStore;
+        const { basketStore:{ setSetWindowMode } } = this.props;
         setSetWindowMode(false, []);
     };
 
     countPlus = () => {
-        const { currentTicketsSet, toBasket } = BasketStore;
+        const { basketStore:{ currentTicketsSet, toBasket } } = this.props;
         toBasket( currentTicketsSet, true );
     };
+
     countMinus = () => {
-        const { currentTicketsSet, toBasket } = BasketStore;
+        const { basketStore:{ currentTicketsSet, toBasket } } = this.props;
         toBasket( currentTicketsSet, false );
     };
 
     render(){
         let buffy = null;
-        const { setWindowMode, currentTicketsSet } = BasketStore;
+        const { basketStore:{ setWindowMode, currentTicketsSet } } = this.props;
 
         if( setWindowMode && currentTicketsSet ) {
             const { name, price } = currentTicketsSet;
 
             buffy = (
-                <div className="bt-sc active-form">
-                    <div className="bt-sc-h">
-                        <div className="bt-sc-h-h">{name}</div>
-                        <div className="bt-sc-h-e" onClick={this.close}>+</div>
-                    </div>
-                    <div className="bt-sc-content">
-                        <div className="bt-money-control">
-                            <div className="money"><span>{moneyFormating(price, true)}</span></div>
-                        </div>
-                        <div className="bt-q-control sector-item-qb-c">
-                            <div className="minus" onClick={this.countMinus}>-</div>
-                            <div className="bt-number"><span></span></div>
-                            <div className="plus" onClick={this.countPlus}>+</div>
-                        </div>
-                    </div>
-                </div>
+                <Wrapper>
+                    <Header name={name} close={this.close}/>
+                    <Content price={price} minus={this.countMinus} plus={this.countPlus}/>
+                </Wrapper>
             );
         }
 

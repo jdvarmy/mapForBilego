@@ -1,21 +1,30 @@
 import React from 'react';
-import { observer } from "mobx-react";
-import BasketStore from '../Store/BasketStore'
+import { observer, inject } from 'mobx-react';
+import styled from 'styled-components';
 
+const Blocking = styled('div')`
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.7);
+`;
+
+@inject('basketStore')
 @observer
 class Block extends React.Component{
-
     close = () => {
-        const { setSetWindowMode } = BasketStore;
+        const { basketStore:{ setSetWindowMode } } = this.props;
         setSetWindowMode(false, []);
     };
 
     render(){
+        const { basketStore:{ setWindowMode } } = this.props;
         let buffy = null;
-        const { setWindowMode } = BasketStore;
 
         if( setWindowMode )
-            buffy = ( <div className="blocking" onClick={this.close} /> );
+            buffy = ( <Blocking onClick={this.close} /> );
 
         return <>{buffy}</>;
     }

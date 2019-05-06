@@ -11,8 +11,8 @@ import './chooser.css'
 class AppIndex extends React.Component{
     render(){
         return (
-            <Provider>
-                <AppLayout serverDataStore={serverDataStore} basketStore={basketStore} mapStore={mapStore} />
+            <Provider serverDataStore={serverDataStore} basketStore={basketStore} mapStore={mapStore}>
+                <AppLayout />
             </Provider>
         );
     };

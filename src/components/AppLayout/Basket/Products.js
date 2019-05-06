@@ -1,14 +1,69 @@
 import React from 'react'
-import basketStore from '../Store/BasketStore'
-import { observer } from "mobx-react";
-import { Product } from './Product'
+import { inject, observer } from 'mobx-react';
+import styled from 'styled-components';
 
+import { Product } from './Product';
+
+const Wrapper = styled('span')`
+    display: table-row;
+    padding: 0;
+    margin: 0;
+`;
+
+const Div = styled('div')`
+    display: table-cell;
+    padding: 0;
+    margin: 0;
+    vertical-align: middle;
+`;
+
+const ButtonWrap = styled(Div)`
+    width: 112px;
+    padding-right: 20px;
+    height: 73px;
+    margin: 0;
+`;
+
+const Button = styled('button')`
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    outline: none;
+    padding: 8px 20px;
+    background: #ffae19;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 0;
+    margin-top: 1px;
+    transition: background .2s ease;
+    &:hover{
+        background: #0c5a40;
+    }
+`;
+
+const Summary = styled(Div)`
+    height: 73px;
+    text-align: right;
+    white-space: nowrap;
+    word-spacing: -2px;
+`;
+
+const Content = styled(Div)`
+    width: 100%;
+    vertical-align: top;
+    position: relative;
+`;
+
+@inject('basketStore')
 @observer
 class Products extends React.Component{
 
     countSummary = () => {
         let summary = 0;
-        const { tickets } = basketStore;
+        const { basketStore:{ tickets } } = this.props;
         tickets.forEach( el => {
             summary += el.price*1*el.count;
         } );
@@ -16,21 +71,18 @@ class Products extends React.Component{
     };
 
     render(){
-        let ticketsArr = [];
-        const { tickets } = basketStore;
-        tickets.forEach( el => ticketsArr.push(el) );
+        const { basketStore:{ tickets } } = this.props;
 
         return(
-            <span>
-                <div className="basket-content-footer-button">
-                    <button width="112px" height="36px" fontSize="15"
-                            className="session-scheme_continue sc-bwzfXH csUinh">Купить</button>
-                </div>
-                <div className="basket-content-footer-summary">{this.countSummary()} ₽</div>
-                <div className="basket-content-footer">
-                    { ticketsArr.map( el => <Product key={el.id} ticket={el} /> ) }
-                </div>
-            </span>
+            <Wrapper>
+                <ButtonWrap>
+                    <Button>Купить билеты</Button>
+                </ButtonWrap>
+                <Summary>{this.countSummary()} ₽</Summary>
+                <Content>
+                    { tickets.map( ( el, k ) => <Product key={el.id.toString() + k} ticket={el} /> ) }
+                </Content>
+            </Wrapper>
         );
     }
 }

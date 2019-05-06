@@ -1,21 +1,50 @@
 import React from 'react'
-import Products from './Products'
-import {observer} from "mobx-react";
-import basketStore from '../Store/BasketStore'
+import { observer, inject } from "mobx-react";
+import styled from 'styled-components';
 
+import Products from './Products'
+
+const FormWrap = styled('form')`
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    ${props=>props.productInBasket && `
+        animation-duration: .1s;
+        animation-fill-mode: both;
+        animation-name: in;
+    `};
+`;
+
+const Container = styled('div')`
+    max-width: 1200px;
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    display: table;
+`;
+
+@inject('basketStore')
 @observer
 class Form extends React.Component{
     render(){
-        // classNames = {['event-content-container', data.type].join(' ')};
-        const { productInBasket } = basketStore;
+        const { basketStore:{ productInBasket } } = this.props;
 
         return(
-            <form id="map-ticket-form" className={productInBasket ? 'active-form' : ''} action="/cart" method="post"
-                               encType='multipart/form-data'>
-                <div className="basket-content">
+            <FormWrap
+                  action="/cart"
+                  method="post"
+                  encType='multipart/form-data'
+                  productInBasket={productInBasket}
+            >
+                <Container>
                     <Products />
-                </div>
-            </form>
+                </Container>
+            </FormWrap>
         );
     }
 }

@@ -1,4 +1,4 @@
-import Tooltip from './index'
+import Tooltip from './Tooltip'
 
 export class TooltipSeat extends Tooltip{
     constructor(props){

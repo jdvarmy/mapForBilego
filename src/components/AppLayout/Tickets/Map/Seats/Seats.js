@@ -1,37 +1,36 @@
 import React from 'react'
-import Seat from './Seat'
-// import {createSeatUID} from "../functions/functions"
+import { inject } from 'mobx-react'
+import styled from 'styled-components';
 
-class CreateSeats extends React.PureComponent{
+import Seat from './Seat'
+
+const Wrapper = styled('g')``;
+const WrapperSectorGroup = styled('g')``;
+const WrapperRowGroup = styled('g')``;
+
+@inject('serverDataStore')
+class Seats extends React.PureComponent{
     render() {
-        const {el, tickets} = this.props;
+        const seats = this.props.serverDataStore.data.map_data.elems_seats;
 
         return (
-            <g id="seats">
-                {el.map((se, sk) => {
-                    return (
-                        <g id={se.id} key={se.id} data-name-sector={se.el} data-component={se.comp}
-                           className="map-sector">
-                            {se.rows.map((re, rk) => {
-                                return (
-                                    <g key={se.id + re.el} data-name={re.el} data-component={re.comp}
-                                       className="map-row">
-                                        {re.seats.map(
-                                            (e, k) => {
-                                                // const id = createSeatUID(e.cx, e.cy);
-                                                const id = e.uid;
-                                                return <Seat el={e} key={id} id={id} sector={se.id} tickets={tickets}/>
-                                            }
-                                        )}
-                                    </g>
-                                )
-                            })}
-                        </g>
+            <Wrapper id="seats">
+                {seats.map(se =>
+                    (
+                    <WrapperSectorGroup id={se.id} key={se.id} data-name-sector={se.el} data-component={se.comp}>
+                        {se.rows.map(re =>
+                            (
+                            <WrapperRowGroup key={se.id + re.el} data-name={re.el} data-component={re.comp}>
+                                {re.seats.map(e => <Seat el={e} key={e.uid} id={e.uid} sector={se.id}/>)}
+                            </WrapperRowGroup>
+                            )
+                        )}
+                    </WrapperSectorGroup>
                     )
-                })}
-            </g>
+                )}
+            </Wrapper>
         );
     }
 }
 
-export default CreateSeats;
+export default Seats;

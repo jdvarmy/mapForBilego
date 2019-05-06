@@ -1,12 +1,12 @@
 import React from 'react';
-import './function.css'
-import CreateSeats from './seat/CreateSeats'
-import CreatePath from './Path/CreatePath'
-import { observer } from 'mobx-react'
-import mapStore from '../Store/MapStore'
+import { observer, inject } from 'mobx-react'
 
+import Seats from '../Seats/Seats'
+import Paths from '../Paths/Paths'
+
+@inject('serverDataStore', 'mapStore')
 @observer
-class Map extends React.Component{
+class Svg extends React.Component{
     constructor(props){
         super(props);
 
@@ -14,11 +14,15 @@ class Map extends React.Component{
     }
 
     componentDidMount(): void {
-        mapStore.container = document.querySelector('.bt-container.map');
-        mapStore.map = document.querySelector('#btm-map');
+        const { mapStore } = this.props;
+        const { serverDataStore:{ data } } = this.props;
+        const width = data.map_data.data.width,
+            height = data.map_data.data.height;
 
-        mapStore.contentW = parseInt( this.props.svgData.width );
-        mapStore.contentH = parseInt( this.props.svgData.height );
+        mapStore.setContainer (document.querySelector('#bt-container') );
+        mapStore.setMap (document.querySelector('#btm-map') );
+
+        mapStore.setContentDimensions ( parseInt( width ), parseInt( height ) );
 
         window.addEventListener('resize', this.updateResize);
         this.updateResize();
@@ -27,44 +31,46 @@ class Map extends React.Component{
     }
 
     render() {
-        const {elSeats, elPath, svgData, bgmap, svgData:{width, height}, tickets} = this.props;
-        const {x, y, scale, delay} = mapStore;
+        const { serverDataStore:{ data } } = this.props;
+        const backgroundImage = data.map_images.bgmap[1],
+            svgData = data.map_data.data;
+        const { width, height } = svgData;
+        const { mapStore } = this.props;
+        const { x, y, scale, delay } = mapStore;
 
         return (
-            <>
-                <div id="btm-map" className="btm-map" style={{
-                    width: parseInt(width),
-                    height: parseInt(height),
-                    transform: `translate(${x.toFixed(3)}px, ${y.toFixed(3)}px) scale(${scale})`,
-                    transition: `${delay}s all ease`,
-                }}>
-                    <div
-                        className="btm-map-image"
-                        ref={(e) => (this.element = e)}
-                        onWheel={mapStore.handleWheel}
-                        onMouseDown={mapStore.handleMouseDown}
-                        onTouchStart={mapStore.handleTouchStart}
-                    >
-                        <svg id="bts-tickets-map" {...svgData} /*style={{backgroundImage: `url(${bgmap})`}}*/>
-                            <defs></defs>
-                            <CreateSeats el={elSeats} tickets={tickets} />
-                            <CreatePath el={elPath} tickets={tickets} />
-                        </svg>
-                    </div>
+            <div id="btm-map" className="btm-map" style={{
+                width: parseInt(width),
+                height: parseInt(height),
+                transform: `translate(${x.toFixed(3)}px, ${y.toFixed(3)}px) scale(${scale})`,
+                transition: `${delay}s all ease`,
+            }}>
+                <div
+                    className="btm-map-image"
+                    ref={(e) => (this.element = e)}
+                    onWheel={mapStore.handleWheel}
+                    onMouseDown={mapStore.handleMouseDown}
+                    onTouchStart={mapStore.handleTouchStart}
+                >
+                    <svg id="bts-tickets-map" {...svgData} style={{backgroundImage: `url(${backgroundImage})`}}>
+                        <defs />
+                        <Seats />
+                        <Paths />
+                    </svg>
                 </div>
-            </>
+            </div>
         );
     }
     
     updateResize = () => {
-        mapStore.containerW = mapStore.container.offsetWidth;
-        mapStore.containerH = mapStore.container.offsetHeight;
+        const { mapStore } = this.props;
+        mapStore.setContainerDimensions ( mapStore.container.offsetWidth, mapStore.container.offsetHeight );
 
         let wr = mapStore.containerW / mapStore.contentW,
             hr = mapStore.containerH / mapStore.contentH;
 
-        if (wr < hr) mapStore.fitscale = wr;
-        else mapStore.fitscale = hr;
+        if (wr < hr) mapStore.setFitscale( wr );
+        else mapStore.setFitscale( hr );
 
         if (this.oldSize.w !== mapStore.containerW || this.oldSize.h !== mapStore.containerH) {
             this.oldSize.w = mapStore.container.offsetWidth;
@@ -75,4 +81,4 @@ class Map extends React.Component{
     }
 }
 
-export default Map;
+export default Svg;

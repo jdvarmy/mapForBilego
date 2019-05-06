@@ -1,4 +1,4 @@
-import {action, observable} from 'mobx'
+import { action, observable } from 'mobx'
 
 class BasketStore{
     @observable tickets = [];
@@ -14,8 +14,12 @@ class BasketStore{
         if( !ticket.ID ) return false;
         const {ID, price_regular, row_name, seat_name, sector_name} = ticket;
         let oldTicket, newTicket = {id: ID, price: price_regular, row:row_name, seat: seat_name, sector: sector_name, count: 1};
-        /*map*/
-        if(action) {
+
+        if( this.isFull && action ) return false;
+        // if( ticket.stock < count ) return false;
+
+        /*ticketsMap*/
+        if(action){
             if( this.ticketsMap.has(ID) ){
                 oldTicket = this.ticketsMap.get(ID);
                 oldTicket.count++;
@@ -34,28 +38,23 @@ class BasketStore{
                 }
             }
         }
-
-
-        // if( ticket.stock < count || ( this.isFull && action ) ) return false;
-
+        /*tickets*/
         if(action){
             this.tickets.push({id: ID, price: price_regular, row: row_name, seat: seat_name, sector: sector_name})
         }else{
-            this.tickets.filter(v=>{
-                if(v.id===ID){
-                    console.log(v)
-                    // break;
+            for(let i = this.tickets.length; i--;){
+                if(this.tickets[i].id===ID){
+                    this.tickets.splice(i, 1);
+                    break;
                 }
-            });
+            }
         }
 
-        // this.updateCount();
+        this.updateCount();
 
         this.productInBasket = this.count > 0;
-        console.log(this.tickets)
-        console.log(this.ticketsMap)
+        this.isFull = this.count+1 > this.maxCountInBasket;
     };
-
 
     // work with @set@ tickets
     @observable
@@ -64,9 +63,14 @@ class BasketStore{
     currentTicketsSet = [];
 
     @action
-    setSetWindowMode = (val, ticketSet) => {
+    updateCount = () => {
+        this.count = this.tickets.length;
+    };
+
+    @action
+    setSetWindowMode = (val, currentTicketSet) => {
         this.setWindowMode = val;
-        this.currentTicketsSet = ticketSet;
+        this.currentTicketsSet = currentTicketSet;
     };
 }
 

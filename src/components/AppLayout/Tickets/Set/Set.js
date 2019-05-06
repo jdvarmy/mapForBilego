@@ -1,9 +1,13 @@
 import React from 'react';
 
-export default function CreateSet(props){
-    return(
-        <>
-            {console.log('Set', props)}
-        </>
-    );
+class CreateSet extends React.Component{
+    render() {
+        return (
+            <>
+                {console.log('Set', this.props)}
+            </>
+        );
+    }
 }
+
+export default CreateSet;

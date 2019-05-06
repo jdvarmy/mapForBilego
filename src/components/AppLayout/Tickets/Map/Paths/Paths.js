@@ -1,17 +1,24 @@
 import React from 'react'
+import { inject } from 'mobx-react'
+import styled from 'styled-components';
+
 import Path from './Path'
 
-class CreateSeats extends React.PureComponent {
+const Element = styled('g')``;
+
+@inject('serverDataStore')
+class Paths extends React.PureComponent {
     render() {
-        const {el, tickets} = this.props;
+        const paths = this.props.serverDataStore.data.map_data.elems_path;
+
         return (
-            <g id="poligons">
-                {el.map((e, k) => {
-                    return <Path el={e} key={e.id} tickets={tickets} />
+            <Element id="poligons">
+                {paths.map(e => {
+                    return <Path el={e} key={e.id} />
                 })}
-            </g>
+            </Element>
         );
     }
 }
 
-export default CreateSeats;
+export default Paths;
