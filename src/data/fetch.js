@@ -1,3 +1,6 @@
+// Добавить все что необходимо для покупки билета в основной массив данных и в ответ на запрос корзины возвращать только true или false.
+// а карзину формировать исходя из данных которые уже есть
+
 export function getData() {
     const bilegoMap = {
         "url":"https://spb.bilego.ru/wp-admin/admin-ajax.php",
@@ -3523,4 +3526,128 @@ export function getData() {
     return new Promise(
         (resolve, reject)=>setTimeout( ()=>resolve(bilegoMap), 2000 )
         )
+}
+
+export function getCheckout() {
+    const data = {};
+
+    return new Promise(
+        (resolve, reject) => setTimeout( ()=>resolve(data), 700 )
+    )
+
+
+
+    /* Запрос
+    action: "get_cart_tickets"
+    form:
+        303:
+            quantity: 2
+            type: "with_map_sector"
+            variation_id: ""
+        408:
+            quantity: 1
+            type: "with_map_seat"
+            variation_id: ""
+    globalClient: "wp"
+    nonce: "de1fb558e3"
+     */
+
+    /* Ответ
+    {
+        action: 'https://spb.bilego.ru/checkout/',
+        billing: [
+            label: '<label for="billing_email" class="b-label">Email</label>',
+            input: '<input type="email" " name="billing_email" id="billing_email" placeholder="address@example.com" autocomplete="email username" />'
+        ],
+        event: 'Лебединое озеро',
+        date: '30 ноября 2019',
+        address: 'Набережная реки Фонтанки, 65',
+        tickets: [
+
+        ],
+    }
+    */
+
+
+
+    /*
+    <div class="woocommerce">
+    <form class="checkout animate-in-left" action="https://spb.bilego.ru/checkout/" method="post" name="checkout">
+        <div class="checkout-header">
+            <div>Оформление заказа</div>
+        </div>
+        <div class="checkout-field">
+            <div class="b-form-row input-text validate-email" id="billing_email_field" data-priority="110"><label for="billing_email" class="b-label">Email</label><div class="b-field-wrap"><input type="email" class="input-text " name="billing_email" id="billing_email" placeholder="address@example.com"  value="martina.letterbox@rambler.ru" autocomplete="email username" /><div class="b-error-wrapper"><div class="b-error">Обязательное поле</div></div></div></div>    </div>
+                <div class="checkout-additional">
+                <div class="checkout-additional-header">Лебединое озеро</div>
+                <div class="checkout-additional-date">30 ноября 2019</div>
+                <div class="checkout-meta-additional">
+                    <div class="checkout-meta">Набережная реки Фонтанки, 65</div>
+                </div>
+            </div>
+            <div class="checkout-tickets-header">
+                <div>3 билета</div>
+            </div>
+            <div class="checkout-tickets">
+                <div class="checkout-tickets-list">
+                                                    <div class="ckeckout-tickets-single" data-add_to_cart="303" data-update_key="11b9842e0a271ff252c1903e7132cd68">
+                                        <div class="ckeckout-tickets-ticket">
+                                            <div>free</div>
+                                            <div class="checkout-meta">Входной билет</div>
+                                        </div>
+                                        <div class="ckeckout-tickets-sub-total">
+                                            <span>
+                                                <span class="woocommerce-Price-amount amount">20&nbsp;<span class="woocommerce-Price-currencySymbol">₽</span></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                                                    <div class="ckeckout-tickets-single" data-add_to_cart="303" data-update_key="11b9842e0a271ff252c1903e7132cd68">
+                                        <div class="ckeckout-tickets-ticket">
+                                            <div>free</div>
+                                            <div class="checkout-meta">Входной билет</div>
+                                        </div>
+                                        <div class="ckeckout-tickets-sub-total">
+                                            <span>
+                                                <span class="woocommerce-Price-amount amount">20&nbsp;<span class="woocommerce-Price-currencySymbol">₽</span></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                                                <div class="ckeckout-tickets-single" data-add_to_cart="408"
+                                     data-update_key="0d0fd7c6e093f7b804fa0150b875b868">
+                                    <div class="ckeckout-tickets-ticket">
+                                        <div>A                                        ряд, 4 место
+                                        </div>
+                                        <div class="checkout-meta">Стол 4</div>
+                                    </div>
+                                    <div class="ckeckout-tickets-sub-total">
+                                        <span><span class="woocommerce-Price-amount amount">10&nbsp;<span class="woocommerce-Price-currencySymbol">&#8381;</span></span></span>
+                                    </div>
+                                </div>
+                                            </div>
+            </div>
+
+        <div class="checkout-footer">
+            <div class="checkout-footer-totalorder">
+                <div><strong><span class="woocommerce-Price-amount amount">50&nbsp;<span class="woocommerce-Price-currencySymbol">&#8381;</span></span></strong> </div>
+                <div class="checkout-meta">Нажимая кнопку &laquo;Перейти к оплате&raquo;, вы соглашаетесь с условиями <a id="send-form-to-checkout" href="https://spb.bilego.ru/offer/" target="_blank">оферты</a></div>
+            </div>
+
+            <div class="checkout-footer-exit">
+                <button type="submit" name="checkout_exit" id="" class="checkout-footer-button">
+                    Назад
+                </button>
+            </div>
+            <div class="checkout-footer-next">
+                <button type="submit" name="woocommerce_checkout_place_order" id="place_order"  class="checkout-footer-button footer-button-colored">
+                    Перейти к оплате
+                </button>
+            </div>
+        </div>
+        <div>
+            <input type="hidden" name="paynonce" id="paynonce" value="ed1dfd5203">
+            <input type="hidden" id="_wpnonce" name="_wpnonce" value="61a3839d85" /><input type="hidden" name="_wp_http_referer" value="/wp-admin/admin-ajax.php" />        				<input id="payment_method_fondy" type="hidden" name="payment_method" value="fondy" />
+                        </div>
+    </form>
+    </div>
+    */
 }
