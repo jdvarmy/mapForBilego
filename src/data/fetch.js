@@ -3548,7 +3548,7 @@ export function getCheckout() {
             quantity: 1
             type: "with_map_seat"
             variation_id: ""
-    globalClient: "wp"
+    globalClient: "wp" // для определения событий ticketcloud
     nonce: "de1fb558e3"
      */
 

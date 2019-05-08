@@ -15,6 +15,8 @@ class ServerDataStore{
 
     @action
     getWoocommerceCheckout = tickets => {
+        let request;
+
 
     }
 }
