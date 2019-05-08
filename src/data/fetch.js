@@ -3528,11 +3528,11 @@ export function getData() {
         )
 }
 
-export function getCheckout() {
-    const data = {};
+export function getCheckout( request ) {
+    const data = request;
 
     return new Promise(
-        (resolve, reject) => setTimeout( ()=>resolve(data), 700 )
+        (resolve, reject) => setTimeout( ()=>resolve(data), 2000 )
     )
 
 

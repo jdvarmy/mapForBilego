@@ -52,10 +52,22 @@ class Products extends React.Component{
 
     sendForm = e => {
         e.preventDefault();
-        const { basketStore:{ tickets, blockingForm }, serverDataStore:{ getWoocommerceCheckout } } = this.props;
+        const { basketStore:{ ticketsMap, blockingForm }, serverDataStore:{ getCheckoutData } } = this.props;
+        let request = {
+            action: 'get_cart_tickets',
+            form: {}
+        };
 
         blockingForm(true);
-        getWoocommerceCheckout(tickets);
+
+        ticketsMap.forEach(el=>{
+            request.form[el.id] = {
+                quantity: el.count,
+                variation_id: ''
+            }
+        });
+
+        getCheckoutData(request);
     };
 
     countSummary = () => {

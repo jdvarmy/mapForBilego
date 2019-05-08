@@ -1,6 +1,6 @@
-import { observable, action } from 'mobx'
+import { observable, action } from 'mobx';
 
-import { getData } from '../../data/fetch'
+import { getData, getCheckout } from '../../data/fetch';
 
 class ServerDataStore{
     @observable data = null;
@@ -14,11 +14,11 @@ class ServerDataStore{
     };
 
     @action
-    getWoocommerceCheckout = tickets => {
-        let request;
-
-
-    }
+    getCheckoutData = (data) => {
+        getCheckout(data).then( data => {
+            this.checkoutData = data;
+        })
+    };
 }
 
 export const serverDataStore = new ServerDataStore();

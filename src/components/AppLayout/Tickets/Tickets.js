@@ -8,6 +8,7 @@ import Basket from '../Basket/Basket'
 import Layout from './Layout/Layout'
 import Popups from './Map/Popups/Popups'
 import Block from './Map/Block'
+import Checkout from '../Checkout/Checkout';
 
 const FadeInWrap = styled('div')`
     animation-duration:.8s;
@@ -38,6 +39,7 @@ class Tickets extends React.Component{
                 <Block />
                 <Popups />
                 <Layout />
+                <Checkout />
             </FadeInWrap>
         );
     }
