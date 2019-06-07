@@ -42,23 +42,22 @@ const Summary = styled(Div)`
 `;
 
 const Content = styled(Div)`
-    // display: table;
     width: 100%;
     position: relative;
 `;
 const ContentWidth = styled('div')`
     max-width: ${props=>props.maxWidth}px;
-    margin-top: -60px;
+    margin-top: -40px;
     margin-left: auto;
 `;
 const Table = styled(Div)`
     max-width: ${props=>props.maxWidth}px;
     width: 100%;
-    // display: table;
     box-sizing: border-box;
 `;
 const TableRow = styled('div')`
-    // display: table-row;
+    display: flex;
+    flex-direction: row-reverse;
 `;
 
 @inject('basketStore', 'serverDataStore')

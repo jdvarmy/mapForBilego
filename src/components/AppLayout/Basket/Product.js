@@ -6,13 +6,9 @@ import { inject, observer } from 'mobx-react';
 
 const Wrapper = styled('div')`
     width: ${ props=>props.widthPercent }%;
-    // display: table-cell;
     position: relative;
-    // z-index: 1;
-    
+    box-sizing: border-box;
     display: inline-block;
-    // position: absolute;
-    // right: 0;
 `;
 
 const Container = styled('div')`
@@ -21,7 +17,7 @@ const Container = styled('div')`
     width: 152px;
     position: absolute;
     top: 0px;
-    left: 0px;
+    right: 0px;
     background: rgb(255, 255, 255);
     border-width: 1px 1px 0px;
     border-style: solid solid solid;
@@ -29,19 +25,12 @@ const Container = styled('div')`
     border-image: initial;
     border-bottom: 0px;
     padding: 12px 24px;
-    text-align: left;
+    text-align: right;
     transition: margin 0.2s ease 0s;
-    // &::before{
-    //     content: "";
-    //     width: 100%;
-    //     height: 20px;
-    //     display: block;
-    //     position: absolute;
-    //     top: -20px;
-    //     left: 0px;
-    //     overflow: hidden;
-    //     background: transparent;
-    // }
+    &:hover{
+        margin-top: -22px;
+        z-index: 1;
+    }
 `;
 const ContentWrapper = styled('div')`
     color: rgb(51, 51, 51);
@@ -79,14 +68,16 @@ const Remover = styled('b')`
     border-radius: 100%;
 `;
 
-@inject('basketStore')
+@inject('basketStore', 'mapStore')
 @observer
 class Product extends React.Component{
     render() {
-        const { ticket:{price, sector, row, seat}, basketStore:{count} } = this.props;
+        const { ticket:{price, sector, row, seat}, basketStore:{count}, mapStore:{containerW, containerH} } = this.props;
 
         const seatInfo = row && seat && (<RowSeat>ряд {row}, место {seat}</RowSeat>);
         const width = 100 / count;
+
+        console.log(containerW, containerH);
 
         return (
             <Wrapper widthPercent={ width }>
