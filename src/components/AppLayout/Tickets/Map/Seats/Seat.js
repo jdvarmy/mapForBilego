@@ -18,8 +18,7 @@ const Circle = styled('circle')`
 
 const Text = styled('text')`
     text-anchor: middle;
-    vertical-align: middle;
-    alignment-baseline: middle;
+    dominant-baseline: middle;
     font-weight: 700;
     fill: #fff;
     cursor: pointer;
@@ -98,7 +97,7 @@ class Seat extends React.Component {
         let text, radius, style;
 
         if( ticket ) {
-            text = <Text fontSize={(r*1.8 + scale*2.2).toFixed(2)} x={cx} y={(cy*1 + 2.4*scale).toFixed(2)}>
+            text = <Text fontSize={(r*1.8 + scale*2.2).toFixed(2)} x={cx} y={(+cy + 2.4*scale).toFixed(2)}>
                 {ticket.seat_name}
             </Text>;
 

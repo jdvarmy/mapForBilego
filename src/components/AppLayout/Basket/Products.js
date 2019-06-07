@@ -2,7 +2,7 @@ import React from 'react'
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 
-import { Product } from './Product';
+import Product from './Product';
 
 const Div = styled('div')`
     padding: 0;
@@ -42,8 +42,23 @@ const Summary = styled(Div)`
 `;
 
 const Content = styled(Div)`
+    // display: table;
     width: 100%;
     position: relative;
+`;
+const ContentWidth = styled('div')`
+    max-width: ${props=>props.maxWidth}px;
+    margin-top: -60px;
+    margin-left: auto;
+`;
+const Table = styled(Div)`
+    max-width: ${props=>props.maxWidth}px;
+    width: 100%;
+    // display: table;
+    box-sizing: border-box;
+`;
+const TableRow = styled('div')`
+    // display: table-row;
 `;
 
 @inject('basketStore', 'serverDataStore')
@@ -80,7 +95,8 @@ class Products extends React.Component{
     };
 
     render(){
-        const { basketStore:{ tickets } } = this.props;
+        const { basketStore:{ tickets, count } } = this.props;
+        const maxWidth = 140 * count;
 
         return(
             <>
@@ -89,7 +105,13 @@ class Products extends React.Component{
                 </ButtonWrap>
                 <Summary>{this.countSummary()} ₽</Summary>
                 <Content>
-                    { tickets.map( ( el, k ) => <Product key={el.id.toString() + k} ticket={el} /> ) }
+                    <ContentWidth maxWidth={maxWidth}>
+                        <Table maxWidth={maxWidth}>
+                            <TableRow>
+                                { tickets.map( ( el, k ) => <Product key={el.id.toString() + k} ticket={el} /> ) }
+                            </TableRow>
+                        </Table>
+                    </ContentWidth>
                 </Content>
             </>
         );
