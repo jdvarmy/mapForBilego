@@ -67,7 +67,7 @@ class Popups extends React.Component{
                         price={price}
                         minus={this.countMinus}
                         plus={this.countPlus}
-                        tickets={this.getTicketsById(currentTicketsSet.ID)}
+                        tickets={this.getTicketsById(currentTicketsSet.id)}
                         maxCountInBasket={maxCountInBasket}
                         maxCountTicket={stock}/>
                 </Wrapper>

@@ -48,11 +48,11 @@ class Svg extends React.Component{
                 <div
                     className="btm-map-image"
                     ref={(e) => (this.element = e)}
-                    onWheel={mapStore.handleWheel}
+                    // onWheel={mapStore.handleWheel}
                     onMouseDown={mapStore.handleMouseDown}
                     onTouchStart={mapStore.handleTouchStart}
                 >
-                    <svg id="bts-tickets-map" {...svgData} /*style={{backgroundImage: `url(${backgroundImage})`}}*/>
+                    <svg id="bts-tickets-map" {...svgData} style={{backgroundImage: `url(${backgroundImage})`}}>
                         <defs />
                         <Seats />
                         <Paths />

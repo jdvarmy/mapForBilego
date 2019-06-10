@@ -8,7 +8,7 @@ import Tickets from './Tickets/Tickets'
 const Wrapper = styled('div')`
     background-color: #fff;
     position:relative;
-    width: 73%;
+    width: 100%;
     overflow: hidden;
 `;
 

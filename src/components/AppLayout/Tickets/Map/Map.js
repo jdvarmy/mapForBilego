@@ -15,7 +15,6 @@ const Wrapper = styled(Container)`
     width: 100%;
     position: relative;
     overflow: hidden;
-    -webkit-font-smoothing: antialiased;
     font-smooth: antialiased;
 `;
 

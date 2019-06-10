@@ -14,10 +14,10 @@ const Wrapper = styled('div')`
 const Container = styled('div')`
     margin: -13px -13px -13px 0px;
     min-height: 90px;
-    width: 152px;
+    width: ${props=>props.widthDiv < 1201 ? 112 : 152}px;
     position: absolute;
     top: 0px;
-    right: 0px;
+    right: 12px;
     background: rgb(255, 255, 255);
     border-width: 1px 1px 0px;
     border-style: solid solid solid;
@@ -26,10 +26,15 @@ const Container = styled('div')`
     border-bottom: 0px;
     padding: 12px 24px;
     text-align: right;
-    transition: margin 0.2s ease 0s;
+    transition: all 0.2s ease 0s;
     &:hover{
-        margin-top: -22px;
+        border-color: #ffae19 #ffae19;
+        margin-top: -29px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.25), 0 6px 6px rgba(0,0,0,0.22);
         z-index: 1;
+    }
+    &:hover b{
+        display: block;
     }
 `;
 const ContentWrapper = styled('div')`
@@ -57,31 +62,51 @@ const Remover = styled('b')`
     width: 26px;
     height: 26px;
     display: none;
-    background-color: rgb(51, 51, 51);
+    background-color: #ffae19;
     cursor: pointer;
     position: absolute;
     top: -8px;
-    right: -8px;
+    left: -8px;
     overflow: hidden;
     background-position: 50% center;
     background-repeat: no-repeat;
     border-radius: 100%;
+    &::after{
+        content: '+';
+        font-size: 17px;
+        display: block;
+        text-align: center;
+        width: 100%;
+        height: 100%;
+        transform: rotate(45deg);
+        color: #fff;
+    }
 `;
 
 @inject('basketStore', 'mapStore')
 @observer
 class Product extends React.Component{
+    removeFromBasket = e => {
+        const { basketStore:{toBasket, seatStores}, ticket } = this.props;
+        toBasket( ticket, false );
+
+        console.log(seatStores)
+
+        for( let key in seatStores ){
+            if( +key === ticket.id )
+                seatStores[key].onClick();
+        }
+    };
+
     render() {
-        const { ticket:{price, sector, row, seat}, basketStore:{count}, mapStore:{containerW, containerH} } = this.props;
+        const { ticket:{price, sector, row, seat}, basketStore:{count}, mapStore:{containerW} } = this.props;
 
         const seatInfo = row && seat && (<RowSeat>ряд {row}, место {seat}</RowSeat>);
         const width = 100 / count;
 
-        console.log(containerW, containerH);
-
         return (
             <Wrapper widthPercent={ width }>
-                <Container>
+                <Container widthDiv={containerW}>
                     {seatInfo}
                     <Sector createBeforeEl={row && seat}>{sector}</Sector>
                     <ContentWrapper>
@@ -89,7 +114,9 @@ class Product extends React.Component{
                             <span>{moneyFormating(price, true)}</span>
                         </Money>
                     </ContentWrapper>
-                    <Remover />
+                    <Remover
+                        onClick={ this.removeFromBasket }
+                    />
                 </Container>
             </Wrapper>
         );

@@ -36,6 +36,7 @@ const Button = styled('button')`
 `;
 
 const Summary = styled(Div)`
+    background-color: #fff;
     text-align: right;
     white-space: nowrap;
     word-spacing: -2px;

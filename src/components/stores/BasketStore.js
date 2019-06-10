@@ -7,43 +7,47 @@ class BasketStore{
     @observable productInBasket = false;
     @observable isFull = false;
 
+    seatStores = {};
+
     maxCountInBasket = 6;
 
     @action
-    toBasket = (ticket, action) => {
-        if( !ticket.ID ) return false;
-        const {ID, price_regular, row_name, seat_name, sector_name} = ticket;
-        let oldTicket, newTicket = {id: ID, price: price_regular, row:row_name, seat: seat_name, sector: sector_name, count: 1};
+    toBasket = (ticket, action, store) => {
+        if( !ticket.id ) return false;
+        const {id, price_regular, row_name, seat_name, sector_name} = ticket;
+        let oldTicket, newTicket = {id: id, price: price_regular, row: row_name, seat: seat_name, sector: sector_name, count: 1};
 
         if( action && this.isFull ) return false;
-        if( action && this.ticketsMap.get(ID) && ticket.stock < this.ticketsMap.get(ID).count+1 ) return false;
+        if( action && this.ticketsMap.get(id) && ticket.stock < this.ticketsMap.get(id).count+1 ) return false;
 
         /*ticketsMap*/
         if(action){
-            if( this.ticketsMap.has(ID) ){
-                oldTicket = this.ticketsMap.get(ID);
+            if( this.ticketsMap.has(id) ){
+                oldTicket = this.ticketsMap.get(id);
                 oldTicket.count++;
-                this.ticketsMap.set(ID, oldTicket);
+                this.ticketsMap.set(id, oldTicket);
             }else{
-                this.ticketsMap.set(ID, newTicket);
+                this.ticketsMap.set(id, newTicket);
             }
         }else{
-            if( this.ticketsMap.has(ID) ){
-                oldTicket = this.ticketsMap.get(ID);
+            if( this.ticketsMap.has(id) ){
+                oldTicket = this.ticketsMap.get(id);
                 if( oldTicket.count > 1 ){
                     oldTicket.count--;
-                    this.ticketsMap.set(ID, oldTicket);
+                    this.ticketsMap.set(id, oldTicket);
                 }else{
-                    this.ticketsMap.delete(ID)
+                    this.ticketsMap.delete(id)
                 }
             }
         }
         /*tickets*/
         if(action){
-            this.tickets.push({id: ID, price: price_regular, row: row_name, seat: seat_name, sector: sector_name})
+            this.tickets.push({id: id, price: price_regular, row: row_name, seat: seat_name, sector: sector_name});
+
+            if(store) this.seatStores[ticket.id] = store;
         }else{
             for(let i = this.tickets.length; i--;){
-                if(this.tickets[i].id===ID){
+                if(this.tickets[i].id===id){
                     this.tickets.splice(i, 1);
                     break;
                 }

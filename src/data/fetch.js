@@ -3198,12 +3198,19 @@ export function getData() {
         "event_type":"b_map",
         "type":"map" // set
         ,
+        // todo: добавить массив с цветами для меню
+        "colors":[
+            ["10", "palegoldenrod"],
+            ["20", "grey"],
+            ["55", "#bec12f"],
+            ["1 000", "#4dccbb"]
+        ],
         // todo: добавить данные!!!!!!!!!!!!!!!!!
         // todo: добавить цвет билета к каждому элементу
         "tickets":[
             {
-                ID: 303,
-                UID: "free", // todo: У сетов UID должен совпадать с ID сектора!!!
+                id: 303,
+                uid: "free", // todo: У сетов uid должен совпадать с id сектора!!!
                 description: "Лебединое озеро, free",
                 end_date_time: null,
                 name: "free",
@@ -3226,8 +3233,8 @@ export function getData() {
                 color: "grey"
             },
             {
-                ID: 306,
-                UID: "FCDCGFBE",
+                id: 306,
+                uid: "FCDCGFBE",
                 description: "sector:stol8,row:A,seat:4",
                 end_date_time: null,
                 name: "sector:stol8,row:A,seat:4",
@@ -3247,11 +3254,11 @@ export function getData() {
                 stock: 1,
                 stock_status: "instock",
                 type: "with_map_seat",
-                color: "palegoldenrod"
+                color: "#4dccbb"
             },
             {
-                ID: 312,
-                UID: "JGCBGIHD",
+                id: 312,
+                uid: "JGCBGIHD",
                 description: "sector:stol7,row:A,seat:2",
                 end_date_time: null,
                 name: "sector:stol7,row:A,seat:2",
@@ -3271,11 +3278,11 @@ export function getData() {
                 stock: 1,
                 stock_status: "instock",
                 type: "with_map_seat",
-                color: "palegoldenrod"
+                color: "#4dccbb"
             },
             {
-                ID: 362,
-                UID: "GHGEIFAG",
+                id: 362,
+                uid: "GHGEIFAG",
                 description: "Стол 3-A-5",
                 end_date_time: null,
                 name: "Лебединое озеро, Стол 3-A-5",
@@ -3298,8 +3305,8 @@ export function getData() {
                 color: "palegoldenrod"
             },
             {
-                ID: 364,
-                UID: "CADEHADE",
+                id: 364,
+                uid: "CADEHADE",
                 description: "Стол 2-A-1",
                 end_date_time: null,
                 name: "Лебединое озеро, Стол 2-A-1",
@@ -3322,8 +3329,8 @@ export function getData() {
                 color: "palegoldenrod"
             },
             {
-                ID: 366,
-                UID: "BDIEFIHE",
+                id: 366,
+                uid: "BDIEFIHE",
                 description: "Стол 2-A-3",
                 end_date_time: null,
                 name: "Лебединое озеро, Стол 2-A-3",
@@ -3346,8 +3353,8 @@ export function getData() {
                 color: "palegoldenrod"
             },
             {
-                ID: 383,
-                UID: "AHHCBDGE",
+                id: 383,
+                uid: "AHHCBDGE",
                 description: "Лебединое озеро, Стол 6-A-1",
                 end_date_time: null,
                 name: "Лебединое озеро, Стол 6-A-1",
@@ -3368,11 +3375,11 @@ export function getData() {
                 stock: 1,
                 stock_status: "instock",
                 type: "with_map_seat",
-                color: "palegoldenrod"
+                color: "#4dccbb"
             },
             {
-                ID: 388,
-                UID: "GCJCHAED",
+                id: 388,
+                uid: "GCJCHAED",
                 description: "Стол 5-A-2",
                 end_date_time: null,
                 name: "Лебединое озеро, Стол 5-A-2",
@@ -3396,8 +3403,8 @@ export function getData() {
                 color: "palegoldenrod"
             },
             {
-                ID: 390,
-                UID: "HCIDHCAD",
+                id: 390,
+                uid: "HCIDHCAD",
                 description: "Стол 5-A-4",
                 end_date_time: null,
                 name: "Лебединое озеро, Стол 5-A-4",
@@ -3421,8 +3428,8 @@ export function getData() {
                 color: "palegoldenrod"
             },
             {
-                ID: 405,
-                UID: "JGCBHIIC",
+                id: 405,
+                uid: "JGCBHIIC",
                 description: "Стол 0-A-2",
                 end_date_time: null,
                 name: "Лебединое озеро, Стол 0-A-2",
@@ -3446,8 +3453,8 @@ export function getData() {
                 color: "palegoldenrod"
             },
             {
-                ID: 406,
-                UID: "JGCBJFDC",
+                id: 406,
+                uid: "JGCBJFDC",
                 description: "Стол 0-A-1",
                 end_date_time: null,
                 name: "Лебединое озеро, Стол 0-A-1",
@@ -3471,8 +3478,8 @@ export function getData() {
                 color: "palegoldenrod"
             },
             {
-                ID: 408,
-                UID: "ACFEFEAI",
+                id: 408,
+                uid: "ACFEFEAI",
                 description: "Стол 4-A-4",
                 end_date_time: null,
                 name: "Лебединое озеро, Стол 4-A-4",
@@ -3496,8 +3503,8 @@ export function getData() {
                 color: "palegoldenrod"
             },
             {
-                ID: 423,
-                UID: "DFBGJFDC",
+                id: 423,
+                uid: "DFBGJFDC",
                 description: "Бар-A-1",
                 end_date_time: null,
                 name: "Лебединое озеро, Бар-A-1",
@@ -3518,10 +3525,15 @@ export function getData() {
                 stock: 1,
                 stock_status: "instock",
                 type: "with_map_seat",
-                color: "palegoldenrod"
+                color: "#bec12f"
             }
         ]
     };
+
+    const urlArray = window.location.search.substr(1).split('&');
+    const id = urlArray[0],
+        city = urlArray[1].split('=')[1];
+
 
     return new Promise(
         (resolve, reject)=>setTimeout( ()=>resolve(bilegoMap), 2000 )

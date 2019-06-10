@@ -5,7 +5,7 @@ export class SeatStore {
     init = props => {
         const { tickets, id } = props;
         tickets.map(e => {
-            if( id === e.UID) this.ticket = e;
+            if( id === e.uid) this.ticket = e;
         });
     };
 

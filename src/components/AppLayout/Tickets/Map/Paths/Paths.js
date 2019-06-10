@@ -13,8 +13,8 @@ class Paths extends React.PureComponent {
 
         return (
             <Element id="poligons">
-                {paths.map(e => {
-                    return <Path el={e} key={e.id} />
+                {paths.map(el => {
+                    return <Path el={el} key={el.id} />
                 })}
             </Element>
         );

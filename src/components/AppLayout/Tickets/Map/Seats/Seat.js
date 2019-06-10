@@ -66,13 +66,14 @@ class Seat extends React.Component {
     };
 
     handlerClick = e => {
-        const {onClick, ticket, click} = this.seatStore;
+        const { onClick, ticket, click } = this.seatStore;
         const { basketStore:{ isFull, toBasket } } = this.props;
 
         if( (!click && !isFull) || ((click && !isFull)) || (click && isFull) ) {
             onClick();
-            toBasket(ticket, this.seatStore.click);
+            toBasket(ticket, this.seatStore.click, this.seatStore);
         }
+        // console.log('seat', {...this.seatStore})
     };
 
     handlerSpecialClick = e => {
@@ -84,7 +85,7 @@ class Seat extends React.Component {
     findTicketInBascket = () => {
         let t = false;
         this.props.basketStore.ticketsMap.forEach(e => {
-            if(e.id === this.seatStore.ticket.ID)
+            if(e.id === this.seatStore.ticket.id)
                 t = e
         });
         return t;
