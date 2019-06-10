@@ -30,9 +30,9 @@ class Tickets extends React.Component{
 
         return(
             <FadeInWrap>
-                <Wrapper data-type={data.type}>
+                <Wrapper data-type={data.ticket_type}>
                     <Container>
-                        {data.type === 'map' ? <Map/> : <Set/>}
+                        {data.ticket_type === 'map' ? <Map/> : <Set/>}
                         <Basket />
                     </Container>
                 </Wrapper>

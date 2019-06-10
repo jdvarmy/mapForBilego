@@ -3196,7 +3196,7 @@ export function getData() {
         "tc_event_map":"",
         "load_img":"https://spb.bilego.ru/wp-content/uploads/loadings/loading-v1.png",
         "event_type":"b_map",
-        "type":"map" // set
+        "ticket_type":"map" // set
         ,
         // todo: добавить массив с цветами для меню
         "colors":[
@@ -3530,14 +3530,25 @@ export function getData() {
         ]
     };
 
-    const urlArray = window.location.search.substr(1).split('&');
-    const id = urlArray[0],
-        city = urlArray[1].split('=')[1];
+    const location = window.location.search;
 
+    if( location ) {
+        const urlArray = location.substr(1).split('&');
+        const id = urlArray[0],
+            city = urlArray[1].split('=')[1];
 
-    return new Promise(
-        (resolve, reject)=>setTimeout( ()=>resolve(bilegoMap), 2000 )
-        )
+        // let address = `https://${city}.bilego.ru/wp-json/bilego/v1/posts`;
+        let address = `https://evenpic.ru/wp-json/bilego/v1/tickets/${id}`;
+        return fetch(address)
+            .then( resp => resp.json() )
+            .then( resp => resp )
+            .catch( alert => console.log(alert) )
+
+    }
+
+    // return new Promise(
+    //     (resolve, reject)=>setTimeout( /*()=>resolve(bilegoMap)*/ [], 2000 )
+    //     )
 }
 
 export function getCheckout( request ) {
