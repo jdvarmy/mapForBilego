@@ -15,18 +15,16 @@ class Seats extends React.PureComponent{
 
         return (
             <Wrapper id="seats">
-                {seats.map(se =>
-                    (
-                    <WrapperSectorGroup id={se.id} key={se.id} data-name-sector={se.el} data-component={se.comp}>
-                        {se.rows.map(re =>
+                {Object.keys(seats).map(se =>
+                    (<WrapperSectorGroup id={seats[se].id} key={seats[se].id} data-name-sector={seats[se].el} data-component={seats[se].comp}>
+                        {Object.keys(seats[se].rows).map(re =>
                             (
-                            <WrapperRowGroup key={se.id + re.el} data-name={re.el} data-component={re.comp}>
-                                {re.seats.map(e => <Seat el={e} key={e.uid} id={e.uid} sector={se.id}/>)}
+                            <WrapperRowGroup key={seats[se].id + seats[se].rows[re].el} data-name={seats[se].rows[re].el} data-component={seats[se].rows[re].comp}>
+                                {seats[se].rows[re].seats.map(e => <Seat el={e} key={e.uid} id={e.uid} sector={se.id}/>)}
                             </WrapperRowGroup>
                             )
                         )}
-                    </WrapperSectorGroup>
-                    )
+                    </WrapperSectorGroup>)
                 )}
             </Wrapper>
         );

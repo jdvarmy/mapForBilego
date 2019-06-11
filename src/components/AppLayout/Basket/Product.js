@@ -90,8 +90,6 @@ class Product extends React.Component{
         const { basketStore:{toBasket, seatStores}, ticket } = this.props;
         toBasket( ticket, false );
 
-        console.log(seatStores)
-
         for( let key in seatStores ){
             if( +key === ticket.id )
                 seatStores[key].onClick();

@@ -3203,7 +3203,7 @@ export function getData() {
             ["10", "palegoldenrod"],
             ["20", "grey"],
             ["55", "#bec12f"],
-            ["1 000", "#4dccbb"]
+            ["1000", "#4dccbb"]
         ],
         // todo: добавить данные!!!!!!!!!!!!!!!!!
         // todo: добавить цвет билета к каждому элементу
@@ -3544,11 +3544,11 @@ export function getData() {
             .then( resp => resp )
             .catch( alert => console.log(alert) )
 
+    }else {
+        return new Promise(
+            (resolve, reject) => setTimeout( ()=>resolve(bilegoMap), 2000)
+        )
     }
-
-    // return new Promise(
-    //     (resolve, reject)=>setTimeout( /*()=>resolve(bilegoMap)*/ [], 2000 )
-    //     )
 }
 
 export function getCheckout( request ) {

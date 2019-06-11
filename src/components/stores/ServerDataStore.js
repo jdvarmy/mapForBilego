@@ -9,8 +9,8 @@ class ServerDataStore{
     @action
     getPostData = () => {
         getData().then(data => {
-            // this.data = data;
-            console.log(data)
+            this.data = data;
+            // console.log(data)
         })
     };
 
