@@ -44,6 +44,11 @@ const Image = styled(Img)`
     opacity: 1;
     top: 0;
     left: 0;
+    background-color: #ffffff;
+`;
+
+const Clip = styled(Overlay)`
+    background-color: inherit;
 `;
 
 @inject('mapStore', 'serverDataStore')
@@ -65,13 +70,15 @@ class MiniMap extends React.Component {
                 <Container>
                     <Background src={minimap[1]} />
                     <Overlay />
-                    <Image
-                        src={minimap[1]}
-                        style={{
+                    <Clip style={{
                             clip: `rect(${top}px, ${right}px, ${bottom}px, ${left}px)`,
                             transition: `.1s all ease`,
                         }}
-                    />
+                    >
+                        <Image
+                            src={minimap[1]}
+                        />
+                    </Clip>
                 </Container>
             </Wrapper>
         );

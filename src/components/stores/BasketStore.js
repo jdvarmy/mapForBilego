@@ -13,6 +13,7 @@ class BasketStore{
 
     @action
     toBasket = (ticket, action, store) => {
+        if( !ticket ) return false;
         if( !ticket.id ) return false;
         const {id, price_regular, row_name, seat_name, sector_name} = ticket;
         let oldTicket, newTicket = {id: id, price: price_regular, row: row_name, seat: seat_name, sector: sector_name, count: 1};
