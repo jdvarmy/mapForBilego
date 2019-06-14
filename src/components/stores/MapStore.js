@@ -1,4 +1,4 @@
-import {action, observable} from 'mobx'
+import {action, observable} from 'mobx';
 
 const inverse = (x) => x * -1;
 

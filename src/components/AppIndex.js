@@ -1,5 +1,5 @@
 import React from 'react'
-import { Provider } from "mobx-react"
+import { Provider } from 'mobx-react'
 
 import AppLayout from './AppLayout/AppLayout'
 import { serverDataStore } from './stores/ServerDataStore'

@@ -97,9 +97,9 @@ class Product extends React.Component{
     };
 
     render() {
-        const { ticket:{price, sector, row, seat}, basketStore:{count}, mapStore:{containerW} } = this.props;
+        const { ticket:{price, sector, row, seat, name, type}, basketStore:{count}, mapStore:{containerW} } = this.props;
 
-        const seatInfo = row && seat && (<RowSeat>ряд {row}, место {seat}</RowSeat>);
+        const seatInfo = ( row && seat && (<RowSeat>ряд {row}, место {seat}</RowSeat>) ) || ( type === 'without_map' && <Sector>{name}</Sector> );
         const width = 100 / count;
 
         return (
