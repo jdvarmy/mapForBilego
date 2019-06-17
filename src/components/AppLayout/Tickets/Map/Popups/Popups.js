@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react/index';
-import styled from 'styled-components'
+import styled from 'styled-components';
+import { getStrEnding } from '../../../functions/functions';
 
 import Header from './Header';
 import Content from './Content';
@@ -19,7 +20,7 @@ const Wrapper = styled('div')`
     animation-name: in;
 `;
 
-@inject('basketStore')
+@inject('basketStore', 'informerStore')
 @observer
 class Popups extends React.Component{
     constructor(props){
@@ -44,8 +45,11 @@ class Popups extends React.Component{
     };
 
     countPlus = () => {
-        const { basketStore:{ currentTicketsSet, toBasket } } = this.props;
+        const { basketStore:{ currentTicketsSet, toBasket, isFull, maxCountInBasket }, informerStore:{ setMessage } }  = this.props;
         toBasket( currentTicketsSet, true );
+        if( isFull ){
+            setMessage(`За один заказ можно купить только ${maxCountInBasket} ${getStrEnding(maxCountInBasket, ['билет','билета','билетов'])}`);
+        }
     };
 
     countMinus = () => {
@@ -55,7 +59,7 @@ class Popups extends React.Component{
 
     render(){
         let buffy = null;
-        const { basketStore:{ blockTicketsForm, currentTicketsSet, maxCountInBasket } } = this.props;
+        const { basketStore:{ blockTicketsForm, currentTicketsSet } } = this.props;
 
         if( blockTicketsForm && currentTicketsSet ) {
             const { name, price, stock } = currentTicketsSet;
@@ -68,7 +72,6 @@ class Popups extends React.Component{
                         minus={this.countMinus}
                         plus={this.countPlus}
                         tickets={this.getTicketsById(currentTicketsSet.id)}
-                        maxCountInBasket={maxCountInBasket}
                         maxCountTicket={stock}/>
                 </Wrapper>
             );

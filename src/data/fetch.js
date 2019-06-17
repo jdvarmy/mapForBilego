@@ -3529,7 +3529,6 @@ export function getData() {
             }
         ]
     };
-
     const location = window.location.search;
 
     if( location ) {
@@ -3537,7 +3536,9 @@ export function getData() {
         const id = urlArray[0],
             city = urlArray[1].split('=')[1];
 
-        // let address = `https://${city}.bilego.ru/wp-json/bilego/v1/posts`;
+        // let address = `https://${city}.bilego.ru/wp-json/bilego/v1/tickets/${id}`;
+        // MjE5
+        // MjAx
         let address = `https://evenpic.ru/wp-json/bilego/v1/tickets/${id}`;
         return fetch(address)
             .then( resp => resp.json() )
@@ -3552,11 +3553,30 @@ export function getData() {
 }
 
 export function getCheckout( request ) {
-    const data = request;
+    const location = window.location.search;
 
-    return new Promise(
-        (resolve, reject) => setTimeout( ()=>resolve(data), 2000 )
-    )
+    if( location ) {
+        const urlArray = location.substr(1).split('&');
+        const city = urlArray[1].split('=')[1];
+
+        const options = {
+            method: 'post',
+            headers:{
+                'Content-Type': 'application/json',
+                'accept': 'application/json',
+            },
+            body: JSON.stringify( {'form': request} )
+        };
+
+
+        // let address = `https://${city}.bilego.ru/wp-json/bilego/v1/checkout/${id}`;
+        let address = `https://evenpic.ru/wp-json/bilego/v1/checkout`;
+        return fetch(address, options)
+            .then( resp => resp.json() )
+            .then( resp => resp )
+            .catch( alert => console.log(alert) )
+
+    }
 
 
 

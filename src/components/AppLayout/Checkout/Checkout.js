@@ -6,7 +6,7 @@ import { observer, inject } from 'mobx-react';
 class Checkout extends React.Component{
     render(){
         const { serverDataStore:{ checkoutData } } = this.props;
-        console.log(checkoutData)
+        console.log({...checkoutData})
         return(
             <div/>
         );

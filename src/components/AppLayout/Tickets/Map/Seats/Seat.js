@@ -1,7 +1,8 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react';
 import ReactDOM from 'react-dom';
-import styled from "styled-components";
+import styled from 'styled-components';
+import { getStrEnding } from '../../../functions/functions';
 
 import { SeatStore } from '../stores/SeatStore'
 import { TooltipSeat } from '../Tooltip/TooltipSeat'
@@ -24,7 +25,7 @@ const Text = styled('text')`
     cursor: pointer;
 `;
 
-@inject('serverDataStore', 'mapStore', 'basketStore')
+@inject('serverDataStore', 'mapStore', 'basketStore', 'informerStore')
 @observer
 class Seat extends React.Component {
     constructor(props){
@@ -67,13 +68,13 @@ class Seat extends React.Component {
 
     handlerClick = e => {
         const { onClick, ticket, click } = this.seatStore;
-        const { basketStore:{ isFull, toBasket } } = this.props;
+        const { basketStore:{ isFull, toBasket, maxCountInBasket }, informerStore:{ setMessage } } = this.props;
 
+        if( !click && isFull ) setMessage(`За один заказ можно купить только ${maxCountInBasket} ${getStrEnding(maxCountInBasket, ['билет','билета','билетов'])}`);
         if( (!click && !isFull) || ((click && !isFull)) || (click && isFull) ) {
             onClick();
             toBasket(ticket, this.seatStore.click, this.seatStore);
         }
-        // console.log('seat', {...this.seatStore})
     };
 
     handlerSpecialClick = e => {

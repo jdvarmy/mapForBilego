@@ -40,6 +40,10 @@ class Loading extends React.Component{
             this.start();
         }
     }
+
+    componentWillUnmount(){
+        this.stop();
+    };
     
     start = () => {
         if( this.container.classList.contains('loading') ) return;
@@ -59,17 +63,12 @@ class Loading extends React.Component{
         }, this.options.speed);
     };
     
-    // stop = () => {
-    //     this.container.removeClass('loading');
-    //
-    //     $('#' + selector).animate({
-    //         opacity: 0
-    //     }, 600);
-    //     setTimeout(function(){
-    //         clearInterval( this.init );
-    //         $('#' + selector).css({display: 'none'});
-    //     }, 700);
-    // };
+    stop = () => {
+        this.container.classList.remove('loading');
+        setTimeout(function(){
+            clearInterval( this.init );
+        }, 700);
+    };
 
     drawImageLoader = () => {
         const max = 23;

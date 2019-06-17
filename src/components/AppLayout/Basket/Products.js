@@ -1,6 +1,7 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
+import { moneyFormating } from '../functions/functions';
 
 import Product from './Product';
 
@@ -61,28 +62,16 @@ const TableRow = styled('div')`
     flex-direction: row-reverse;
 `;
 
-@inject('basketStore', 'serverDataStore')
+@inject('basketStore', 'serverDataStore', 'cartStore')
 @observer
 class Products extends React.Component{
 
-    sendForm = e => {
+    getCart = e => {
         e.preventDefault();
-        const { basketStore:{ ticketsMap, blockingForm }, serverDataStore:{ getCheckoutData } } = this.props;
-        let request = {
-            action: 'get_cart_tickets',
-            form: {}
-        };
+        const { basketStore:{ tickets, blockingForm }, cartStore:{ addTickets } } = this.props;
 
         blockingForm(true);
-
-        ticketsMap.forEach(el=>{
-            request.form[el.id] = {
-                quantity: el.count,
-                variation_id: ''
-            }
-        });
-
-        getCheckoutData(request);
+        addTickets(tickets);
     };
 
     countSummary = () => {
@@ -101,9 +90,9 @@ class Products extends React.Component{
         return(
             <>
                 <ButtonWrap>
-                    <Button onClick={this.sendForm}>Купить билеты</Button>
+                    <Button onClick={this.getCart}>Купить билеты</Button>
                 </ButtonWrap>
-                <Summary>{this.countSummary()} ₽</Summary>
+                <Summary>{moneyFormating(this.countSummary(), true)}</Summary>
                 <Content>
                     <ContentWidth maxWidth={maxWidth}>
                         <Table maxWidth={maxWidth}>

@@ -10,14 +10,15 @@ class ServerDataStore{
     getPostData = () => {
         getData().then(data => {
             this.data = data;
-            console.log(data)
+            // console.log(data)
         })
     };
 
     @action
     getCheckoutData = (data) => {
         getCheckout(data).then( data => {
-            this.checkoutData = data;
+            // this.checkoutData = data;
+            console.log(data)
         })
     };
 }

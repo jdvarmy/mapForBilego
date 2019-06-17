@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import {moneyFormating} from "../../../functions/functions";
+import {inject, observer} from "mobx-react";
 
 const Wrapper = styled('div')``;
 
@@ -71,13 +72,15 @@ const Plus = styled(Control)`
     ${props => props.block && style};
 `;
 
-export default class Content extends React.Component{
+@inject('basketStore')
+@observer
+class Content extends React.Component{
     render(){
-        const { price, minus, plus, tickets, maxCountInBasket, maxCountTicket } = this.props;
+        const { price, minus, plus, tickets, maxCountTicket, basketStore:{ isFull } } = this.props;
         const count = tickets.length ? tickets.length : 0;
 
         const blockMinus = count===0;
-        const blockPlus = count===maxCountInBasket || count >= maxCountTicket;
+        const blockPlus = isFull || count >= maxCountTicket;
 
         return(
             <Wrapper>
@@ -97,3 +100,5 @@ export default class Content extends React.Component{
         );
     }
 }
+
+export default Content;

@@ -9,6 +9,8 @@ import Layout from './Layout/Layout'
 import Popups from './Map/Popups/Popups'
 import Block from './Map/Block'
 import Checkout from '../Checkout/Checkout';
+import Cart from '../Cart/Cart';
+import Informer from '../Informer/Informer';
 
 const FadeInWrap = styled('div')`
     animation-duration:.8s;
@@ -22,11 +24,11 @@ const Container = styled('div')`
     position: relative;
 `;
 
-@inject('serverDataStore')
+@inject('serverDataStore', 'informerStore')
 @observer
 class Tickets extends React.Component{
     render(){
-        const { serverDataStore: { data } } = this.props;
+        const { serverDataStore: { data }, informerStore:{ message } } = this.props;
 
         return(
             <FadeInWrap>
@@ -40,6 +42,8 @@ class Tickets extends React.Component{
                 <Popups />
                 <Layout />
                 <Checkout />
+                <Cart />
+                { message && ( <Informer /> )}
             </FadeInWrap>
         );
     }

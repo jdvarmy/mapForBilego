@@ -6,6 +6,10 @@
     from{opacity:0;transform:translate3d(0,50%,0)}
     to{opacity:1;transform:none}
 }
+@keyframes in-top {
+    from{opacity:0;transform:translate3d(0,-50%,0)}
+    to{opacity:1;transform:none;}
+}
 
 
 /*#bilego-sell-tickets{background-color: #fff;position:relative;width: 73%;overflow: hidden;}*/
