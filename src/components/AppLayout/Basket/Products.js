@@ -68,10 +68,11 @@ class Products extends React.Component{
 
     getCart = e => {
         e.preventDefault();
-        const { basketStore:{ tickets, blockingForm }, cartStore:{ addTickets } } = this.props;
+        const { basketStore:{ tickets, blockingForm }, cartStore:{ addTickets, addEvent }, serverDataStore:{ data:{ event } } } = this.props;
 
         blockingForm(true);
         addTickets(tickets);
+        addEvent(event);
     };
 
     countSummary = () => {

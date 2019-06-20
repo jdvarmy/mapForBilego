@@ -28,13 +28,11 @@ class Cart extends React.Component{
 
     render(){
         // const { serverDataStore:{ checkoutData } } = this.props;
-        const { cartStore:{ tickets } } = this.props;
-
-        console.log({...tickets})
+        const { cartStore:{ tickets, event } } = this.props;
 
         return(
             <>
-                { tickets && <CartContent tickets={tickets}/> }
+                { tickets && <CartContent tickets={tickets} event={event} /> }
             </>
         );
     }
