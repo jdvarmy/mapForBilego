@@ -12,12 +12,13 @@ const Blocking = styled('div')`
     z-index: 1;
 `;
 
-@inject('basketStore')
+@inject('basketStore', 'cartStore')
 @observer
 class Block extends React.Component{
     close = () => {
-        const { basketStore:{ setSetWindowMode } } = this.props;
+        const { basketStore:{ setSetWindowMode }, cartStore:{ clear } } = this.props;
         setSetWindowMode(false, null);
+        clear();
     };
 
     render(){

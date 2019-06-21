@@ -9,13 +9,10 @@ import Footer from './elements/Footer'
 
 import { getStrEnding } from '../functions/functions'
 
-const Span = styled('span')`
-    //padding: 10px;
-`;
-const SpanBlack = styled(Span)`
+const SpanBlack = styled('span')`
     color: #111;
 `;
-const SpanGray = styled(Span)`
+const SpanGray = styled('span')`
     color: #676662;
 `;
 
@@ -31,7 +28,7 @@ const Wrapper = styled('div')`
     min-width: 350px;
     padding: 0 30px;
     background-color: #fff;
-    animation-duration: .2s;
+    animation-duration: 0.2s;
     animation-timing-function: cubic-bezier(0,0,0.88,1);
     animation-fill-mode: both;
     animation-name: in-left;
@@ -53,12 +50,12 @@ const AdditionalWrap = styled(Div)``;
 const CountTickets = styled(Div)`
     font-size: 18px;
     line-height: 21px;
+    // padding: 10px 0 20px;
 `;
 const TicketsWrap = styled(Div)`
+    height: 249px;
     padding: 0;
-    max-height: 154px;
-    overflow: hidden!important;
-    padding: 0!important;
+    padding: 0;
     position: relative;
 `;
 const FooterWrap = styled(Div)`
@@ -71,8 +68,6 @@ class Cart extends React.Component{
         const { tickets, event } = this.props,
             length = tickets.length;
 
-        console.log({...tickets})
-        console.log({...event})
         return(
             <Wrapper>
                 <Header>
