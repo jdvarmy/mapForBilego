@@ -23,11 +23,12 @@ class AppLayout extends React.Component {
     }
 
     render() {
-        const { serverDataStore:{ data } } = this.props;
+        const { serverDataStore:{ loading, forceLoading } } = this.props;
+        const content = !forceLoading ? <Tickets /> : <><Tickets /><Loading /></>;
 
         return (
             <Wrapper id="bilego-sell-tickets">
-                {data ? <Tickets /> : <Loading />}
+                {!loading ? content : <Loading />}
             </Wrapper>
         );
     }

@@ -6,6 +6,11 @@ class CartStore{
     @observable total = null;
     city = null;
 
+    // validate form
+    @observable email = '';
+    @observable emailValid = '';
+    @observable formValid = false;
+
     constructor(props){
         const location = window.location.search;
 
@@ -16,16 +21,16 @@ class CartStore{
     }
 
     @action
-    addTickets = ( tickets ) => {
+    addTickets = tickets => {
         this.tickets = tickets;
     };
 
     @action
-    addEvent = ( event ) => {
+    addEvent = event => {
         this.event = event;
     };
     @action
-    addTotal = ( total ) => {
+    addTotal = total => {
         this.total = total;
     };
 
@@ -34,7 +39,22 @@ class CartStore{
         this.tickets = null;
         this.event = null;
         this.total = null;
-    }
+    };
+
+    // validate form
+    @action
+    setEmail = email => {
+        this.email = email;
+    };
+    @action
+    checkEmail = valid => {
+        this.emailValid = valid;
+    };
+    @action
+    checkForm = valid => {
+        this.formValid = valid;
+    };
+
 }
 
 export const cartStore = new CartStore();

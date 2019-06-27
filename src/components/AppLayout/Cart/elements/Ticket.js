@@ -35,7 +35,6 @@ const TicketMeta = styled('div')`
 class Ticket extends React.Component{
     render(){
         const { ticket:{ id, name, price, sector, row, seat, type } } = this.props;
-        console.log(type, name, sector)
 
         let nameContent, metaContent;
         if( type === 'with_map_seat' ){

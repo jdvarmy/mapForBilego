@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import {inject, observer} from "mobx-react";
 
@@ -73,8 +74,11 @@ const Link = styled('a')`
     }
 `;
 
-@inject('cartStore', 'basketStore')
+@inject('cartStore', 'basketStore', 'serverDataStore')
+@observer
 class Footer extends React.Component{
+    state = {disabled: false};
+
     close = () => {
         const { cartStore:{ clear }, basketStore:{ blockingForm } } = this.props;
 
@@ -82,18 +86,45 @@ class Footer extends React.Component{
         blockingForm(false);
     };
 
+    pay = ( e ) => {
+        this.setState({disabled: true});
+
+        const { basketStore:{ ticketsMap }, serverDataStore:{ getCheckoutData }, cartStore:{ email } } = this.props;
+        let items = [];
+
+        ticketsMap.forEach(el=>{
+            items.push({
+                product_id: el.id,
+                quantity: el.count,
+                variation_id: ''
+            })
+        });
+
+        const request = {
+            'payment_method': 'fondy',
+            'set_paid': true,
+            'billing': {
+                'email': email
+            },
+            'line_items': items,
+        };
+
+        getCheckoutData(request);
+    };
+
     render(){
-        const { cartStore:{ city, total } } = this.props,
+        const { cartStore:{ city, total, formValid } } = this.props,
+            { disabled } = this.state,
             href = `https://${city}.bilego.ru/offer/`;
 
         return(
             <Wrapper>
                 <TotalOrderWrap>
                     <TotalOrder>{total}</TotalOrder>
-                    <Meta>Нажимая кнопку «перейти к оплате», вы соглашаетесь с условиями <Link href={href} target="_blank">оферты</Link></Meta>
+                    <Meta>Нажимая кнопку «перейти к оплате», <Link href={href} target="_blank">вы соглашаетесь с условиями оферты</Link></Meta>
                 </TotalOrderWrap>
                 <ButtonNext>
-                    <Button>Перейти к оплате</Button>
+                    <Button disabled={!formValid || disabled} onClick={this.pay}>Перейти к оплате</Button>
                 </ButtonNext>
                 <ButtonPrev>
                     <Button onClick={this.close}>Назад</Button>

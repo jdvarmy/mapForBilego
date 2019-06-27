@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import {inject, observer} from "mobx-react";
 
 const Wrapper = styled('div')`
     position: relative;
@@ -46,6 +47,7 @@ const Input = styled('input')`
     transition-duration: .35s;
     transition-timing-function: linear;
     box-shadow: none;
+    ${props => props.valid === '' || props.valid ? '' : `border-color: #D0021B`}
 `;
 const ErrorWpar = styled('div')`
     position: relative;
@@ -61,17 +63,52 @@ const Error = styled('div')`
     color: #da251c;
     opacity: 0;
     z-index: 4;
+    ${props => props.valid === '' || props.valid ? '' : `opacity: 1`}
 `;
 
+@inject('cartStore')
+@observer
 class Email extends React.Component{
+
+    handleUserInput = e => {
+        const { cartStore:{ setEmail } } = this.props;
+        const name = e.target.name;
+        const value = e.target.value;
+
+        this.validateField(name, value);
+        setEmail(value);
+    };
+
+    validateField = (fieldName, value) => {
+        const { cartStore:{ checkEmail, checkForm } } = this.props;
+
+        switch(fieldName) {
+            case 'billing_email':
+                checkEmail( value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) );
+                break;
+            default:
+                break;
+        }
+
+        const { cartStore:{ emailValid } } = this.props;
+        checkForm(emailValid);
+
+    };
+
     render(){
+        const { cartStore:{ email, emailValid } } = this.props;
+
         return(
             <Wrapper>
                 <Label>Email</Label>
                 <InputWrap>
-                    <Input type="email" name="billing_email" id="billing_email" placeholder="address@example.com" />
+                    <Input type="email" name="billing_email" id="billing_email" placeholder="address@example.com"
+                           value={email}
+                           valid={emailValid}
+                           onChange={this.handleUserInput}
+                    />
                     <ErrorWpar>
-                        <Error>Обязательное поле</Error>
+                        <Error valid={emailValid}>Обязательное поле</Error>
                     </ErrorWpar>
                 </InputWrap>
             </Wrapper>

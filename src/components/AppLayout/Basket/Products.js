@@ -23,7 +23,7 @@ const Button = styled('button')`
     text-transform: uppercase;
     outline: none;
     padding: 8px 20px;
-    background: #ffae19;
+    background: #0c5a40;
     border: none;
     cursor: pointer;
     width: 100%;
@@ -32,7 +32,7 @@ const Button = styled('button')`
     margin-top: 1px;
     transition: background .2s ease;
     &:hover{
-        background: #0c5a40;
+        background: #ffae19;
     }
 `;
 

@@ -10,6 +10,16 @@ const Wrapper = styled('canvas')`
     display: block;
     opacity: 1;
     margin: 0 auto;
+    ${props=>props.forceLoading && `
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+    `}
+    animation-duration: .5s;
+    animation-timing-function: cubic-bezier(0,0,0.88,1);
+    animation-fill-mode: both;
+    animation-name: fade-in;
 `;
 
 @inject('serverDataStore')
@@ -28,15 +38,15 @@ class Loading extends React.Component{
 
     componentDidMount(){
         this.element = document.querySelector('#loading');
-        this.context = this.element.getContext('2d');
+        this.context = this.element.getContext('2d') && this.element.getContext('2d');
         this.container = document.querySelector('#bilego-sell-tickets');
 
         let img = document.createElement('img');
         img.src = logo;
         this.spride = img;
 
-        const { serverDataStore: { data } } = this.props;
-        if(!data) {
+        const { serverDataStore: { loading, forceLoading } } = this.props;
+        if(loading || forceLoading) {
             this.start();
         }
     }
@@ -50,22 +60,20 @@ class Loading extends React.Component{
         const width = this.container.getBoundingClientRect().width,
             height = this.container.getBoundingClientRect().height;
 
-        this.container
-            .classList.add('loading');
-        this.element
-            .setAttribute('width', width);
-        this.element
-            .setAttribute('height', height);
+        this.container.classList.add('loading');
+        this.element.setAttribute('width', width);
+        this.element.setAttribute('height', height);
 
         this.init = setInterval(() => {
-            this.context.clearRect(0, 0, width, height );
+            this.context.clearRect(0, 0, width, height);
             this.drawImageLoader();
         }, this.options.speed);
+
     };
     
     stop = () => {
         this.container.classList.remove('loading');
-        setTimeout(function(){
+        setTimeout(() => {
             clearInterval( this.init );
         }, 700);
     };
@@ -102,8 +110,9 @@ class Loading extends React.Component{
     };
 
     render() {
+        const { serverDataStore:{ loading, forceLoading } } = this.props;
         return (
-            <Wrapper id="loading" width={0} height={0} />
+            <Wrapper loading={loading} forceLoading={forceLoading} id="loading" width={0} height={0} />
         );
     }
 }
