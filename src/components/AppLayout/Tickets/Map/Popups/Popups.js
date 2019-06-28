@@ -32,6 +32,7 @@ class Popups extends React.Component{
     getTicketsById(id) {
         let nodes = [];
         const { basketStore:{ tickets } } = this.props;
+        // eslint-disable-next-line array-callback-return
         tickets.map(ticket=>{
             if(ticket.id === id) nodes.push(ticket)
         });

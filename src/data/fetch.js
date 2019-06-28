@@ -3533,8 +3533,8 @@ export function getData() {
 
     if( location ) {
         const urlArray = location.substr(1).split('&');
-        const id = urlArray[0],
-            city = urlArray[1].split('=')[1];
+        const id = urlArray[0];
+            // city = urlArray[1].split('=')[1];
 
         // let address = `https://${city}.bilego.ru/wp-json/bilego/v1/tickets/${id}`;
         // MjE5
@@ -3556,8 +3556,8 @@ export function getCheckout( request ) {
     const location = window.location.search;
 
     if( location ) {
-        const urlArray = location.substr(1).split('&');
-        const city = urlArray[1].split('=')[1];
+        // const urlArray = location.substr(1).split('&');
+        // const city = urlArray[1].split('=')[1];
 
         const options = {
             method: 'post',

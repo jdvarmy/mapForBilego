@@ -6,7 +6,9 @@ export const createSeatUID = (x, y) => {
     const arr = ['A','B','C','D','E','F','G','H','I','J'];
 
     for(let i=str.length; i--;){
+        // eslint-disable-next-line array-callback-return,no-loop-func
         arr.map((v,k)=>{
+            // eslint-disable-next-line array-callback-return
             if( isNaN(+str[i]) ) return;
             if( parseInt(str[i]) === k ) result += v;
         });

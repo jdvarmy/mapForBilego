@@ -91,7 +91,7 @@ class MapStore{
         this.mouse.x = this.normalizeX(e.pageX - this.initial.x + this.current.x);
         this.mouse.y = this.normalizeY(e.pageY - this.initial.y + this.current.y);
     };
-    onMouseUp = e => {
+    onMouseUp = () => {
         this.map.removeEventListener('mousemove', this.onMouseMove);
         document.removeEventListener('mouseup', this.onMouseUp);
         this.map.classList.remove('dragging');
@@ -165,15 +165,15 @@ class MapStore{
         if( domNode.firstChild )
             domNode.firstChild.remove();
     };
-    onTouchEnd = e => {
+    onTouchEnd = () => {
         this.map.removeEventListener('touchmove', this.onTouchMove);
         document.removeEventListener('touchend', this.onTouchEnd);
         this.map.classList.remove('dragging');
     };
     onTouchMoveZoom = e => {
 
-        const orig = e.touches,
-            touches = orig.length;
+        const orig = e.touches
+            // touches = orig.length;
 
         const pos = {
             x: (orig[0].pageX + orig[1].pageX)/2,
@@ -190,7 +190,7 @@ class MapStore{
             this.normalizeY(this.y - (pos.y - this.container.getBoundingClientRect().top - this.y) * (this.scale/scale - 1))
         );
     };
-    onTouchEndZoom = e => {
+    onTouchEndZoom = () => {
         this.map.removeEventListener('touchmove', this.onTouchMoveZoom);
         document.removeEventListener('touchend', this.onTouchEndZoom);
         this.map.classList.remove('dragging');
@@ -250,7 +250,6 @@ class MapStore{
         this.moveTo(0.5, 0.5, this.fitscale, 0);
     };
     moveTo = (x, y, s, duration, ry) => {
-        duration = typeof duration !== 'undefined' ? duration : 400;
         ry = typeof ry !== 'undefined' ? ry : 0.5;
         s = typeof s !== 'undefined' ? s : this.scale/this.fitscale;
 
