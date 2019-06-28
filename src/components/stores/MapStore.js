@@ -319,8 +319,8 @@ class MapStore{
         const width = (this.containerW / this.contentW / this.scale * this.containerMinimap.offsetWidth),
             height = (this.containerH / this.contentH / this.scale * this.containerMinimap.offsetHeight);
 
-        this.miniMap.top = (-this.y / this.contentH / this.scale * this.containerMinimap.offsetWidth);
-        this.miniMap.left = (-this.x / this.contentW / this.scale * this.containerMinimap.offsetHeight);
+        this.miniMap.top = (-this.y / this.contentH / this.scale * this.containerMinimap.offsetHeight);
+        this.miniMap.left = (-this.x / this.contentW / this.scale * this.containerMinimap.offsetWidth);
         this.miniMap.right = this.miniMap.left + width;
         this.miniMap.bottom = this.miniMap.top + height;
 
@@ -331,12 +331,9 @@ class MapStore{
         }, 3000)
     };
 
-
     // control buttons
     @action.bound
-    handleClickZoomIn(e){
-        e.preventDefault();
-
+    handleClickZoomIn(){
         this.stopMomentum();
 
         const scale = this.scale;
@@ -350,9 +347,7 @@ class MapStore{
             );
     };
     @action.bound
-    handleClickZoomOut(e){
-        e.preventDefault();
-
+    handleClickZoomOut(){
         this.stopMomentum();
 
         const scale = this.scale;

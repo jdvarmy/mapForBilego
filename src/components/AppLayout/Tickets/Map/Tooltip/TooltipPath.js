@@ -29,6 +29,7 @@ export class TooltipPath extends Tooltip{
         desc.classList.add('descr');
 
         title = text;
+        // eslint-disable-next-line array-callback-return
         ticketArr.map(e=>{
             count += e.stock;
             if( priceMin === undefined ) priceMin = e.price_regular;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import styled from 'styled-components';
 
 import Email from './elements/Email'
@@ -25,8 +25,13 @@ const Wrapper = styled('div')`
     height: 100%;
     width: 50%;
     max-width: 440px;
-    min-width: 350px;
     padding: 0 30px;
+    ${props=>props.isSmallScreen && `
+        width: 100%;
+        max-width: none;
+        padding: 0;
+    `}
+    min-width: 350px;
     background-color: #fff;
     animation-duration: 0.2s;
     animation-timing-function: cubic-bezier(0,0,0.88,1);
@@ -46,11 +51,17 @@ const Header = styled('div')`
     font-weight: 700;
 `;
 const EmailWrap = styled(Div)``;
-const AdditionalWrap = styled(Div)``;
+const AdditionalWrap = styled(Div)`
+    ${props => props.isSmallScreen && `
+        padding: 10px 15px;
+    `}
+`;
 const CountTickets = styled(Div)`
     font-size: 18px;
     line-height: 21px;
-    // padding: 10px 0 20px;
+    ${props => props.isSmallScreen && `
+        padding: 0 15px;
+    `}
 `;
 const TicketsWrap = styled(Div)`
     height: 249px;
@@ -58,28 +69,29 @@ const TicketsWrap = styled(Div)`
     padding: 0;
     position: relative;
 `;
-const FooterWrap = styled(Div)`
+const FooterWrap = styled('div')`
     margin: 0;
 `;
 
+@inject('dataStore')
 @observer
 class Cart extends React.Component{
     render(){
-        const { tickets, event } = this.props,
+        const { tickets, event, dataStore:{ isSmallScreen } } = this.props,
             length = tickets.length;
 
         return(
-            <Wrapper>
+            <Wrapper isSmallScreen={isSmallScreen} >
                 <Header>
                     <SpanBlack>Подтверждение заказа</SpanBlack>
                 </Header>
                 <EmailWrap>
                     <Email />
                 </EmailWrap>
-                <AdditionalWrap>
+                <AdditionalWrap isSmallScreen={isSmallScreen} >
                     <Additional event={event}/>
                 </AdditionalWrap>
-                <CountTickets>
+                <CountTickets isSmallScreen={isSmallScreen} >
                     <SpanGray>{`${length} ${getStrEnding(length, ['билет','билета','билетов'])}`}</SpanGray>
                 </CountTickets>
                 <TicketsWrap>

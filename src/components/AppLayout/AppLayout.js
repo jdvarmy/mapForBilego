@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 import Loading from './Loading/Loading'
 import Tickets from './Tickets/Tickets'
+import ThankYou from './ThankYou/ThankYou'
 
 const Wrapper = styled('div')`
     background-color: #fff;
@@ -12,7 +13,7 @@ const Wrapper = styled('div')`
     overflow: hidden;
 `;
 
-@inject('serverDataStore')
+@inject('serverDataStore', 'thankYouStore')
 @observer
 class AppLayout extends React.Component {
     constructor(props){
@@ -23,8 +24,13 @@ class AppLayout extends React.Component {
     }
 
     render() {
-        const { serverDataStore:{ loading, forceLoading } } = this.props;
-        const content = !forceLoading ? <Tickets /> : <><Tickets /><Loading /></>;
+        const { serverDataStore:{ loading, forceLoading }, thankYouStore:{ thankYou } } = this.props;
+        let content;
+
+        if( thankYou )
+            content = <ThankYou />;
+        else
+            content = !forceLoading ? <Tickets /> : <><Tickets /><Loading /></>;
 
         return (
             <Wrapper id="bilego-sell-tickets">

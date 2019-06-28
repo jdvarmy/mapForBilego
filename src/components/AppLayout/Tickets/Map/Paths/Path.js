@@ -24,7 +24,7 @@ const Element = styled('path')`
     }}
 `;
 
-@inject('serverDataStore', 'mapStore', 'basketStore')
+@inject('serverDataStore', 'mapStore', 'basketStore', 'dataStore')
 @observer
 class Path extends React.Component {
     constructor(props){
@@ -45,8 +45,9 @@ class Path extends React.Component {
     }
 
     handleHover = () => {
+        const { dataStore:{ isSmallScreen } } = this.props;
         this.pathStore.onEnter();
-        this.tooltip.create();
+        !isSmallScreen && this.tooltip.create();
     };
     handleUnhover = () => {
         this.pathStore.onOver();
@@ -74,7 +75,6 @@ class Path extends React.Component {
                 onMouseOver={this.handleHover}
                 onMouseLeave={this.handleUnhover}
                 onClick={ticket ? this.handlerSpecialClick : handleClick}
-                onTouchStart={ticket ? this.handlerSpecialClick : handleClick}
             />
         )
     }

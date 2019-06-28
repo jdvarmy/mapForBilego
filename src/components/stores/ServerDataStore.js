@@ -39,6 +39,16 @@ class ServerDataStore{
     };
 
     @action
+    clean = () => {
+        this.data = null;
+        this.checkoutData = null;
+
+        this.forceLoading = false;
+
+        this.getPostData();
+    };
+
+    @action
     startLoading = () => { this.loading = true };
     @action
     stopLoading = () => { this.loading = false };

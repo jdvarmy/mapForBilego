@@ -63,13 +63,11 @@ class ZoomButtons extends React.Component {
                    href='#'
                    disabled={scale === maxscale}
                    onClick={handleClickZoomIn}
-                   onTouchStart={handleClickZoomIn}
                 />
                 <ZoomOut
                    href='#'
                    disabled={scale === fitscale}
                    onClick={handleClickZoomOut}
-                   onTouchStart={handleClickZoomOut}
                 />
             </Wrapper>
         );

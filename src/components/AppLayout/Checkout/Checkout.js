@@ -10,21 +10,22 @@ const Wrapper = styled('div')`
     left: 0;
     z-index: 1;
     height: 100%;
-    width: 50%;
-    max-width: 440px;
-    min-width: 350px;
+    width: 100%;
     padding: 0 30px;
+    ${props => props.isSmallScreen && `
+        padding: 0;
+    `}
     background-color: #fff;
     // animation-duration: 0.2s;
     // animation-timing-function: cubic-bezier(0,0,0.88,1);
     // animation-fill-mode: both;
-    opacity:.8;
-    transform: translate3d(-100%,0,0);
+    opacity: 0;
+    // transform: translate3d(-100%,0,0);
     transition: transform 0.2s, opacity 0.2s;
     // animation-name: in-left;
 `;
 
-@inject('serverDataStore', 'informerStore')
+@inject('serverDataStore', 'informerStore', 'thankYouStore', 'cartStore', 'basketStore', 'dataStore')
 @observer
 class Checkout extends React.Component{
     componentDidMount(): void {
@@ -39,7 +40,7 @@ class Checkout extends React.Component{
     }
 
     fondyFunction = url => {
-        const { informerStore:{ setMessage } } = this.props;
+        const { informerStore:{ setMessage }, thankYouStore:{ setThankYou }, serverDataStore:{ clean }, cartStore:{ clear }, basketStore:{ clearBasket, blockingForm } } = this.props;
 
         // eslint-disable-next-line no-undef
         $ipsp.get('checkout').config({
@@ -54,7 +55,7 @@ class Checkout extends React.Component{
                     // action: "redirect"
                     // token: "baa727b73375d289325d5f587e24ae3904fde1e2"
                     // url: "https://api.fondy.eu/api/checkout/redirect/callback/1133802477/7eaa9adb63a1affc4f909d536149d1c1ed8e4ecb"
-
+                    //
                     // action: "submit"
                     // final: true
                     // method: "POST"
@@ -99,13 +100,13 @@ class Checkout extends React.Component{
                     // target: "_top"
                     // token: "f454954b339817ca9bd0d3792596fe56aa54c9ef"
                     // url: "https://evenpic.ru/?wc-api=Bilego_Tickets_Gates_Fondy"
-
-
+                    //
+                    //
                     // false
                     // action: "redirect"
                     // token: "13de75687a0da7b9eb12f4a3482bd78a25115628"
                     // url: "https://api.fondy.eu/api/checkout?token=13de75687a0da7b9eb12f4a3482bd78a25115628"
-
+                    //
                     // api_version: "1.0.0"
                     // error:
                     //     code: 2009
@@ -191,7 +192,15 @@ class Checkout extends React.Component{
                     }
 
                     if( send_data && status === 'approved' ){
-                        // todo approved
+                        setThankYou(true);
+
+                        setTimeout( () => {
+                            setThankYou(false);
+                            clear();
+                            clean();
+                            clearBasket();
+                            blockingForm(false);
+                        }, 9000);
                     }
                 }
             );
@@ -201,8 +210,9 @@ class Checkout extends React.Component{
     };
 
     render(){
+        const { dataStore:{ isSmallScreen } } = this.props;
         return(
-            <Wrapper id="cart-checkout" />
+            <Wrapper isSmallScreen={isSmallScreen}  id="cart-checkout" />
         );
     }
 }

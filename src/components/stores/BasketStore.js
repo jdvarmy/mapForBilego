@@ -83,6 +83,15 @@ class BasketStore{
         this.currentTicketsSet = currentTicketSet;
     };
 
+    @action
+    clearBasket = () => {
+        this.tickets = [];
+        this.ticketsMap = new Map();
+        this.count = 0;
+        this.productInBasket = false;
+        this.isFull = false;
+    }
+
 }
 
 export const basketStore = new BasketStore();

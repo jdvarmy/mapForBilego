@@ -25,7 +25,7 @@ const Text = styled('text')`
     cursor: pointer;
 `;
 
-@inject('serverDataStore', 'mapStore', 'basketStore', 'informerStore')
+@inject('serverDataStore', 'mapStore', 'basketStore', 'informerStore', 'dataStore')
 @observer
 class Seat extends React.Component {
     constructor(props){
@@ -53,11 +53,13 @@ class Seat extends React.Component {
 
     handlerHover = e => {
         if(this.seatStore.ticket) {
+            const { dataStore:{ isSmallScreen } } = this.props;
+
             this.scale = this.props.mapStore.scale;
-            this.seatStore.onEnter();
+            !isSmallScreen && this.seatStore.onEnter();
 
             const errorY = this.seatStore.click ? 0 : - 2 * this.scale;
-            this.tooltip.create( errorY );
+            !isSmallScreen && this.tooltip.create( errorY );
         }
     };
 

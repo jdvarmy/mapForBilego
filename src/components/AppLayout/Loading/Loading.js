@@ -4,13 +4,28 @@ import styled from 'styled-components';
 import logo from './loading-v1.png';
 import {inject, observer} from 'mobx-react';
 
-const Wrapper = styled('canvas')`
+const Wrapper = styled('div')``;
+const Background = styled('div')`
+    ${props => props.forceLoading && `   
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: rgba(255,255,255,1);
+        animation-duration: 8s;
+        animation-fill-mode: both;
+        animation-name: fade-in-minimal;
+    `}
+`;
+
+const Content = styled('canvas')`
     width: 100%;
     min-height: 645px;
     display: block;
     opacity: 1;
     margin: 0 auto;
-    ${props=>props.forceLoading && `
+    ${props => props.forceLoading && `
         position: absolute;
         top: 0;
         left: 0;
@@ -112,7 +127,10 @@ class Loading extends React.Component{
     render() {
         const { serverDataStore:{ loading, forceLoading } } = this.props;
         return (
-            <Wrapper loading={loading} forceLoading={forceLoading} id="loading" width={0} height={0} />
+            <Wrapper>
+                <Background forceLoading={forceLoading} />
+                <Content loading={loading} forceLoading={forceLoading} id="loading" width={0} height={0} />
+            </Wrapper>
         );
     }
 }
