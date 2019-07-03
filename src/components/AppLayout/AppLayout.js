@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import Loading from './Loading/Loading'
 import Tickets from './Tickets/Tickets'
 import ThankYou from './ThankYou/ThankYou'
+import Error from './Error/Error'
 
 const Wrapper = styled('div')`
     background-color: #fff;
@@ -24,11 +25,13 @@ class AppLayout extends React.Component {
     }
 
     render() {
-        const { serverDataStore:{ loading, forceLoading }, thankYouStore:{ thankYou } } = this.props;
+        const { serverDataStore:{ loading, forceLoading, error }, thankYouStore:{ thankYou } } = this.props;
         let content;
 
         if( thankYou )
             content = <ThankYou />;
+        else if( error )
+            content = <Error />;
         else
             content = !forceLoading ? <Tickets /> : <><Tickets /><Loading /></>;
 

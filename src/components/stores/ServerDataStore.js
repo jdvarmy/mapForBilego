@@ -9,6 +9,8 @@ class ServerDataStore{
     @observable loading = true;
     @observable forceLoading = false;
 
+    @observable error = false;
+
     @action
     getPostData = () => {
         this.startLoading();
@@ -30,10 +32,16 @@ class ServerDataStore{
         getCheckout(data).then( data => {
             console.log(data)
 
-            this.checkoutData = data;
-            setTimeout(() => {
-                this.stopForceLoading()
-            }, 3500);
+            if( data ) {
+                if( data.code === 'checkout-error' ){
+                    this.setError(data.message);
+                }else {
+                    this.checkoutData = data;
+                    setTimeout(() => {
+                        this.stopForceLoading()
+                    }, 3500);
+                }
+            }
 
         });
     };
@@ -42,10 +50,16 @@ class ServerDataStore{
     clean = () => {
         this.data = null;
         this.checkoutData = null;
+        this.error = false;
 
         this.forceLoading = false;
 
         this.getPostData();
+    };
+
+    @action
+    setError = error => {
+        this.error = error;
     };
 
     @action
