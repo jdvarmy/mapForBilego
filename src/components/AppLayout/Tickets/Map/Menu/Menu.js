@@ -6,9 +6,6 @@ import {inject} from "mobx-react";
 
 const Wrapper = styled('div')`
     display: inline-block;
-    // position: absolute;
-    // top: 0;
-    // left: calc( 50% - 200px);
     font-size: 0px;
     width: 100%;
     max-width: 360px;

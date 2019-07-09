@@ -30,10 +30,13 @@ const Text = styled('text')`
 class Seat extends React.Component {
     constructor(props){
         super(props);
-        const { id, serverDataStore:{ data: { tickets } } } = props;
+        const { id, serverDataStore:{ data: { tickets, ticketcloud } }, el:{name}, row, sector } = props;
 
         this.seatStore = new SeatStore();
-        this.seatStore.init( { id, tickets } );
+        if( ticketcloud )
+            this.seatStore.initTicketCloud( { name, row, sector, tickets } );
+        else
+            this.seatStore.init( { id, tickets } );
 
         if( this.seatStore.ticket && this.seatStore.ticket.type === 'with_map_sector' )
             this.seatStore.addSpecialType();
@@ -107,7 +110,7 @@ class Seat extends React.Component {
 
             if ( (click && hover) || click ) {
                 radius = (r*1.3).toFixed(2);
-                style = {fill: 'white', stroke: ticket.color, strokeWidth: `${r}px`}
+                style = {fill: 'white', stroke: ticket.color, strokeWidth: `${r}px`, zIndex: 1}
             }else if( hover ){
                 radius = (r*1.8).toFixed(2);
                 style = {fill: ticket.color};

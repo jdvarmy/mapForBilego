@@ -3537,8 +3537,11 @@ export function getData() {
             // city = urlArray[1].split('=')[1];
 
         // let address = `https://${city}.bilego.ru/wp-json/bilego/v1/tickets/${id}`;
-        // MjE5
-        // MjAx
+        // https://webapp.bilego.ru/?a71214be6d36580a&city=spb map
+        // https://webapp.bilego.ru/?a71214be79277003&city=spb set
+
+        // https://webapp.bilego.ru/?a712a48c7927580ad8c06937ce1ece1e&city=spb set
+        // https://webapp.bilego.ru/?a712a48c7927580aa7123d4ece1ece1e&city=spb map
         let address = `https://evenpic.ru/wp-json/bilego/v1/tickets/${id}`;
         return fetch(address)
             .then( resp => resp.json() )

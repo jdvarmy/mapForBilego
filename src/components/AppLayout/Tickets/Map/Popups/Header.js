@@ -8,6 +8,7 @@ const Wrapper = styled('div')`
     border-bottom: 1px solid rgba(0,0,0,0.05);
     padding: 10px 54px 7px 24px;
     box-sizing: border-box;
+    overflow: hidden;
 `;
 
 const HeaderH = styled('div')`

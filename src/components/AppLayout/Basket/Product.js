@@ -83,15 +83,16 @@ const Remover = styled('b')`
     }
 `;
 
-@inject('basketStore', 'mapStore')
+@inject('basketStore', 'mapStore', 'serverDataStore')
 @observer
 class Product extends React.Component{
     removeFromBasket = e => {
-        const { basketStore:{toBasket, seatStores}, ticket } = this.props;
+        const { basketStore:{toBasket, seatStores}, ticket, serverDataStore:{data:{ticketcloud}} } = this.props;
         toBasket( ticket, false );
 
         for( let key in seatStores ){
-            if( +key === ticket.id )
+            if( !ticketcloud ) key = +key;
+            if( key === ticket.id )
                 seatStores[key].onClick();
         }
     };

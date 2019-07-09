@@ -16,9 +16,13 @@ class ServerDataStore{
         this.startLoading();
 
         getData().then(data => {
+            console.log(data)
+
             if( data ) {
-                this.data = data;
-                this.stopLoading();
+                if ( !data.code) {
+                    this.data = data;
+                    this.stopLoading();
+                }
             }
         });
 
@@ -33,9 +37,9 @@ class ServerDataStore{
             console.log(data)
 
             if( data ) {
-                if( data.code === 'checkout-error' ){
+                if( data.code === 'error' ){
                     this.setError(data.message);
-                }else {
+                }else{
                     this.checkoutData = data;
                     setTimeout(() => {
                         this.stopForceLoading()
