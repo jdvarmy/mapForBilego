@@ -139,3 +139,14 @@ export const shadow = (dx, dy, blur, color, opacity) => {
     return id;
 };
 
+export const getEventId = all => {
+    const location = window.location.search;
+
+    if( location ) {
+        const urlArray = location.substr(1).split('&');
+        return all ? urlArray : urlArray[0];
+    }else{
+        return null;
+    }
+};
+

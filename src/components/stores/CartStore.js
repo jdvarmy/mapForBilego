@@ -1,9 +1,10 @@
 import { action, observable } from 'mobx';
 
 class CartStore{
-    @observable tickets = null;
-    @observable event = null;
-    @observable total = null;
+    @observable showCart = false;
+    @observable tickets = undefined;
+    @observable event = undefined;
+    @observable total = undefined;
     city = null;
 
     // validate form
@@ -11,7 +12,7 @@ class CartStore{
     @observable emailValid = '';
     @observable formValid = false;
 
-    constructor(props){
+    constructor(){
         const location = window.location.search;
 
         if( location ) {
@@ -21,24 +22,23 @@ class CartStore{
     }
 
     @action
-    addTickets = tickets => {
-        this.tickets = tickets;
+    showHideDiv = (tickets, event, total) => {
+        this.showCart = !this.showCart;
+        this.setData(tickets, event, total);
     };
 
-    @action
-    addEvent = event => {
+    setData = (tickets, event, total) => {
+        this.tickets = tickets;
         this.event = event;
-    };
-    @action
-    addTotal = total => {
         this.total = total;
     };
 
     @action
     clear = () => {
-        this.tickets = null;
-        this.event = null;
-        this.total = null;
+        this.showCart = false;
+        this.tickets = undefined;
+        this.event = undefined;
+        this.total = undefined;
     };
 
     // validate form

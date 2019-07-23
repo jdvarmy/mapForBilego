@@ -65,15 +65,12 @@ const TableRow = styled('div')`
 @inject('basketStore', 'serverDataStore', 'cartStore')
 @observer
 class Products extends React.Component{
-
     getCart = e => {
         e.preventDefault();
-        const { basketStore:{ tickets, blockingForm }, cartStore:{ addTickets, addEvent, addTotal }, serverDataStore:{ data:{ event } } } = this.props;
+        const { basketStore:{ tickets, blockingForm }, cartStore: {showHideDiv}, serverDataStore:{ data:{ event } } } = this.props;
 
         blockingForm(true);
-        addTickets(tickets);
-        addEvent(event);
-        addTotal( moneyFormating(this.countSummary(), true) );
+        showHideDiv(tickets, event, moneyFormating(this.countSummary(), true));
     };
 
     countSummary = () => {

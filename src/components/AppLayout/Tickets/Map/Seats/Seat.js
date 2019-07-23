@@ -54,7 +54,7 @@ class Seat extends React.Component {
         }
     }
 
-    handlerHover = e => {
+    handlerHover = () => {
         if(this.seatStore.ticket) {
             const { dataStore:{ isSmallScreen } } = this.props;
 
@@ -110,7 +110,7 @@ class Seat extends React.Component {
 
             if ( (click && hover) || click ) {
                 radius = (r*1.3).toFixed(2);
-                style = {fill: 'white', stroke: ticket.color, strokeWidth: `${r}px`, zIndex: 1}
+                style = {fill: 'white', stroke: ticket.color, strokeWidth: `${r}px`}
             }else if( hover ){
                 radius = (r*1.8).toFixed(2);
                 style = {fill: ticket.color};
@@ -141,7 +141,6 @@ class Seat extends React.Component {
                 onMouseEnter={this.handlerHover}
                 onMouseLeave={this.handlerUnhover}
                 onClick={ !specialType ? this.handlerClick : this.handlerSpecialClick}
-                // todo: add to basket from mobile device
             >
                 <Circle
                     id={id}

@@ -1,5 +1,4 @@
-// Добавить все что необходимо для покупки билета в основной массив данных и в ответ на запрос корзины возвращать только true или false.
-// а карзину формировать исходя из данных которые уже есть
+import {getEventId} from '../components/AppLayout/functions/functions';
 
 export function getData() {
     const bilegoMap = {
@@ -3529,17 +3528,21 @@ export function getData() {
             }
         ]
     };
-    const location = window.location.search;
+    // todo: в проме поменять на true
+    const location = getEventId(false);
 
     if( location ) {
-        const urlArray = location.substr(1).split('&');
-        const id = urlArray[0];
-            // city = urlArray[1].split('=')[1];
-
+        const urlArray = location;
+        const id = urlArray;
+        // todo: раскоментить на проме
+        // const id = urlArray[0];
+        // const city = urlArray[1].split('=')[1];
         // let address = `https://${city}.bilego.ru/wp-json/bilego/v1/tickets/${id}`;
+
         // https://webapp.bilego.ru/?a71214be6d36580a&city=spb map
         // https://webapp.bilego.ru/?a71214be79277003&city=spb set
 
+        // https://webapp.bilego.ru/?a712a48cf9c09e44a7126d36ce1ece1e&city=spb
         // https://webapp.bilego.ru/?a712a48c7927580ad8c06937ce1ece1e&city=spb set
         // https://webapp.bilego.ru/?a712a48c7927580aa7123d4ece1ece1e&city=spb map
         let address = `https://evenpic.ru/wp-json/bilego/v1/tickets/${id}`;
@@ -3556,7 +3559,8 @@ export function getData() {
 }
 
 export function getCheckout( request ) {
-    const location = window.location.search;
+    // todo: в проме поменять на true
+    const location = getEventId(false);
 
     if( location ) {
         // const urlArray = location.substr(1).split('&');
@@ -3568,7 +3572,7 @@ export function getCheckout( request ) {
                 'Content-Type': 'application/json',
                 'accept': 'application/json',
             },
-            body: JSON.stringify( {'form': request} )
+            body: JSON.stringify( {'form': request, 'id': location} )
         };
 
 

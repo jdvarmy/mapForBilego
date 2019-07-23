@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import styled from 'styled-components';
+import {inject, observer} from "mobx-react";
 
 const EventName = styled('div')`
     font-size: 17px;
@@ -18,16 +19,22 @@ const EventAddress = styled('div')`
     line-height: 18px;
 `;
 
+@inject('cartStore')
+@observer
 class Additional extends React.Component{
     render(){
-        const { event:{ title, date, address } } = this.props;
+        const {cartStore: {event}} = this.props;
 
         return(
-            <>
-                <EventName>{title}</EventName>
-                <EventDate>{date}</EventDate>
-                <EventAddress>{address}</EventAddress>
-            </>
+            <Fragment>
+              {event &&
+                <Fragment>
+                  <EventName>{event.title}</EventName>
+                  <EventDate>{event.date}</EventDate>
+                  <EventAddress>{event.address}</EventAddress>
+                </Fragment>
+              }
+            </Fragment>
         );
     }
 }

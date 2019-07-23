@@ -50,7 +50,9 @@ const Sector = styled('div')`
     font-size: 13px;
     line-height: 18px;
 `;
-const RowSeat = styled(ContentWrapper)``;
+const RowSeat = styled(ContentWrapper)`
+    font-size: 14px;
+`;
 const Money = styled(ContentWrapper)`
     & > span{
         white-space: nowrap;

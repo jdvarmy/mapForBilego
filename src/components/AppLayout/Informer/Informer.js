@@ -8,7 +8,6 @@ const Container = styled('div')`
     position: absolute;
     top: 100px;
     right: 0;
-    // bottom: 0;
     left: 0;
     margin: auto;
     z-index: 100;
@@ -24,7 +23,7 @@ const InnerContainer = styled('div')`
     max-width: 700px;
     background-color: #fff;
     border: 1px solid #ffae19;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.25), 0 6px 6px rgba(0,0,0,0.22);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12);
 `;
 
 const Wrap = styled('span')`

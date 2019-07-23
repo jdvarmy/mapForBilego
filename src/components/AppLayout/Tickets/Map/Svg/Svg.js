@@ -21,7 +21,6 @@ class Svg extends React.Component{
 
         mapStore.setContainer (document.querySelector('#bt-container') );
         mapStore.setMap (document.querySelector('#btm-map') );
-
         mapStore.setContentDimensions ( parseInt( width ), parseInt( height ) );
 
         window.addEventListener('resize', this.updateResize);
@@ -31,11 +30,10 @@ class Svg extends React.Component{
     }
 
     render() {
-        const { serverDataStore:{ data } } = this.props;
+        const { serverDataStore:{ data }, mapStore } = this.props;
         const backgroundImage = data.map_images.bgmap[1],
             svgData = data.map_data.data;
         const { width, height } = svgData;
-        const { mapStore } = this.props;
         const { x, y, scale, delay } = mapStore;
 
         return (

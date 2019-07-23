@@ -2,7 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import {inject, observer} from "mobx-react";
 
-const Wrapper = styled('div')``;
+const Wrapper = styled('div')`
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+`;
 
 const Button = styled('button')`
     text-align: center;
@@ -46,7 +52,6 @@ const Meta = styled('div')`
 `;
 
 const ButtonNext = styled('div')`
-    float: right;
     & button{
         background: #0c5a40;
         &:hover{
@@ -55,7 +60,6 @@ const ButtonNext = styled('div')`
     }
 `;
 const ButtonPrev = styled('div')`
-    float: left;
     & button{
         background: #ffae19;
         &:hover{
@@ -95,8 +99,8 @@ class Footer extends React.Component{
             items.push({
                 product_id: el.id,
                 quantity: el.count,
-                variation_id: ''
-            })
+                variation_id: '',
+            });
         });
 
         const request = {

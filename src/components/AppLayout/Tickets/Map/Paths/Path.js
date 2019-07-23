@@ -40,8 +40,10 @@ class Path extends React.Component {
             el = ReactDOM.findDOMNode(this);
         let ticketArr = [];
 
-        tickets.map( e => e.sector === id && ticketArr.push(e) );
-        this.tooltip = new TooltipPath({el, ticketArr, text});
+        if( tickets !== null ) {
+            tickets.map(e => e.sector === id && ticketArr.push(e));
+            this.tooltip = new TooltipPath({el, ticketArr, text});
+        }
     }
 
     handleHover = () => {

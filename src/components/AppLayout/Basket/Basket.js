@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import Form from './Form';
 
 const Wrapper = styled('div')``;
-
 const Meta = styled('div')``;
 
 @inject('basketStore')

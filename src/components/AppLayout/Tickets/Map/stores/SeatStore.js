@@ -13,16 +13,18 @@ export class SeatStore {
     @action
     initTicketCloud = props => {
         const { name, row, sector, tickets } = props;
-        // eslint-disable-next-line array-callback-return
-        tickets.map(e => {
-            if( e.sector && e.row && e.seat ) {
-                if (sector === e.sector && row === e.row.toString() && name === e.seat.toString()) {
-                    this.ticket = e;
+        if( tickets !== null ) {
+            // eslint-disable-next-line array-callback-return
+            tickets.map(e => {
+                if (e.sector && e.row && e.seat) {
+                    if (sector === e.sector && row === e.row.toString() && name === e.seat.toString()) {
+                        this.ticket = e;
+                    }
+                } else {
+                    if (name === e.id || name === e.sector) this.ticket = e;
                 }
-            }else{
-                if( name === e.id || name === e.sector ) this.ticket = e;
-            }
-        });
+            });
+        }
     };
 
     @observable

@@ -46,7 +46,6 @@ class ServerDataStore{
                     }, 3500);
                 }
             }
-
         });
     };
 

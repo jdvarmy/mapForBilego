@@ -4,10 +4,12 @@ export class PathStore {
     @action
     init = props => {
         const { tickets, id } = props;
-        // eslint-disable-next-line array-callback-return
-        tickets.map(e => {
-            if(id === e.uid) this.ticket = e
-        });
+        if( tickets !== null ) {
+            // eslint-disable-next-line array-callback-return
+            tickets.map(e => {
+                if (id === e.uid) this.ticket = e
+            });
+        }
     };
 
     @observable

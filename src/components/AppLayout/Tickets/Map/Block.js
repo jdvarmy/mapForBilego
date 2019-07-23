@@ -1,8 +1,9 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import styled from 'styled-components';
+import {Animation} from '../../../styles/defaults';
 
-const Blocking = styled('div')`
+const Blocking = styled(Animation)`
     width: 100%;
     height: 100%;
     position: absolute;
@@ -26,7 +27,7 @@ class Block extends React.Component{
         let buffy = null;
 
         if( blockTicketsForm )
-            buffy = ( <Blocking onClick={this.close} /> );
+            buffy = ( <Blocking loading fast onClick={this.close} /> );
 
         return <>{buffy}</>;
     }

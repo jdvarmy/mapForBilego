@@ -5,6 +5,10 @@ import {inject, observer} from 'mobx-react';
 @inject('serverDataStore', 'cartStore', 'basketStore')
 @observer
 class Error extends React.Component{
+    componentWillUnmount() {
+        clearTimeout(this.timeout);
+    }
+
     returnToTheTickets = () => {
         this.clear();
     };
@@ -21,7 +25,7 @@ class Error extends React.Component{
     render(){
         const { serverDataStore:{ error } } = this.props;
 
-        setTimeout( () => {
+        this.timeout = setTimeout( () => {
             this.clear();
         }, 9000);
 

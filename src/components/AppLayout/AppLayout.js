@@ -1,16 +1,18 @@
-import React from 'react'
-import { observer, inject } from 'mobx-react'
-import styled from 'styled-components'
+import React from 'react';
+import { observer, inject } from 'mobx-react';
+import styled from 'styled-components';
+import {$css} from '../styles/defaults';
 
-import Loading from './Loading/Loading'
-import Tickets from './Tickets/Tickets'
-import ThankYou from './ThankYou/ThankYou'
-import Error from './Error/Error'
+import Loading from './Loading/Loading';
+import Tickets from './Tickets/Tickets';
+import ThankYou from './ThankYou/ThankYou';
+import Error from './Error/Error';
 
 const Wrapper = styled('div')`
     background-color: #fff;
     position:relative;
     width: 100%;
+    height: ${$css.sizes.containerH}
     overflow: hidden;
 `;
 
@@ -20,24 +22,19 @@ class AppLayout extends React.Component {
     constructor(props){
         super(props);
 
-        const { serverDataStore:{ getPostData } } = this.props;
+        const {serverDataStore: {getPostData}} = this.props;
         getPostData();
     }
 
     render() {
-        const { serverDataStore:{ loading, forceLoading, error }, thankYouStore:{ thankYou } } = this.props;
-        let content;
-
-        if( thankYou )
-            content = <ThankYou />;
-        else if( error )
-            content = <Error />;
-        else
-            content = !forceLoading ? <Tickets /> : <><Tickets /><Loading /></>;
+        const {serverDataStore: {error, data}, thankYouStore: {thankYou}} = this.props;
 
         return (
             <Wrapper id="bilego-sell-tickets">
-                {!loading ? content : <Loading />}
+                {data && <Tickets />}
+                {thankYou && <ThankYou />}
+                {error && <Error />}
+                <Loading src={1}/>
             </Wrapper>
         );
     }
