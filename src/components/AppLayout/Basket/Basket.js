@@ -1,11 +1,7 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import styled from 'styled-components';
-
 import Form from './Form';
-
-const Wrapper = styled('div')``;
-const Meta = styled('div')``;
+import { Drawer } from 'antd';
 
 @inject('basketStore')
 @observer
@@ -14,12 +10,16 @@ class Basket extends React.Component{
         const { basketStore:{ productInBasket } } = this.props;
 
         return (
-            <>
-                <Wrapper>
-                    { productInBasket && <Form /> }
-                </Wrapper>
-                <Meta />
-            </>
+            <Drawer
+              placement='bottom'
+              visible={productInBasket}
+              zIndex={1}
+              closable={false}
+              mask={false}
+              height={76}
+            >
+                { productInBasket && <Form /> }
+            </Drawer>
         );
     }
 }

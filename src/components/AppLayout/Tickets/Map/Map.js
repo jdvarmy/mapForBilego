@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
-
-import Menu from './Menu/Menu'
-import Svg from './Svg/Svg'
-import MiniMap from './Minimap/Minimap'
-import ZoomButtons from './ZoomButtons/ZoomButtons'
+import Menu from './Menu/Menu';
+import Svg from './Svg/Svg';
+import MiniMap from './Minimap/Minimap';
+import ZoomButtons from './ZoomButtons/ZoomButtons';
+import ModalTickets from './ModalTickets/ModalTickets';
 
 const Container = styled('div')`
     height: 100%;
@@ -22,7 +22,7 @@ class Map extends React.PureComponent{
 
     render() {
         return (
-            <>
+            <Fragment>
                 <Menu/>
                 <Wrapper id="bt--tickets-views">
                     <Container id="bt-container" data-type="map">
@@ -31,7 +31,8 @@ class Map extends React.PureComponent{
                         <ZoomButtons/>
                     </Container>
                 </Wrapper>
-            </>
+                <ModalTickets />
+            </Fragment>
         );
     }
 }

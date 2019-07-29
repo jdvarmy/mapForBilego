@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import { moneyFormating } from '../functions/functions';
 import { inject, observer } from 'mobx-react';
+import { $css } from '../../styles/defaults';
 
 const Wrapper = styled('div')`
-    width: ${ props=>props.widthPercent }%;
+    width: ${ props=>props.shiftPercent }%;
     position: relative;
     box-sizing: border-box;
     display: inline-block;
@@ -14,23 +14,24 @@ const Wrapper = styled('div')`
 const Container = styled('div')`
     margin: -13px -13px -13px 0px;
     min-height: 90px;
-    width: ${props=>props.widthDiv < 1201 ? 112 : 152}px;
+    width: 152px;
     position: absolute;
     top: 0px;
-    right: 12px;
-    background: rgb(255, 255, 255);
+    right: ${props=>props.shiftRight}px;
+    box-sizing: content-box;
+    background: ${$css.colors.white};
     border-width: 1px 1px 0px;
     border-style: solid solid solid;
-    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1);
+    border-color: ${$css.colors.rgbaBorder} ${$css.colors.rgbaBorder};
     border-image: initial;
     border-bottom: 0px;
     padding: 12px 24px;
     text-align: right;
-    transition: all 0.2s ease 0s;
+    transition: all ${$css.animation.durationfast}ms ${$css.animation.timeFunction} 0s;
     &:hover{
-        border-color: #ffae19 #ffae19;
+        border-color: ${$css.colors.orange} ${$css.colors.orange};
         margin-top: -29px;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.25), 0 6px 6px rgba(0,0,0,0.22);
+        box-shadow: ${$css.shadow.style2};
         z-index: 1;
     }
     &:hover b{
@@ -38,7 +39,7 @@ const Container = styled('div')`
     }
 `;
 const ContentWrapper = styled('div')`
-    color: rgb(51, 51, 51);
+    color: ${$css.colors.black};
     font-size: 15px;
     line-height: 19px;
     padding-top: 4px;
@@ -46,7 +47,7 @@ const ContentWrapper = styled('div')`
 
 const Sector = styled('div')`
     padding-top: 4px;
-    color: rgb(153, 153, 153);
+    color: ${$css.colors.darkGrey};
     font-size: 13px;
     line-height: 18px;
 `;
@@ -64,7 +65,7 @@ const Remover = styled('b')`
     width: 26px;
     height: 26px;
     display: none;
-    background-color: #ffae19;
+    background-color: ${$css.colors.orange};
     cursor: pointer;
     position: absolute;
     top: -8px;
@@ -75,20 +76,20 @@ const Remover = styled('b')`
     border-radius: 100%;
     &::after{
         content: '+';
-        font-size: 17px;
+        font-size: 16px;
         display: block;
         text-align: center;
         width: 100%;
         height: 100%;
         transform: rotate(45deg);
-        color: #fff;
+        color: ${$css.colors.white};
     }
 `;
 
 @inject('basketStore', 'mapStore', 'serverDataStore')
 @observer
 class Product extends React.Component{
-    removeFromBasket = e => {
+    removeFromBasket = () => {
         const { basketStore:{toBasket, seatStores}, ticket, serverDataStore:{data:{ticketcloud}} } = this.props;
         toBasket( ticket, false );
 
@@ -100,14 +101,13 @@ class Product extends React.Component{
     };
 
     render() {
-        const { ticket:{price, sector, row, seat, name, type}, basketStore:{count}, mapStore:{containerW} } = this.props;
-
-        const seatInfo = ( row && seat && (<RowSeat>ряд {row}, место {seat}</RowSeat>) ) || ( type === 'without_map' && <Sector>{name}</Sector> );
-        const width = 100 / count;
-
+        const { ticket:{price, sector, row, seat, name, type}, basketStore:{count}, number } = this.props,
+            seatInfo = ( row && seat && (<RowSeat>ряд {row}, место {seat}</RowSeat>) ) || ( type === 'without_map' && <Sector>{name}</Sector> ),
+            width = 100 / count,
+            shift = number === 1 ? 12 : 12 * number - count * number * 12 / 2;
         return (
-            <Wrapper widthPercent={ width }>
-                <Container widthDiv={containerW}>
+            <Wrapper shiftPercent={width}>
+                <Container shiftRight={shift}>
                     {seatInfo}
                     <Sector createBeforeEl={row && seat}>{sector}</Sector>
                     <ContentWrapper>
@@ -116,7 +116,7 @@ class Product extends React.Component{
                         </Money>
                     </ContentWrapper>
                     <Remover
-                        onClick={ this.removeFromBasket }
+                        onClick={this.removeFromBasket}
                     />
                 </Container>
             </Wrapper>

@@ -15,6 +15,14 @@
     100% {opacity:0;transform:none}
 }
 
+@keyframes in-top {
+    from{opacity:0;transform:translate3d(0,-50%,0)}
+    to{opacity:1;transform:none;}
+}
+@-webkit-keyframes in-top {
+    from{opacity:0;transform:translate3d(0,-50%,0)}
+    to{opacity:1;transform:none;}
+}
 
 /**/
 ._visible {
@@ -24,15 +32,13 @@
 }
 /**/
 
-
-
 @keyframes in {
     from{opacity:0;transform:translate3d(0,50%,0)}
     to{opacity:1;transform:none}
 }
-@keyframes in-top {
-    from{opacity:0;transform:translate3d(0,-50%,0)}
-    to{opacity:1;transform:none;}
+@-webkit-keyframes in {
+    from{opacity:0;transform:translate3d(0,50%,0)}
+    to{opacity:1;transform:none}
 }
 
 
@@ -40,13 +46,10 @@
 /*    from,50%,to{opacity:1}*/
 /*    25%,75%{opacity:0}*/
 /*}*/
-.fade-left{
-    opacity:1;transform:none;
-}
+/*.fade-left{*/
+/*    opacity:1;transform:none;*/
+/*}*/
 
-
-/*#bilego-sell-tickets{width: 100%;height: 645px;background-color: #fff;position:relative;}*/
-/*.bt-map{height:595px;width:100%;-webkit-font-smoothing:antialiased;position:relative; overflow: hidden}*/
 .bt-map > * {opacity: 1;transition: opacity 0.6s}
 .bt-map input, .bt-map button, .bt-map a, .bt-map a:hover, .bt-map a:active, .bt-map a:focus{outline:none;box-shadow:none;-webkit-box-shadow:none;}
 
@@ -55,48 +58,8 @@
 .btm-map .btm-map-image{position: absolute;  width: 100%;  height: 100%;  -webkit-touch-callout: none;  -webkit-user-select: none;  -khtml-user-select: none;  -moz-user-select: none;  -ms-user-select: none;  user-select: none;  }
 
 .dragging{cursor: grabbing}
-#bts-tickets-map{background:center center no-repeat;background-size:contain;width:100%;height:100%;/*position:absolute*/}
-/*#bts-tickets-map .poligon{fill:transparent;-webkit-transition:all .3s;-moz-transition:all .3s;-ms-transition:all .3s;-o-transition:all .3s;transition:all .3s}*/
-/*#bts-tickets-map .poligon.active{fill:transparent;opacity:1;stroke:#1e73be !important;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:.7;cursor:pointer}*/
+#bts-tickets-map{background:center center no-repeat;background-size:contain;width:100%;height:100%;}
 .event-wrapper{position: relative}
-/*.bt-minimap{*/
-/*    border: 1px solid rgba(0, 0, 0, 0.1);*/
-/*    position: absolute;*/
-/*    top: -1px;*/
-/*    right: -1px;*/
-/*    opacity: 0;*/
-/*    overflow: hidden;*/
-/*    -webkit-transition: opacity 0.4s;*/
-/*    transition: opacity 0.4s;*/
-/*    -webkit-user-select: none;*/
-/*    -moz-user-select: none;*/
-/*    -ms-user-select: none;*/
-/*    user-select: none;*/
-/*    width: 140px;*/
-/*}*/
-/*.bt-minimap-wr{line-height: 0;}*/
-/*.bt-minimap img{width:100%;height:100%;vertical-align:middle;}*/
-/*.bt-minimap-overlay{*/
-/*    background-color: rgba(0, 0, 0, 0.4);*/
-/*    position: absolute;*/
-/*    width: 100%;*/
-/*    height: 100%;*/
-/*    top: 0;*/
-/*    left: 0;}*/
-/*!*minimap*!*/
-/*.bt-minimap .bt-minimap-active{position:absolute;opacity:1;top:0;left:0}*/
-/*.bt-minimap-background{width:140px!important;-webkit-filter:blur(2px);filter:blur(2px)}*/
-
-/*circle{-webkit-transition: all 0.1s cubic-bezier(0.39, 0.575, 0.565, 1);transition: all 0.1s cubic-bezier(0.39, 0.575, 0.565, 1);}*/
-/*.circle{cursor: pointer;-webkit-filter: drop-shadow( 0px 0px 10px rgba(0,0,0,.1) );filter: drop-shadow( 0px 0px 10px rgba(0,0,0,.1) );}*/
-/*.circle-text{*/
-/*    text-anchor:middle;*/
-/*    vertical-align: middle;*/
-/*    alignment-baseline:middle;*/
-/*    font-weight:700;*/
-/*    fill:#fff;*/
-/*    cursor:pointer;*/
-/*}*/
 
 #bt-tooltip{margin:0;position:absolute;z-index:9999;width:170px;-webkit-font-smoothing:antialiased;}
 .bt-tooltip-wrap{background:rgba(255,255,255,0.9);padding:1px;position:relative;box-shadow:0 4px 10px rgba(0,0,0,0.15);}
@@ -111,123 +74,5 @@
 .bt-tooltip-wrap-seat{font-weight: 500}
 #bt-tooltip .container.seat-tooltip{width:150px}
 
-/*!*zoom*!*/
-/*.bt-zoom-buttons{margin:20px;position:absolute;right:0;bottom:calc(50% - 80px)}*/
-/*.bt-zoom-buttons a:hover{background-color: #ffb637}*/
-/*.bt-zoom-buttons a{background-repeat:no-repeat;background-position:center;color:#0c5a40;display:block;cursor:pointer;text-align:center;text-decoration:none;font-size:24px;width:40px;height:40px;line-height:42px;background-color:#f7f7f7;position:relative;}*/
-/*.bt-zoom-buttons a:active{background-color:#f4f4f4}*/
-/*.bt-zoom-buttons a.disabled{background-color:#fff;cursor:default}*/
-/*a.bt-zoomin-button,*/
-/*a.bt-zoomout-button{background-size:10px 10px}*/
-/*a.bt-zoomin-button::after,*/
-/*a.bt-zoomout-button::after{vertical-align:top;position:relative;bottom:4px}*/
-/*a.bt-zoomin-button::after{content:'+';}*/
-/*a.bt-zoomout-button::after{content:'-';}*/
-/*!**!*/
-
-
-/*Basket*/
-/*#map-ticket-form{*/
-/*    width: 100%;*/
-/*    display: block;*/
-/*    padding: 0;*/
-/*    margin: 0;*/
-/*    position: absolute;*/
-/*    left: 0;*/
-/*    bottom: 0;*/
-/*    border-top: 1px solid rgba(0,0,0,0.1);*/
-/*}*/
-/*.active-form{animation-duration:.1s;animation-fill-mode:both;animation-name:in}*/
-/*.basket-content{*/
-/*    max-width: 1200px;*/
-/*    position: relative;*/
-/*    margin: 0 auto;*/
-/*    width: 100%;*/
-/*    display: table;*/
-/*}*/
-/*.basket-content > span{*/
-/*    display: table-row;*/
-/*    padding: 0;*/
-/*    margin: 0;*/
-/*}*/
-/*.basket-content-footer-button{*/
-/*    width: 112px;*/
-/*    padding-right: 20px;*/
-/*    height: 73px;*/
-/*    display: table-cell;*/
-/*    vertical-align: middle;*/
-/*    margin: 0;*/
-/*}*/
-/*.basket-content-footer-summary{*/
-/*    height: 73px;*/
-/*    display: table-cell;*/
-/*    vertical-align: middle;*/
-/*    padding: 0;*/
-/*    margin: 0;*/
-/*    text-align: right;*/
-/*    white-space: nowrap;*/
-/*    word-spacing: -2px;*/
-/*}*/
-/*.basket-content-footer{*/
-/*    width: 100%;*/
-/*    display: table-cell;*/
-/*    vertical-align: top;*/
-/*    padding: 0;*/
-/*    margin: 0;*/
-/*    position: relative;*/
-/*}*/
-
-/*blocking*/
-/*.blocking{*/
-/*    width: 100%;*/
-/*    height: 100%;*/
-/*    position: absolute;*/
-/*    top: 0;*/
-/*    left: 0;*/
-/*    background-color: rgba(0,0,0,0.7);*/
-/*}*/
-/* tickets set */
-/*.bt-sc{width:290px;height:140px;background-color:#fff;position:absolute;top:calc(50% - 70px);left:calc(50% - 145px);z-index:1;overflow:hidden}*/
-/*.bt-sc-h{width:100%;height:40%;border-bottom:1px solid rgba(0,0,0,0.05);padding:10px 54px 7px 24px;box-sizing:border-box;position:relative}*/
-/*.bt-sc-h-h{color:#111;font-size:18px;line-height:190%}*/
-/*.bt-sc-h-e{width:24px;height:24px;position:absolute;top:16px;right:18px;text-align:center;font-size:24px;font-weight:400;color:rgba(0,0,0,0.2);cursor:pointer;-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);-ms-transform:rotate(45deg);-o-transform:rotate(45deg);transform:rotate(45deg);-webkit-transition:color .2s;-moz-transition:color .2s;-ms-transition:color .2s;-o-transition:color .2s;transition:color .2s}*/
-/*.bt-sc-h-e:hover{color:#222}*/
-
-/*.bt-q-control.sector-item-qb-c div{display: inline-block;  margin-bottom: 0;}*/
-/*.bt-sc-content .bt-number{*/
-/*    margin: 0 15px;*/
-/*    font-size: 18px;*/
-/*    color:#111;*/
-/*}*/
-/*.bt-sc-content .bt-number span{*/
-/*    user-select: none;*/
-/*}*/
-/*.bt-sc-content > div{*/
-/*    vertical-align: middle;*/
-/*    display: inline-block;*/
-/*    height: 45px;*/
-/*    padding: 20px 0;*/
-/*}*/
-/*.bt-sc-content .bt-money-control{*/
-/*    font-size: 15px;*/
-/*    line-height: 17px;*/
-/*    text-align: left;*/
-/*    padding-right: 28px;*/
-/*}*/
-/*.bt-money-control .money span:first-child{*/
-/*    vertical-align: text-bottom;*/
-/*    font-size: 18px;*/
-/*}*/
-/*.bt-money-control .money span:last-child{*/
-/*    color: #999;*/
-/*    font-size: 13px;*/
-/*    margin-top: 5px;*/
-/*    display: inline-block;*/
-/*}*/
-.map-row text{
-    font-weight: bold;
-}
-
-
-/*bascket*/
-/*.basket-content-footer > div{font-size:14px;display:inline-block;float:right;text-align:right;width:100px;}*/
+.ant-notification-notice.bt-informer{border-radius:0;background:rgba(0,0,0,0.45)}
+.bt-informer .ant-notification-notice-message,.bt-informer .ant-notification-notice-description,.bt-informer .ant-notification-notice-close{color:#fff}

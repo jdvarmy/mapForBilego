@@ -7,14 +7,13 @@ class ServerDataStore{
     @observable checkoutData = null;
 
     @observable loading = true;
-    @observable forceLoading = false;
+    @observable loadingImage = 1;
 
     @observable error = false;
 
     @action
     getPostData = () => {
         this.startLoading();
-
         getData().then(data => {
             console.log(data)
 
@@ -31,7 +30,7 @@ class ServerDataStore{
 
     @action
     getCheckoutData = (data) => {
-        this.startForceLoading();
+        console.log('load')
 
         getCheckout(data).then( data => {
             console.log(data)
@@ -42,7 +41,6 @@ class ServerDataStore{
                 }else{
                     this.checkoutData = data;
                     setTimeout(() => {
-                        this.stopForceLoading()
                     }, 3500);
                 }
             }
@@ -55,7 +53,7 @@ class ServerDataStore{
         this.checkoutData = null;
         this.error = false;
 
-        this.forceLoading = false;
+        this.loading = false;
 
         this.getPostData();
     };
@@ -69,11 +67,6 @@ class ServerDataStore{
     startLoading = () => { this.loading = true };
     @action
     stopLoading = () => { this.loading = false };
-
-    @action
-    startForceLoading = () => { this.forceLoading = true };
-    @action
-    stopForceLoading = () => { this.forceLoading = false };
 }
 
 export const serverDataStore = new ServerDataStore();

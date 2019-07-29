@@ -1,16 +1,11 @@
 import React from 'react';
-import { observer, inject } from 'mobx-react'
-import styled from 'styled-components'
-
-import Map from './Map/Map'
-import Set from './Set/Set'
-import Basket from '../Basket/Basket'
-import Layout from './Layout/Layout'
-import Popups from './Map/Popups/Popups'
-import Block from './Map/Block'
+import { observer, inject } from 'mobx-react';
+import styled from 'styled-components';
+import Map from './Map/Map';
+import Set from './Set/Set';
+import Basket from '../Basket/Basket';
+import Layout from './Layout/Layout';
 import Cart from '../Cart/Cart';
-import Informer from '../Informer/Informer';
-import Checkout from '../Checkout/Checkout';
 
 const FadeInWrap = styled('div')`
     animation-duration: .5s;
@@ -25,11 +20,11 @@ const Container = styled('div')`
     position: relative;
 `;
 
-@inject('serverDataStore', 'informerStore')
+@inject('serverDataStore')
 @observer
 class Tickets extends React.Component{
     render(){
-        const { serverDataStore: { data, checkoutData }, informerStore:{ message } } = this.props;
+        const { serverDataStore: { data } } = this.props;
 
         return(
             <FadeInWrap>
@@ -39,12 +34,8 @@ class Tickets extends React.Component{
                         <Basket />
                     </Container>
                 </Wrapper>
-                <Block />
-                <Popups />
                 <Layout />
                 <Cart />
-                { checkoutData && <Checkout /> }
-                { message && <Informer /> }
             </FadeInWrap>
         );
     }

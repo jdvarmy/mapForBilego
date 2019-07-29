@@ -1,10 +1,9 @@
-import React from 'react'
+import React from 'react';
 import ReactDOM from 'react-dom';
-import { inject, observer } from "mobx-react/index";
+import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
-
 import { PathStore } from '../stores/PathStore';
-import { TooltipPath } from '../Tooltip/TooltipPath'
+import { TooltipPath } from '../Tooltip/TooltipPath';
 
 const Element = styled('path')`
     fill: transparent;
@@ -57,10 +56,10 @@ class Path extends React.Component {
     };
 
     handlerSpecialClick = () => {
-        const { basketStore:{ setSetWindowMode } } = this.props;
+        const { basketStore:{ getModalTickets } } = this.props;
         const { ticket } = this.pathStore;
 
-        setSetWindowMode(true, ticket);
+        getModalTickets(ticket);
     };
 
     render() {

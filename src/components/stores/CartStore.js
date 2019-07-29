@@ -2,6 +2,7 @@ import { action, observable } from 'mobx';
 
 class CartStore{
     @observable showCart = false;
+    @observable showPay = false;
     @observable tickets = undefined;
     @observable event = undefined;
     @observable total = undefined;
@@ -22,7 +23,11 @@ class CartStore{
     }
 
     @action
-    showHideDiv = (tickets, event, total) => {
+    showHidePay = () => {
+        this.showPay = !this.showPay;
+    };
+    @action
+    showHideCart = (tickets, event, total) => {
         this.showCart = !this.showCart;
         this.setData(tickets, event, total);
     };
@@ -36,6 +41,7 @@ class CartStore{
     @action
     clear = () => {
         this.showCart = false;
+        this.showPay = false;
         this.tickets = undefined;
         this.event = undefined;
         this.total = undefined;

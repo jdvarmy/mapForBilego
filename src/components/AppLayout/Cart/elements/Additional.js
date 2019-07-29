@@ -1,6 +1,7 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import {inject, observer} from "mobx-react";
+import { inject, observer } from 'mobx-react';
+import { $css } from '../../../styles/defaults';
 
 const EventName = styled('div')`
     font-size: 17px;
@@ -14,7 +15,7 @@ const EventDate = styled('div')`
 `;
 const EventAddress = styled('div')`
     margin-top: 4px;
-    color: #676662;
+    color: ${$css.colors.darkGrey};
     font-size: 12px;
     line-height: 18px;
 `;

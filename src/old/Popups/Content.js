@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import {moneyFormating} from "../../../functions/functions";
+import {moneyFormating} from "../../components/AppLayout/functions/functions";
 import {inject, observer} from "mobx-react";
 
 const Wrapper = styled('div')``;

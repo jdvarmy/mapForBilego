@@ -1,42 +1,22 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import styled from 'styled-components';
-import ReactDOM from 'react-dom';
+import Informer from '../Informer/Informer';
 
 const Wrapper = styled('div')`
-    position: absolute;
-    text-align: left;
-    top: 0;
-    left: 0;
-    z-index: 1;
     height: 100%;
-    width: 100%;
-    padding: 0 30px;
-    ${props => props.isSmallScreen && `
-        padding: 0;
-    `}
-    background-color: #fff;
-    opacity: 0;
-    transition: transform 0.2s, opacity 0.2s;
 `;
 
-@inject('serverDataStore', 'informerStore', 'thankYouStore', 'cartStore', 'basketStore', 'dataStore')
+@inject('thankYouStore', 'serverDataStore')
 @observer
 class Checkout extends React.Component{
     componentDidMount(): void {
         const { serverDataStore:{ checkoutData } } = this.props;
-
         this.fondyFunction(checkoutData);
-
-        const el = ReactDOM.findDOMNode(this);
-        setTimeout(() => {
-            el.classList.add('fade-left')
-        }, 3500);
     }
 
     fondyFunction = url => {
-        const { informerStore:{ setMessage }, thankYouStore:{ setThankYou }, serverDataStore:{ clean }, cartStore:{ clear }, basketStore:{ clearBasket, blockingForm } } = this.props;
-
+        const { thankYouStore:{ setThankYou } } = this.props;
         // eslint-disable-next-line no-undef
         $ipsp.get('checkout').config({
             'wrapper': '#cart-checkout',
@@ -65,7 +45,10 @@ class Checkout extends React.Component{
                     }
 
                     if(error){
-                        setMessage(error);
+                      Informer({
+                        title: 'Ошибка!',
+                        text: error
+                      });
                         return;
                     }
 
@@ -78,20 +61,15 @@ class Checkout extends React.Component{
                     }
 
                     if( (send_data && status === 'declined') || order_data ){
-                        setMessage('Отказ от банка-эмитента вашей карты, возможно на карте установлены ограничения по расчетам в интернете.');
+                      Informer({
+                        title: 'Ответ от банка!',
+                        text: 'Отказ от банка-эмитента вашей карты, возможно на карте установлены ограничения по расчетам в интернете.'
+                      });
                         return;
                     }
 
                     if( send_data && status === 'approved' ){
                         setThankYou(true);
-
-                        setTimeout( () => {
-                            setThankYou(false);
-                            clear();
-                            clean();
-                            clearBasket();
-                            blockingForm(false);
-                        }, 9000);
                     }
                 }
             );
@@ -101,9 +79,8 @@ class Checkout extends React.Component{
     };
 
     render(){
-        const { dataStore:{ isSmallScreen } } = this.props;
         return(
-            <Wrapper isSmallScreen={isSmallScreen}  id="cart-checkout" />
+            <Wrapper id="cart-checkout" />
         );
     }
 }

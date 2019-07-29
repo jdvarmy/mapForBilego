@@ -1,6 +1,8 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
+import { StyledBoxButton } from '../../../../styles/defaults';
+import {Icon} from "antd";
 
 const Wrapper = styled('div')`
     margin: 20px;
@@ -8,47 +10,8 @@ const Wrapper = styled('div')`
     right: 0;
     bottom: calc(50% - 80px);
 `;
-const A = styled('a')`
-    position: relative;
+const StyledBoxButtonBlock = styled(StyledBoxButton)`
     display: block;
-    width: 40px;
-    height: 40px;
-    color: #0c5a40;
-    cursor: pointer;
-    font-size: 24px;
-    text-align: center;
-    text-decoration: none;
-    line-height: 42px;
-    background-color: #f7f7f7;
-    background-repeat: no-repeat;
-    background-position: center;
-    ${props=>props.disabled && `background-color: #fff; cursor: default;`};
-    background-size: 10px 10px;
-    &:hover{
-        background-color: #ffb637;
-    }
-    &:active{
-        background-color: #f4f4f4;
-    }
-    &:after{
-        vertical-align: top;
-        position: relative;
-        bottom: 4px;
-    }
-`;
-
-const ZoomIn = styled(A)`
-    &:after{
-        content:'+';
-    }
-    ${props=>props.disabled && `&:hover{background-color: #fff;}`}
-`;
-
-const ZoomOut = styled(A)`
-    &:after{
-        content:'-';
-    }
-    ${props => props.disabled && `&:hover{background-color: #fff;}`}
 `;
 
 @inject('mapStore')
@@ -59,16 +22,14 @@ class ZoomButtons extends React.Component {
 
         return (
             <Wrapper className="bt-zoom-buttons">
-                <ZoomIn
-                   href='#'
+                <StyledBoxButtonBlock
                    disabled={scale === maxscale}
                    onClick={handleClickZoomIn}
-                />
-                <ZoomOut
-                   href='#'
+                ><Icon type="plus" /></StyledBoxButtonBlock>
+                <StyledBoxButtonBlock
                    disabled={scale === fitscale}
                    onClick={handleClickZoomOut}
-                />
+                ><Icon type="minus" /></StyledBoxButtonBlock>
             </Wrapper>
         );
     }

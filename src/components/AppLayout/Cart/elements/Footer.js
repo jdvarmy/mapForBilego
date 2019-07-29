@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import {inject, observer} from "mobx-react";
+import { inject, observer } from 'mobx-react';
+import { $css, StyledButton } from '../../../styles/defaults';
+import Informer from '../../Informer/Informer';
 
 const Wrapper = styled('div')`
     display: flex;
@@ -9,32 +11,17 @@ const Wrapper = styled('div')`
     flex-wrap: wrap;
     justify-content: space-between;
 `;
-
-const Button = styled('button')`
-    text-align: center;
-    border: none;
-    width: auto;
-    cursor: pointer;
-    color: #fff;
-    background: #0c5a40;
-    padding: 7px 15px;
-    font-weight: 700;
-    font-style: normal;
-    font-size: 14px;
-    height: 46px;
-    color: #fff;
-    background: #0c5a40;
-    text-transform: uppercase;
+const Button = styled(StyledButton)`
     padding: 8px 20px;
-    background: #ffae19;
-    transition: all .5s;
-    outline: none;
+    height: 46px;
+    &.ant-btn:focus{
+        background-color: ${$css.colors.green};
+    }
 `;
-
 const TotalOrderWrap = styled('div')`
     text-align: right;
     padding: 15px 20px;
-    border-bottom: 1px solid rgba(0,0,0,.1);
+    border-bottom: 1px solid ${$css.colors.rgbaBorder};
     margin-bottom: 15px;
 `;
 const TotalOrder = styled('div')`
@@ -45,52 +32,41 @@ const TotalOrder = styled('div')`
     font-weight: 700;
 `;
 const Meta = styled('div')`
-    color: #676662;
+    color: ${$css.colors.darkGrey};
     clear: both;
     font-size: 11px;
     line-height: 13px;
 `;
-
-const ButtonNext = styled('div')`
-    & button{
-        background: #0c5a40;
-        &:hover{
-            background: #ffae19;
-        }
-    }
-`;
-const ButtonPrev = styled('div')`
-    & button{
-        background: #ffae19;
-        &:hover{
-            background: #0c5a40;
-        }
-    }
-`;
 const Link = styled('a')`
-    color: #ffae19;
+    color: ${$css.colors.green};
     text-decoration: none;
     outline: none;
-    transition: all .5s;
+    transition: color ${$css.animation.duration}ms;
     &:hover{
-        color: #0f7855;
+        color: ${$css.colors.orange}
     }
 `;
 
 @inject('cartStore', 'basketStore', 'serverDataStore')
 @observer
 class Footer extends React.Component{
-    state = {disabled: false};
 
     close = () => {
-        const { cartStore:{ clear }, basketStore:{ blockingForm } } = this.props;
+        const { cartStore:{ clear } } = this.props;
 
         clear();
-        blockingForm(false);
     };
 
-    pay = ( e ) => {
-        this.setState({disabled: true});
+    pay = () => {
+        const { cartStore:{ formValid, showHidePay } } = this.props;
+        if(!formValid){
+            Informer({
+                title: 'Опаньки!',
+                text: 'Забыли ввести свой Email. Куда же нам отправить Ваши билеты?'
+            });
+            return;
+        }
+        showHidePay();
 
         const { basketStore:{ ticketsMap }, serverDataStore:{ getCheckoutData }, cartStore:{ email } } = this.props;
         let items = [];
@@ -117,7 +93,6 @@ class Footer extends React.Component{
 
     render(){
         const { cartStore:{ city, total, formValid } } = this.props,
-            { disabled } = this.state,
             href = `https://${city}.bilego.ru/offer/`;
 
         return(
@@ -126,12 +101,12 @@ class Footer extends React.Component{
                     <TotalOrder>{total}</TotalOrder>
                     <Meta>Нажимая кнопку «перейти к оплате», <Link href={href} target="_blank">вы соглашаетесь с условиями оферты</Link></Meta>
                 </TotalOrderWrap>
-                <ButtonNext>
-                    <Button disabled={!formValid || disabled} onClick={this.pay}>Перейти к оплате</Button>
-                </ButtonNext>
-                <ButtonPrev>
-                    <Button onClick={this.close}>Назад</Button>
-                </ButtonPrev>
+                <div>
+                    <Button type="primary" onClick={this.pay}>Перейти к оплате</Button>
+                </div>
+                <div>
+                    <Button type="default" onClick={this.close}>Назад</Button>
+                </div>
             </Wrapper>
         );
     }

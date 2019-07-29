@@ -1,49 +1,20 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { moneyFormating } from '../functions/functions';
+import { StyledButton, $css } from '../../styles/defaults';
 
 import Product from './Product';
 
-const Div = styled('div')`
-    padding: 0;
-    margin: 0;
-`;
-
-const ButtonWrap = styled(Div)`
-    margin: 0;
-    width: 100%;
-    height: 100%;
-`;
-
-const Button = styled('button')`
-    font-size: 15px;
-    font-weight: 700;
-    color: #fff;
-    text-transform: uppercase;
-    outline: none;
-    padding: 8px 20px;
-    background: #0c5a40;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    height: 100%;
-    margin-bottom: 0;
-    margin-top: 1px;
-    transition: background .2s ease;
-    &:hover{
-        background: #ffae19;
-    }
-`;
-
-const Summary = styled(Div)`
-    background-color: #fff;
-    text-align: right;
+const Summary = styled('div')`
+    font-size: 24px;
+    font-weight: 500;
+    background-color: ${$css.colors.white};
     white-space: nowrap;
     word-spacing: -2px;
 `;
 
-const Content = styled(Div)`
+const Content = styled('div')`
     width: 100%;
     position: relative;
 `;
@@ -52,7 +23,7 @@ const ContentWidth = styled('div')`
     margin-top: -40px;
     margin-left: auto;
 `;
-const Table = styled(Div)`
+const Table = styled('div')`
     max-width: ${props=>props.maxWidth}px;
     width: 100%;
     box-sizing: border-box;
@@ -65,14 +36,10 @@ const TableRow = styled('div')`
 @inject('basketStore', 'serverDataStore', 'cartStore')
 @observer
 class Products extends React.Component{
-    getCart = e => {
-        e.preventDefault();
-        const { basketStore:{ tickets, blockingForm }, cartStore: {showHideDiv}, serverDataStore:{ data:{ event } } } = this.props;
-
-        blockingForm(true);
-        showHideDiv(tickets, event, moneyFormating(this.countSummary(), true));
+    getCart = () => {
+        const { basketStore:{ tickets }, cartStore:{ showHideCart }, serverDataStore:{ data:{ event } } } = this.props;
+        showHideCart(tickets, event, moneyFormating(this.countSummary(), true));
     };
-
     countSummary = () => {
         let summary = 0;
         const { basketStore:{ tickets } } = this.props;
@@ -81,27 +48,24 @@ class Products extends React.Component{
         } );
         return summary;
     };
-
     render(){
         const { basketStore:{ tickets, count } } = this.props;
         const maxWidth = 140 * count;
 
         return(
-            <>
-                <ButtonWrap>
-                    <Button onClick={this.getCart}>Купить билеты</Button>
-                </ButtonWrap>
+            <Fragment>
+                <StyledButton type="primary" onClick={this.getCart}>Купить билеты</StyledButton>
                 <Summary>{moneyFormating(this.countSummary(), true)}</Summary>
                 <Content>
                     <ContentWidth maxWidth={maxWidth}>
                         <Table maxWidth={maxWidth}>
                             <TableRow>
-                                { tickets.map( ( el, k ) => <Product key={el.id.toString() + k} ticket={el} /> ) }
+                                { tickets.map( ( el, k ) => <Product key={el.id.toString() + k} ticket={el} number={k+1} /> ) }
                             </TableRow>
                         </Table>
                     </ContentWidth>
                 </Content>
-            </>
+            </Fragment>
         );
     }
 }

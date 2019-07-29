@@ -7,6 +7,16 @@ class BasketStore{
     @observable productInBasket = false;
     @observable isFull = false;
 
+    @observable modalTickets = false;
+    @observable setOfTicket = null;
+    @action getModalTickets = (currentTicketSet) => {
+        this.modalTickets = true;
+        this.setOfTicket = currentTicketSet;
+    };
+    @action closeModalTickets = () => {
+        this.modalTickets = false;
+    };
+
     seatStores = {};
 
     maxCountInBasket = 6;
@@ -63,24 +73,11 @@ class BasketStore{
 
     // work with @set@ tickets
     @observable
-    blockTicketsForm = false;
-    @observable
     currentTicketsSet = null;
 
     @action
     updateCount = () => {
         this.count = this.tickets.length;
-    };
-
-    @action
-    blockingForm = (val) => {
-        this.blockTicketsForm = val;
-    };
-
-    @action
-    setSetWindowMode = (val, currentTicketSet) => {
-        this.blockingForm(val);
-        this.currentTicketsSet = currentTicketSet;
     };
 
     @action

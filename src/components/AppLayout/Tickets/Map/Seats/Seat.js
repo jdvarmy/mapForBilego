@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { getStrEnding } from '../../../functions/functions';
-
+import Informer from '../../../Informer/Informer';
 import { SeatStore } from '../stores/SeatStore'
 import { TooltipSeat } from '../Tooltip/TooltipSeat'
 
@@ -25,7 +25,7 @@ const Text = styled('text')`
     cursor: pointer;
 `;
 
-@inject('serverDataStore', 'mapStore', 'basketStore', 'informerStore', 'dataStore')
+@inject('serverDataStore', 'mapStore', 'basketStore', 'dataStore')
 @observer
 class Seat extends React.Component {
     constructor(props){
@@ -73,9 +73,13 @@ class Seat extends React.Component {
 
     handlerClick = e => {
         const { onClick, ticket, click } = this.seatStore;
-        const { basketStore:{ isFull, toBasket, maxCountInBasket }, informerStore:{ setMessage } } = this.props;
+        const { basketStore:{ isFull, toBasket, maxCountInBasket } } = this.props;
 
-        if( !click && isFull ) setMessage(`За один заказ можно купить только ${maxCountInBasket} ${getStrEnding(maxCountInBasket, ['билет','билета','билетов'])}`);
+        if( !click && isFull )
+            Informer({
+                title: 'Опаньки!',
+                text: `За один заказ можно купить только ${maxCountInBasket} ${getStrEnding(maxCountInBasket, ['билет','билета','билетов'])}`
+            });
         if( (!click && !isFull) || ((click && !isFull)) || (click && isFull) ) {
             onClick();
             toBasket(ticket, this.seatStore.click, this.seatStore);
@@ -83,9 +87,10 @@ class Seat extends React.Component {
     };
 
     handlerSpecialClick = e => {
-        const { basketStore:{ setSetWindowMode } } = this.props;
+        const { basketStore:{ getModalTickets } } = this.props;
         const { ticket } = this.seatStore;
-        setSetWindowMode(true, ticket);
+
+        getModalTickets(ticket);
     };
 
     findTicketInBascket = () => {

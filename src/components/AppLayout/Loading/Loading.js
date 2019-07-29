@@ -5,7 +5,7 @@ import {$css, Animation} from '../../styles/defaults';
 
 const Wrapper = styled(Animation)`
     width: 100%;
-    height: ${$css.sizes.containerH}
+    height: ${$css.sizes.containerH};
     position: absolute;
     top: 0;
     left: 0;
@@ -14,7 +14,7 @@ const Wrapper = styled(Animation)`
 const Content = styled('canvas')`
     width: 100%;
     height: 100%;
-    min-height: ${$css.sizes.containerH}
+    min-height: ${$css.sizes.containerH};
     display: block;
     opacity: 1;
     margin: 0 auto;
@@ -38,8 +38,12 @@ class Loading extends React.Component{
         if(!loading) {
             this.timeout = setTimeout(() => {
                 this.stop();
-                this.loadWrap.current.remove();
+                this.loadWrap.current.style.display = 'none';
             }, $css.animation.duration)
+        }
+        if(loading) {
+            this.loadWrap.current.style.display = 'block';
+            this.start();
         }
     }
 
@@ -54,7 +58,7 @@ class Loading extends React.Component{
 
     getElems = () => {
         this.cont = this.loadWrap.current.lastChild.getContext('2d');
-        const {src} = this.props;
+        const {serverDataStore: {loadingImage}} = this.props;
 
         const images = require.context('./', true, /loading.*/);
         this.images = images.keys()
@@ -63,7 +67,7 @@ class Loading extends React.Component{
           });
 
         let img = document.createElement('img');
-        img.src = this.images[src-1].src;
+        img.src = this.images[loadingImage-1].src;
         this.spride = img;
     };
     

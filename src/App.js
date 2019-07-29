@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import AppIndex from './components/AppIndex'
+import 'antd/dist/antd.css';
+import AppIndex from './components/AppIndex';
 
 class App extends Component {
   render() {
