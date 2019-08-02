@@ -112,8 +112,6 @@ class MapStore{
         );
     }
 
-
-    // todo: test mobile device
     @action.bound
     handleTouchStart(e){
         const orig = e.touches,

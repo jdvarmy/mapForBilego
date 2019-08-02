@@ -33,17 +33,31 @@ const Button = styled(StyledButton)`
 @inject('serverDataStore', 'thankYouStore', 'cartStore', 'basketStore', 'dataStore')
 @observer
 class ThankYou extends React.Component{
+    componentWillUnmount() {
+        clearTimeout(this.timeout);
+    }
+
+    returnToTheTickets = () => {
+        this.clear();
+        clearTimeout(this.timeout);
+    };
+
+    clear = () => {
+        const { thankYouStore:{ setThankYou }, serverDataStore:{ clean }, cartStore:{ clear }, basketStore:{ clearBasket } } = this.props;
+        setThankYou(false);
+        clear();
+        clean();
+        clearBasket();
+    };
+
     render(){
         const { Countdown } = Statistic,
-            { thankYouStore:{ setThankYou, thankYou }, serverDataStore:{ clean }, cartStore:{ clear }, basketStore:{ clearBasket } } = this.props;
+            { thankYouStore:{ thankYou } } = this.props;
 
         if(thankYou) {
-            setTimeout( () => {
-                setThankYou(false);
-                clear();
-                clean();
-                clearBasket();
-            }, 9000);
+            this.timeout = setTimeout( () => {
+                this.clear();
+            }, 20000);
         }
 
         return (
@@ -52,13 +66,13 @@ class ThankYou extends React.Component{
                 <Wrapper>
                     <Container>
                         <Result
-                            icon={<Icon type="smile" theme="twoTone"/>}
+                            icon={<Icon type="smile" style={{ color: $css.colors.orange }}/>}
                             title="Наши поздравления и удачной вечеринки!"
-                            subTitle="Билеты уже в отправлены Вам на почту. Ищите их там, ну или в папке спам."
+                            subTitle="Билеты уже отправлены Вам на почту. Ищите их там, ну или в папке спам."
                             extra={
                                 <Fragment>
-                                    <Button type="default">Возвращаемся к билетам через</Button>
-                                    <Countdown value={Date.now() + 9000}/>
+                                    <Button onClick={this.returnToTheTickets} type="default">Возвращаемся к билетам через</Button>
+                                    <Countdown value={Date.now() + 20000}/>
                                 </Fragment>
                             }
                             status="success"

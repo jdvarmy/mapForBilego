@@ -18,7 +18,7 @@ const UpFont = styled(Font)`
     font-weight: 500;
 `;
 
-@inject('basketStore')
+@inject('basketStore', 'serverDataStore')
 @observer
 class ModalTickets extends React.Component{
     getTicketById = id => {
@@ -33,12 +33,21 @@ class ModalTickets extends React.Component{
     };
 
     plus = () => {
-        const { basketStore:{ setOfTicket, toBasket, isFull, maxCountInBasket } }  = this.props;
+        const { basketStore:{ setOfTicket, toBasket, isFull, maxCountInBasket, tickets }, serverDataStore:{ data:{ ticketcloud } } }  = this.props;
         if( isFull ){
             Informer({
                 title: 'Опаньки!',
-                text: `За один заказ можно купить только ${maxCountInBasket} ${getStrEnding(maxCountInBasket, ['билет','билета','билетов'])}`
+                text: `За один заказ можно купить только ${maxCountInBasket} ${getStrEnding(maxCountInBasket, ['билет','билета','билетов'])}.`
             });
+        }
+        if(ticketcloud) {
+            if(tickets[0] && tickets[0].type !== setOfTicket.type) {
+                Informer({
+                    title: 'Как жаль!',
+                    text: `Для этого события установлены ограничения. В один заказ Вы можете добавить билеты только одного типа (либо только входные, либо только билеты с местом).`
+                });
+                return;
+            }
         }
         toBasket( setOfTicket, true );
     };

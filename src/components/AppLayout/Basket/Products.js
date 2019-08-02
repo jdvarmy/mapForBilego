@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { moneyFormating } from '../functions/functions';
 import { StyledButton, $css } from '../../styles/defaults';
-
+import { getStrEnding } from '../functions/functions';
 import Product from './Product';
 
 const Summary = styled('div')`
@@ -13,7 +13,10 @@ const Summary = styled('div')`
     white-space: nowrap;
     word-spacing: -2px;
 `;
-
+const TicketCount = styled(Summary)`
+    text-align: center;
+    line-height: 24px;
+`;
 const Content = styled('div')`
     width: 100%;
     position: relative;
@@ -33,7 +36,7 @@ const TableRow = styled('div')`
     flex-direction: row-reverse;
 `;
 
-@inject('basketStore', 'serverDataStore', 'cartStore')
+@inject('basketStore', 'serverDataStore', 'cartStore', 'dataStore')
 @observer
 class Products extends React.Component{
     getCart = () => {
@@ -49,7 +52,7 @@ class Products extends React.Component{
         return summary;
     };
     render(){
-        const { basketStore:{ tickets, count } } = this.props;
+        const { basketStore:{ tickets, count }, dataStore:{ isVerySmallScreen } } = this.props;
         const maxWidth = 140 * count;
 
         return(
@@ -57,13 +60,16 @@ class Products extends React.Component{
                 <StyledButton type="primary" onClick={this.getCart}>Купить билеты</StyledButton>
                 <Summary>{moneyFormating(this.countSummary(), true)}</Summary>
                 <Content>
-                    <ContentWidth maxWidth={maxWidth}>
-                        <Table maxWidth={maxWidth}>
-                            <TableRow>
-                                { tickets.map( ( el, k ) => <Product key={el.id.toString() + k} ticket={el} number={k+1} /> ) }
-                            </TableRow>
-                        </Table>
-                    </ContentWidth>
+                    { isVerySmallScreen ?
+                        <TicketCount>{tickets.length}<br/>{getStrEnding(tickets.length, ['билет','билета','билетов'])}</TicketCount> :
+                        <ContentWidth maxWidth={maxWidth}>
+                            <Table maxWidth={maxWidth}>
+                                <TableRow>
+                                    { tickets.map( ( el, k ) => <Product key={el.id.toString() + k} ticket={el} number={k+1} /> ) }
+                                </TableRow>
+                            </Table>
+                        </ContentWidth>
+                      }
                 </Content>
             </Fragment>
         );

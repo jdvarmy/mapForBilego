@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react/index';
 import styled from 'styled-components';
-import { getStrEnding } from '../../components/AppLayout/functions/functions';
+import { getStrEnding } from '../../src/components/AppLayout/functions/functions';
 
 import Header from './Header';
 import Content from './Content';

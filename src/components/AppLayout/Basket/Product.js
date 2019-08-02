@@ -14,7 +14,7 @@ const Wrapper = styled('div')`
 const Container = styled('div')`
     margin: -13px -13px -13px 0px;
     min-height: 90px;
-    width: 152px;
+    width: ${p=>p.isSmallScreen ? 118 : 152}px;
     position: absolute;
     top: 0px;
     right: ${props=>props.shiftRight}px;
@@ -86,7 +86,7 @@ const Remover = styled('b')`
     }
 `;
 
-@inject('basketStore', 'mapStore', 'serverDataStore')
+@inject('basketStore', 'mapStore', 'serverDataStore', 'dataStore')
 @observer
 class Product extends React.Component{
     removeFromBasket = () => {
@@ -101,13 +101,13 @@ class Product extends React.Component{
     };
 
     render() {
-        const { ticket:{price, sector, row, seat, name, type}, basketStore:{count}, number } = this.props,
+        const { ticket: {price, sector, row, seat, name, type}, basketStore: {count}, number, dataStore: {isSmallScreen} } = this.props,
             seatInfo = ( row && seat && (<RowSeat>ряд {row}, место {seat}</RowSeat>) ) || ( type === 'without_map' && <Sector>{name}</Sector> ),
             width = 100 / count,
             shift = number === 1 ? 12 : 12 * number - count * number * 12 / 2;
         return (
             <Wrapper shiftPercent={width}>
-                <Container shiftRight={shift}>
+                <Container shiftRight={shift} isSmallScreen={isSmallScreen}>
                     {seatInfo}
                     <Sector createBeforeEl={row && seat}>{sector}</Sector>
                     <ContentWrapper>

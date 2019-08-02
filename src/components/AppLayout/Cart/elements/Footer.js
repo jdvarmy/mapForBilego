@@ -92,7 +92,7 @@ class Footer extends React.Component{
     };
 
     render(){
-        const { cartStore:{ city, total, formValid } } = this.props,
+        const { cartStore:{ city, total } } = this.props,
             href = `https://${city}.bilego.ru/offer/`;
 
         return(

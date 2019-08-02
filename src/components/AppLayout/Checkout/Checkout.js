@@ -5,6 +5,7 @@ import Informer from '../Informer/Informer';
 
 const Wrapper = styled('div')`
     height: 100%;
+    width: 100%;
 `;
 
 @inject('thankYouStore', 'serverDataStore')
@@ -24,8 +25,6 @@ class Checkout extends React.Component{
         }).scope(function () {
             this.addCallback(
                 function (data, type) {
-                    console.log( 'addCallback', data, type );
-
                     if( data.action === 'redirect' ) {
                         this.loadUrl(data.url);
                         return;

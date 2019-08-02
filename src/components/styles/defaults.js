@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Button, Modal } from 'antd';
 
 const baseDuration = 500;
+const baseDelay = 500;
 export const $css = {
     colors: {
         green: '#0c5a40',
@@ -23,6 +24,7 @@ export const $css = {
         containerH: 645 + 'px'
     },
     animation: {
+        delay: baseDelay,
         duration: baseDuration,
         durationfast: baseDuration / 3,
         timeFunction: 'cubic-bezier(0,0,0.88,1)',

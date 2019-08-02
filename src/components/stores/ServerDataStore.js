@@ -1,11 +1,9 @@
 import { observable, action } from 'mobx';
-
 import { getData, getCheckout } from '../../data/fetch';
 
 class ServerDataStore{
     @observable data = null;
     @observable checkoutData = null;
-
     @observable loading = true;
     @observable loadingImage = 1;
 
@@ -15,13 +13,17 @@ class ServerDataStore{
     getPostData = () => {
         this.startLoading();
         getData().then(data => {
-            console.log(data)
-
             if( data ) {
-                if ( !data.code) {
-                    this.data = data;
-                    this.stopLoading();
+                if( data.code === 'error' ){
+                    this.setError(data.message);
+                }else{
+                    if(data.ticket_type === 'map' && (data.map_data === '' || data.map_images.length === 0)){
+                        this.setError('Ошибка при загрузке карты!');
+                    }else {
+                        this.data = data;
+                    }
                 }
+                this.stopLoading();
             }
         });
 
@@ -30,18 +32,12 @@ class ServerDataStore{
 
     @action
     getCheckoutData = (data) => {
-        console.log('load')
-
         getCheckout(data).then( data => {
-            console.log(data)
-
             if( data ) {
                 if( data.code === 'error' ){
                     this.setError(data.message);
                 }else{
                     this.checkoutData = data;
-                    setTimeout(() => {
-                    }, 3500);
                 }
             }
         });

@@ -66,27 +66,36 @@ class Seat extends React.Component {
         }
     };
 
-    handlerUnhover = e => {
+    handlerUnhover = () => {
         this.seatStore.onOver();
         if(this.seatStore.ticket) this.tooltip.delete();
     };
 
-    handlerClick = e => {
+    handlerClick = () => {
         const { onClick, ticket, click } = this.seatStore;
-        const { basketStore:{ isFull, toBasket, maxCountInBasket } } = this.props;
+        const { basketStore:{ isFull, toBasket, maxCountInBasket, tickets }, serverDataStore:{ data:{ ticketcloud } } } = this.props;
 
         if( !click && isFull )
             Informer({
                 title: 'Опаньки!',
-                text: `За один заказ можно купить только ${maxCountInBasket} ${getStrEnding(maxCountInBasket, ['билет','билета','билетов'])}`
+                text: `За один заказ можно купить только ${maxCountInBasket} ${getStrEnding(maxCountInBasket, ['билет','билета','билетов'])}.`
             });
         if( (!click && !isFull) || ((click && !isFull)) || (click && isFull) ) {
+            if(ticketcloud) {
+                if(tickets[0] && tickets[0].type !== ticket.type) {
+                    Informer({
+                        title: 'Как жаль!',
+                        text: `Для этого события установлены ограничения. В один заказ Вы можете добавить билеты только одного типа (либо только входные, либо только билеты с местом).`
+                    });
+                    return;
+                }
+            }
             onClick();
             toBasket(ticket, this.seatStore.click, this.seatStore);
         }
     };
 
-    handlerSpecialClick = e => {
+    handlerSpecialClick = () => {
         const { basketStore:{ getModalTickets } } = this.props;
         const { ticket } = this.seatStore;
 
@@ -124,7 +133,7 @@ class Seat extends React.Component {
                 style = {fill: ticket.color};
             }
         }else{
-            radius = (r*0.8).toFixed(2);
+            radius = (r*0.6).toFixed(2);
             style = {fill: '#e5e5e5'};
         }
 

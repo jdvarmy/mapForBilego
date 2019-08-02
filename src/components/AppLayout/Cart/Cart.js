@@ -7,9 +7,8 @@ import Tickets from './elements/Tickets'
 import Footer from './elements/Footer'
 import { $css } from '../../styles/defaults';
 import { getStrEnding } from '../functions/functions';
-import { Drawer } from 'antd';
+import { Drawer, Icon, Spin } from 'antd';
 import Checkout from '../Checkout/Checkout';
-import {serverDataStore} from "../../stores/ServerDataStore";
 
 const Wrapper = styled(Drawer)`
     color: ${$css.colors.black};
@@ -25,6 +24,14 @@ const Container = styled('div')`
     height: ${$css.sizes.containerH};
     position: relative;
     width: 100%;
+    & .ant-spin-nested-loading, & .ant-spin, & .ant-spin-container{
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
 `;
 const Div = styled('div')`
     padding: 10px 0 10px;
@@ -73,7 +80,7 @@ class Cart extends React.Component{
                 visible={showCart}
                 zIndex={100}
                 closable={false}
-                width={476}
+                width={isSmallScreen ? 375 : 476}
             >
                 <Container>
                     <Header>
@@ -100,10 +107,17 @@ class Cart extends React.Component{
                     visible={showPay}
                     zIndex={100}
                     closable={false}
-                    width={476}
+                    width={isSmallScreen ? 375 : 476}
                 >
                     <Container>
-                        {checkoutData && <Checkout />}
+                        <Spin
+                          tip="Создание заказа..."
+                          delay={$css.animation.delay}
+                          indicator={<Icon type="loading" style={{ fontSize: 24, color: $css.colors.orange }} spin />}
+                          spinning={!checkoutData}
+                        >
+                            {checkoutData && <Checkout />}
+                        </Spin>
                     </Container>
                 </Wrapper>
             </Wrapper>
