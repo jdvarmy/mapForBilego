@@ -46,14 +46,14 @@ const Link = styled('a')`
         color: ${$css.colors.orange}
     }
 `;
+const Left = styled('div')`${p=>p.isSmallScreen && `margin-left: 15px;`}`;
+const Right = styled('div')`${p => p.isSmallScreen && `margin-right: 15px;`}`;
 
-@inject('cartStore', 'basketStore', 'serverDataStore')
+@inject('cartStore', 'basketStore', 'serverDataStore', 'dataStore')
 @observer
 class Footer extends React.Component{
-
     close = () => {
         const { cartStore:{ clear } } = this.props;
-
         clear();
     };
 
@@ -62,7 +62,7 @@ class Footer extends React.Component{
         if(!formValid){
             Informer({
                 title: 'Опаньки!',
-                text: 'Забыли ввести свой Email. Куда же нам отправить Ваши билеты?'
+                text: 'Вы забыли ввести свой Email. Куда же нам отправить ваши билеты?'
             });
             return;
         }
@@ -70,7 +70,6 @@ class Footer extends React.Component{
 
         const { basketStore:{ ticketsMap }, serverDataStore:{ getCheckoutData }, cartStore:{ email } } = this.props;
         let items = [];
-
         ticketsMap.forEach(el=>{
             items.push({
                 product_id: el.id,
@@ -87,12 +86,11 @@ class Footer extends React.Component{
             },
             'line_items': items,
         };
-
         getCheckoutData(request);
     };
 
     render(){
-        const { cartStore:{ city, total } } = this.props,
+        const { cartStore:{ city, total }, dataStore: {isSmallScreen} } = this.props,
             href = `https://${city}.bilego.ru/offer/`;
 
         return(
@@ -101,12 +99,12 @@ class Footer extends React.Component{
                     <TotalOrder>{total}</TotalOrder>
                     <Meta>Нажимая кнопку «перейти к оплате», <Link href={href} target="_blank">вы соглашаетесь с условиями оферты</Link></Meta>
                 </TotalOrderWrap>
-                <div>
+                <Right isSmallScreen={isSmallScreen}>
                     <Button type="primary" onClick={this.pay}>Перейти к оплате</Button>
-                </div>
-                <div>
+                </Right>
+                <Left isSmallScreen={isSmallScreen}>
                     <Button type="default" onClick={this.close}>Назад</Button>
-                </div>
+                </Left>
             </Wrapper>
         );
     }

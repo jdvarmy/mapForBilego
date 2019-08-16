@@ -18,6 +18,7 @@ const Wrapper = styled(Drawer)`
         align-items: center;
         justify-content: center;
         height: 100%;
+        ${p=>p.width === '100%' && `padding: 0;`}
     }
 `;
 const Container = styled('div')`
@@ -80,7 +81,7 @@ class Cart extends React.Component{
                 visible={showCart}
                 zIndex={100}
                 closable={false}
-                width={isSmallScreen ? 375 : 476}
+                width={isSmallScreen ? '100%' : 476}
             >
                 <Container>
                     <Header>
@@ -107,7 +108,7 @@ class Cart extends React.Component{
                     visible={showPay}
                     zIndex={100}
                     closable={false}
-                    width={isSmallScreen ? 375 : 476}
+                    width={isSmallScreen ? '100%' : 476}
                 >
                     <Container>
                         <Spin

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import {inject, Provider} from 'mobx-react';
 import { SetStore } from '../../../stores/SetStore';
@@ -9,21 +9,30 @@ import RemainingBlock from './elements/RemainingBlock';
 
 const Wrapper = styled('li')`
     margin: 25px;
-    padding: ${p=>p.isSmallScreen ? '10px 0px' : '20px 30px'};
+    padding: 20px 30px;
     display: grid;
-    grid: ${p=>p.isSmallScreen ? '42px/30% 45% 25%' : '42px/20% 35% 25% 20%'};
+    grid: 42px/145px auto 25% 20%;
     grid-gap: 0;
+    ${p=>p.isSmallScreen && `
+        grid: 56px/125px auto;
+        padding: 10px 0px;
+        margin: 25px 10px;
+    `};
 `;
-
 const Flex = styled('div')`
     display: flex;
     align-items: center;
+    justify-content: center;
 `;
-const FlexStart = styled(Flex)`
-    justify-content: flex-start;
+const FlexStartCenter = styled(Flex)`
+    ${p=>p.isSmallScreen 
+    ? `align-items:center;` 
+    : `justify-content: flex-start;`}
 `;
 const FlexEnd = styled(Flex)`
-    justify-content: flex-end;
+    ${p => p.isSmallScreen 
+    ? `flex-direction:column;align-items:flex-end;`
+    : `justify-content: flex-end;`}
 `;
 
 @inject('dataStore')
@@ -42,20 +51,30 @@ class SetElement extends React.Component{
         return (
             <Provider setStore={this.setStore}>
                 <Wrapper isSmallScreen={isSmallScreen}>
-                    <FlexStart>
+                    <FlexStartCenter isSmallScreen={isSmallScreen}>
                         <ControlBlock />
-                    </FlexStart>
-                    <FlexStart>
-                        <NameBlock name={name}/>
-                    </FlexStart>
-                    {!isSmallScreen &&
-                        <FlexEnd>
-                            <RemainingBlock stock={stock} />
-                        </FlexEnd>
+                    </FlexStartCenter>
+                    {!isSmallScreen
+                      ?
+                      <Fragment>
+                          <FlexStartCenter>
+                              <NameBlock name={name}/>
+                          </FlexStartCenter>
+                          <FlexEnd>
+                              <RemainingBlock stock={stock} />
+                          </FlexEnd>
+                          <FlexEnd>
+                              <PriceBlock price={price_regular} />
+                          </FlexEnd>
+                      </Fragment>
+                      :
+                      <Fragment>
+                          <FlexEnd isSmallScreen={isSmallScreen}>
+                              <NameBlock name={name} />
+                              <PriceBlock price={price_regular} />
+                          </FlexEnd>
+                      </Fragment>
                     }
-                    <FlexEnd>
-                        <PriceBlock price={price_regular} />
-                    </FlexEnd>
                 </Wrapper>
             </Provider>
         );

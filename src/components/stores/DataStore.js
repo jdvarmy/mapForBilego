@@ -1,7 +1,8 @@
 class DataStore{
     width = window.innerWidth;
-    isSmallScreen = window.innerWidth < 721;
-    isVerySmallScreen = window.innerWidth <= 375;
+    isSmallScreen = window.innerWidth < 577;
+
+    
 }
 
 export const dataStore = new DataStore();

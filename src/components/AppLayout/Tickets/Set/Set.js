@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { inject } from 'mobx-react';
 import { Scrollbars } from 'react-custom-scrollbars';
-
 import SetElement from './SetElement';
+import NoTickets from '../NoTickets';
 
 const Wrapper = styled('div')`
     background-color: #fff;
@@ -20,20 +20,27 @@ const Container = styled('ul')`
     width: 100%;
 `;
 
-
 @inject('serverDataStore')
 class Set extends React.Component{
     render() {
         const { serverDataStore:{ data:{ tickets } } } = this.props;
+        let countTickets = 0;
 
         return (
-            <Wrapper>
-                <Scroll>
-                    <Container>
-                        {tickets.map( el=>(<SetElement element={el} key={el.id} />) )}
-                    </Container>
-                </Scroll>
-            </Wrapper>
+          <Wrapper>
+            <Scroll>
+              <Container>
+                {tickets
+                  .filter( el=>el.stock !== 0 )
+                  .map( el=>{
+                    countTickets++;
+                    return (<SetElement element={el} key={el.id} />)
+                  } )
+                }
+              </Container>
+            </Scroll>
+            {countTickets === 0 && <NoTickets />}
+          </Wrapper>
         );
     }
 }

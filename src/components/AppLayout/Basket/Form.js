@@ -18,21 +18,30 @@ const Container = styled('div')`
     position: relative;
     margin: 0 auto;
     width: 100%;
-    display: grid;
-    grid-template-columns: 172px 118px auto;
-    grid-template-rows: 75px;
     justify-items: center;
     align-items: center;
+    ${p => p.mobile
+    ? `
+      display: flex;
+      height: 75px;
+      flex-wrap: wrap-reverse;
+      justify-content: space-around;
+    `
+    : `
+      display: grid;
+      grid-template-columns: 172px 118px auto;
+      grid-template-rows: 75px;
+    `}
 `;
 
-@inject('basketStore')
+@inject('basketStore', 'dataStore')
 @observer
 class Form extends React.Component{
     render(){
-        const { basketStore:{ productInBasket } } = this.props;
+        const { basketStore:{ productInBasket }, dataStore:{ isSmallScreen } } = this.props;
         return(
             <Wrapper fast loading={productInBasket}>
-                <Container>
+                <Container mobile={isSmallScreen}>
                     <Products />
                 </Container>
             </Wrapper>

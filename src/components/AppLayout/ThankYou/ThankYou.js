@@ -67,8 +67,8 @@ class ThankYou extends React.Component{
                     <Container>
                         <Result
                             icon={<Icon type="smile" style={{ color: $css.colors.orange }}/>}
-                            title="Наши поздравления и удачной вечеринки!"
-                            subTitle="Билеты уже отправлены Вам на почту. Ищите их там, ну или в папке спам."
+                            title="Наши поздравления!"
+                            subTitle="Вы успешно купили билеты, и они уже ждут вас на почте. Ищите их там, ну или в папке спам. Удачного отдыха!"
                             extra={
                                 <Fragment>
                                     <Button onClick={this.returnToTheTickets} type="default">Возвращаемся к билетам через</Button>

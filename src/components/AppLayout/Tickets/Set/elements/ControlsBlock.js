@@ -4,16 +4,19 @@ import styled from 'styled-components';
 import { StyledBoxButton, $css } from '../../../../styles/defaults';
 import { Icon } from 'antd';
 
+const Wrapper = styled('div')``;
 const Container = styled('div')`
     display: inline-block;
     user-select: none;
 `;
-
 const Amount = styled(Container)`
     vertical-align: middle;
     padding: 0 14px;
     font-size: 20px;
     color: ${$css.colors.black};
+`;
+const Button = styled(StyledBoxButton)`
+    padding: 0;
 `;
 
 @inject('setStore', 'basketStore')
@@ -39,15 +42,15 @@ class ControlBlock extends React.Component{
         }
 
         return(
-            <div>
-                <StyledBoxButton onClick={this.handlerClickMinus} disabled={count <= 0}>
+            <Wrapper>
+                <Button onClick={this.handlerClickMinus} disabled={count <= 0}>
                     <Icon type="minus" />
-                </StyledBoxButton>
+                </Button>
                 <Amount>{count}</Amount>
-                <StyledBoxButton onClick={this.handlerClickPlus} disabled={count >= stock || isFull}>
+                <Button onClick={this.handlerClickPlus} disabled={count >= stock || isFull}>
                     <Icon type="plus" />
-                </StyledBoxButton>
-            </div>
+                </Button>
+            </Wrapper>
         );
     }
 }

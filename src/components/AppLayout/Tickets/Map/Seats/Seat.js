@@ -78,14 +78,14 @@ class Seat extends React.Component {
         if( !click && isFull )
             Informer({
                 title: 'Опаньки!',
-                text: `За один заказ можно купить только ${maxCountInBasket} ${getStrEnding(maxCountInBasket, ['билет','билета','билетов'])}.`
+                text: `В одном заказе можно купить только ${maxCountInBasket} ${getStrEnding(maxCountInBasket, ['билет','билета','билетов'])}.`
             });
         if( (!click && !isFull) || ((click && !isFull)) || (click && isFull) ) {
             if(ticketcloud) {
                 if(tickets[0] && tickets[0].type !== ticket.type) {
                     Informer({
                         title: 'Как жаль!',
-                        text: `Для этого события установлены ограничения. В один заказ Вы можете добавить билеты только одного типа (либо только входные, либо только билеты с местом).`
+                        text: `Для данного события установлены ограничения. В один заказ вы можете добавить билеты только одного типа.`
                     });
                     return;
                 }

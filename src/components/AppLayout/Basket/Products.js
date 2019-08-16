@@ -7,9 +7,9 @@ import { getStrEnding } from '../functions/functions';
 import Product from './Product';
 
 const Summary = styled('div')`
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 500;
-    background-color: ${$css.colors.white};
+    ${p=>!p.mobile && `background-color: ${$css.colors.white};font-size: 24px;`}
     white-space: nowrap;
     word-spacing: -2px;
 `;
@@ -18,16 +18,16 @@ const TicketCount = styled(Summary)`
     line-height: 24px;
 `;
 const Content = styled('div')`
-    width: 100%;
+    ${p=>!p.mobile && `width: 100%;`}
     position: relative;
 `;
 const ContentWidth = styled('div')`
-    max-width: ${props=>props.maxWidth}px;
+    max-width: ${p=>p.maxWidth}px;
     margin-top: -40px;
     margin-left: auto;
 `;
 const Table = styled('div')`
-    max-width: ${props=>props.maxWidth}px;
+    max-width: ${p=>p.maxWidth}px;
     width: 100%;
     box-sizing: border-box;
 `;
@@ -52,17 +52,17 @@ class Products extends React.Component{
         return summary;
     };
     render(){
-        const { basketStore:{ tickets, count }, dataStore:{ isVerySmallScreen } } = this.props;
+        const { basketStore:{ tickets, count }, dataStore:{ isSmallScreen } } = this.props;
         const maxWidth = 140 * count;
 
         return(
             <Fragment>
                 <StyledButton type="primary" onClick={this.getCart}>Купить билеты</StyledButton>
-                <Summary>{moneyFormating(this.countSummary(), true)}</Summary>
-                <Content>
-                    { isVerySmallScreen ?
-                        <TicketCount>{tickets.length}<br/>{getStrEnding(tickets.length, ['билет','билета','билетов'])}</TicketCount> :
-                        <ContentWidth maxWidth={maxWidth}>
+                <Summary mobile={isSmallScreen}>{moneyFormating(this.countSummary(), true)}</Summary>
+                <Content mobile={isSmallScreen}>
+                    { isSmallScreen
+                      ? <TicketCount mobile={isSmallScreen}>{tickets.length} {getStrEnding(tickets.length, ['билет','билета','билетов'])}</TicketCount>
+                      : <ContentWidth maxWidth={maxWidth}>
                             <Table maxWidth={maxWidth}>
                                 <TableRow>
                                     { tickets.map( ( el, k ) => <Product key={el.id.toString() + k} ticket={el} number={k+1} /> ) }

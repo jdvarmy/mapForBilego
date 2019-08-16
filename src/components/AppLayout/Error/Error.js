@@ -60,7 +60,7 @@ class Error extends React.Component{
                         <Result
                           icon={<Icon type="frown" style={{ color: $css.colors.red }}/>}
                           title={error}
-                          subTitle='Произошла "какая-то ошибка"! Не в службу, а в дружбу. Сделайте скриншот страницы и отправьте его на email support@bilego.ru и где-то в мире перестенет плакать один грустный котик.'
+                          subTitle='Произошла непредвиденная ошибка, и мы уже знаем об этом. Вы можете помочь нам исправить её быстрее, если сделаете скриншот страницы и отпраите на email support@bilego.ru и где-то в мире перестенет плакать один грустный котик.'
                           extra={
                               <Fragment>
                                   <Button onClick={this.returnToTheTickets} type="default">Возвращаемся к билетам</Button>
