@@ -51,7 +51,13 @@ class Svg extends React.Component{
                     onTouchStart={mapStore.handleTouchStart}
                 >
                     <svg id="bts-tickets-map" {...svgData} style={{backgroundImage: `url(${backgroundImage})`}}>
-                        <defs />
+                        <defs>
+                            <linearGradient id="stripes" x1="0" y1="0" x2="100%" y2="50%">
+                                <stop stopColor="hsl(45,100%,65%)" offset="0"/>
+                                <stop stopColor="hsl(320,100%,65%)" offset="50%"/>
+                                <stop stopColor="hsl(200,100%,60%)" offset="100%"/>
+                            </linearGradient>
+                        </defs>
                         <Seats />
                         <Paths />
                     </svg>

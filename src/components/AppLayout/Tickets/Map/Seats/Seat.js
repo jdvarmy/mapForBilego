@@ -4,8 +4,10 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { getStrEnding } from '../../../functions/functions';
 import Informer from '../../../Informer/Informer';
-import { SeatStore } from '../stores/SeatStore'
-import { TooltipSeat } from '../Tooltip/TooltipSeat'
+import { SeatStore } from '../stores/SeatStore';
+import { TooltipSeat } from '../Tooltip/TooltipSeat';
+import { TooltipPath } from '../Tooltip/TooltipPath';
+import { $css } from '../../../../styles/defaults';
 
 const Wrapper = styled('g')``;
 
@@ -38,19 +40,24 @@ class Seat extends React.Component {
         else
             this.seatStore.init( { id, tickets } );
 
-        if( this.seatStore.ticket && this.seatStore.ticket.type === 'with_map_sector' )
+        if( this.seatStore.ticket && Array.isArray(this.seatStore.ticket) && 'with_map_sector' === this.seatStore.ticket[0].type ) {
             this.seatStore.addSpecialType();
+        }
         this.scale = 1;
     }
 
     componentDidMount(): void {
         this.el = ReactDOM.findDOMNode(this);
+        const { specialType, ticket } = this.seatStore,
+            el = this.el;
 
-        if( this.el && this.seatStore.ticket ) {
-            const { price_regular, sector_name, row_name, seat_name } = this.seatStore.ticket,
-                el = this.el;
+        if( this.el && ticket && !Array.isArray(ticket) && !specialType) {
+            const { price_regular, sector_name, row_name, seat_name } = ticket;
 
             this.tooltip = new TooltipSeat({price_regular, sector_name, row_name, seat_name, el});
+        }else if(ticket && Array.isArray(ticket) && specialType){
+            const text = 'Входные билеты', ticketArr = ticket;
+            this.tooltip = new TooltipPath({el, ticketArr, text});
         }
     }
 
@@ -103,10 +110,19 @@ class Seat extends React.Component {
     };
 
     findTicketInBascket = () => {
-        let t = false;
+        const { ticket } = this.seatStore;
+        let t = 0;
         this.props.basketStore.ticketsMap.forEach(e => {
-            if(e.id === this.seatStore.ticket.id)
-                t = e
+            if(Array.isArray(ticket)){
+                // eslint-disable-next-line array-callback-return
+                ticket.map(k=>{
+                    if(e.id === k.id)
+                        t += e.count;
+                });
+            }else{
+                if (e.id === ticket.id)
+                    t = e.count
+            }
         });
         return t;
     };
@@ -134,18 +150,29 @@ class Seat extends React.Component {
             }
         }else{
             radius = (r*0.6).toFixed(2);
-            style = {fill: '#e5e5e5'};
+            style = {fill: $css.colors.grey};
         }
 
         if(specialType){
             const ticketInBasket = this.findTicketInBascket();
+            style = Array.isArray(ticket) && ticket.length===1 && ticket[0].color ? {fill: ticket[0].color} : {fill: $css.colors.url.candy};
 
             if(ticketInBasket) {
                 text = (<Text fontSize={(r * 1.8 + scale * 2.2).toFixed(2)} x={cx} y={(cy * 1 + 2.4 * scale).toFixed(2)}>
-                    {ticketInBasket.count}
+                    {ticketInBasket}
                 </Text>);
                 radius = (r * 1.9).toFixed(2);
             }
+        }
+
+        const haveTickets =
+          Array.isArray(ticket)
+          ? ticket.filter(e=>e.stock>0).length>0
+          : ticket.stock>0;
+
+        if(!haveTickets){
+            radius = (r*0.6).toFixed(2);
+            style = {fill: $css.colors.grey};
         }
 
         return (

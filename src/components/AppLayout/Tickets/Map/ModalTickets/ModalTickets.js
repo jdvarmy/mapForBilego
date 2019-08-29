@@ -17,6 +17,17 @@ const Number = styled(Font)`
 const UpFont = styled(Font)`
     font-weight: 500;
 `;
+const LoFont = styled('div')`
+    font-size: 11px;
+`;
+const Wrapper = styled(Row)`
+    padding: 10px 0;
+`;
+const Modal = styled(StyledModal)`
+    & .ant-modal-body{
+        padding: 14px 24px;
+    }
+`;
 
 @inject('basketStore', 'serverDataStore')
 @observer
@@ -32,8 +43,8 @@ class ModalTickets extends React.Component{
         return nodes;
     };
 
-    plus = () => {
-        const { basketStore:{ setOfTicket, toBasket, isFull, maxCountInBasket, tickets }, serverDataStore:{ data:{ ticketcloud } } }  = this.props;
+    plus = (el) => (event) => {
+        const { basketStore:{ toBasket, isFull, maxCountInBasket, tickets }, serverDataStore:{ data:{ ticketcloud } } }  = this.props;
         if( isFull ){
             Informer({
                 title: 'Опаньки!',
@@ -41,7 +52,7 @@ class ModalTickets extends React.Component{
             });
         }
         if(ticketcloud) {
-            if(tickets[0] && tickets[0].type !== setOfTicket.type) {
+            if(tickets && Array.isArray(tickets) && tickets.length>0 && tickets[0] && tickets[0].type !== el.type) {
                 Informer({
                     title: 'Как жаль!',
                     text: `Для данного события установлены ограничения. В один заказ вы можете добавить билеты только одного типа.`
@@ -49,49 +60,53 @@ class ModalTickets extends React.Component{
                 return;
             }
         }
-        toBasket( setOfTicket, true );
+
+        toBasket( el, true );
     };
 
-    minus = () => {
-        const { basketStore:{ setOfTicket, toBasket } } = this.props;
-        toBasket( setOfTicket, false );
+    minus = (el) => (event) => {
+        const { basketStore:{ toBasket } } = this.props;
+        toBasket( el, false );
     };
 
     render(){
-        const { basketStore: { modalTickets, closeModalTickets, setOfTicket, isFull } } = this.props,
-            ticket = setOfTicket && this.getTicketById(setOfTicket.id);
-
-        const disabledMinus = setOfTicket && ticket.length===0;
-        const disabledPlus = setOfTicket && (isFull || ticket.length >= setOfTicket.stock);
+        const { basketStore: { modalTickets, closeModalTickets, setOfTicket, isFull } } = this.props;
 
         return(
-            <StyledModal
+            <Modal
                 visible={modalTickets}
                 centered
                 onOk={closeModalTickets}
                 onCancel={closeModalTickets}
                 footer={null}
-                width={296}
-                title={setOfTicket && setOfTicket.name}
+                width={325}
+                title={(Array.isArray(setOfTicket) && setOfTicket.length > 0) && (setOfTicket.length===1 ? setOfTicket[0].name : 'Входные билеты')}
                 icon={<Icon type="close-circle" />}
                 iconType='close-circle'
             >
-                {setOfTicket &&
-                    <Fragment>
-                        <Row align='middle' justify='center'>
+                {setOfTicket && setOfTicket.map( el => {
+                    const ticket = this.getTicketById(el.id);
+                    const disabledMinus = el.length===0;
+                    const disabledPlus = isFull || ticket.length >= el.stock;
+
+                    return <Fragment key={el.id}>
+                        <Wrapper align='middle' justify='center'>
                             <Col span={12}>
-                                <UpFont>{moneyFormating(setOfTicket.price, true)}</UpFont>
-                                <div>Входной билет</div>
+                                <UpFont>{moneyFormating(el.price, true)}</UpFont>
+                                <LoFont>{setOfTicket.length===1 ? 'Входной билет' : el.name}</LoFont>
                             </Col>
                             <Col span={12}>
-                                <StyledBoxButton disabled={disabledMinus} onClick={this.minus}><Icon type="minus" /></StyledBoxButton>
+                                <StyledBoxButton disabled={disabledMinus} onClick={this.minus(el)}><Icon
+                                  type="minus"/></StyledBoxButton>
                                 <Number><span>{ticket.length}</span></Number>
-                                <StyledBoxButton disabled={disabledPlus} onClick={this.plus}><Icon type="plus" /></StyledBoxButton>
+                                <StyledBoxButton disabled={disabledPlus} onClick={this.plus(el)}><Icon
+                                  type="plus"/></StyledBoxButton>
                             </Col>
-                        </Row>
+                        </Wrapper>
                     </Fragment>
+                })
                 }
-            </StyledModal>
+            </Modal>
         );
     }
 }

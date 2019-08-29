@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button, Modal } from 'antd';
+import { Button, Modal, Popover } from 'antd';
 
 const baseDuration = 500;
 const baseDelay = 500;
@@ -18,7 +18,10 @@ export const $css = {
         orangeDark: '#ff9f4c',
         rgbaGrey: 'rgba(0,0,0,0.5)',
         rgbaBorder: 'rgba(0,0,0,0.1)',
-        rgbaOpacity: 'rgba(0,0,0,0)'
+        rgbaOpacity: 'rgba(0,0,0,0)',
+        url: {
+            candy: 'url(#stripes)'
+        }
     },
     sizes: {
         containerH: 645 + 'px'
@@ -127,4 +130,8 @@ export const StyledBoxButton = styled(Button)`
         background-color: ${$css.colors.white};
         cursor: default;
     }
+`;
+
+export const StyledPopover = styled(Popover)`
+    
 `;

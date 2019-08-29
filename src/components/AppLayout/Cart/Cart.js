@@ -58,7 +58,10 @@ const CountTickets = styled(Div)`
     `}
 `;
 const TicketsWrap = styled('div')`
-    height: 249px;
+    ${props => props.isSmallScreen ? 
+        `height: 249px;` :
+        `height: 219px;`
+    }
     position: relative;
 `;
 const FooterWrap = styled('div')`
@@ -66,6 +69,11 @@ const FooterWrap = styled('div')`
     bottom: 0;
     left: 0;
     right: 0;
+`;
+const Spinner = styled(Spin)`
+    & .ant-spin-text{
+        text-transform: uppercase;
+    }
 `;
 
 @inject('dataStore', 'cartStore', 'serverDataStore')
@@ -96,7 +104,7 @@ class Cart extends React.Component{
                     <CountTickets isSmallScreen={isSmallScreen} >
                         <span>{`${length} ${getStrEnding(length, ['билет','билета','билетов'])}`}</span>
                     </CountTickets>
-                    <TicketsWrap>
+                    <TicketsWrap isSmallScreen={isSmallScreen}>
                         <Tickets/>
                     </TicketsWrap>
                     <FooterWrap>
@@ -111,14 +119,15 @@ class Cart extends React.Component{
                     width={isSmallScreen ? '100%' : 476}
                 >
                     <Container>
-                        <Spin
+                        <Spinner
                           tip="Создание заказа..."
                           delay={$css.animation.delay}
                           indicator={<Icon type="loading" style={{ fontSize: 24, color: $css.colors.orange }} spin />}
                           spinning={!checkoutData}
+                          size="large"
                         >
                             {checkoutData && <Checkout />}
-                        </Spin>
+                        </Spinner>
                     </Container>
                 </Wrapper>
             </Wrapper>

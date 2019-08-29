@@ -14,7 +14,7 @@ const Element = styled('path')`
             fill:transparent;
             opacity: 1;
             stroke: #ef5625;
-            stroke-width: 40;
+            stroke-width: 25;
             stroke-linecap: round;
             stroke-linejoin: round;
             stroke-opacity: .7;
@@ -67,6 +67,11 @@ class Path extends React.Component {
             { mapStore:{ pathDisplay, handleClick } } = this.props,
             { hover, ticket } = this.pathStore;
 
+        const haveTickets =
+          Array.isArray(ticket)
+            ? ticket.filter(e=>e.stock>0).length>0
+            : ticket.stock>0;
+
         return (
             <Element
                 d={d}
@@ -75,7 +80,7 @@ class Path extends React.Component {
                 pathDisplay={pathDisplay}
                 onMouseOver={this.handleHover}
                 onMouseLeave={this.handleUnhover}
-                onClick={ticket ? this.handlerSpecialClick : handleClick}
+                onClick={Array.isArray(ticket) && ticket.length>0 && haveTickets ? this.handlerSpecialClick : handleClick}
             />
         )
     }

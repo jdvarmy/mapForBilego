@@ -13,6 +13,7 @@ export class SeatStore {
     @action
     initTicketCloud = props => {
         const { name, row, sector, tickets } = props;
+
         if( tickets !== null ) {
             // eslint-disable-next-line array-callback-return
             tickets.map(e => {
@@ -21,7 +22,14 @@ export class SeatStore {
                         this.ticket = e;
                     }
                 } else {
-                    if (name === e.id || name === e.sector) this.ticket = e;
+                    if (name === e.id || name === e.sector) {
+                        if(e.type === 'with_map_sector'){
+                            this.ticket = typeof this.ticket==='undefined' ? [] : this.ticket;
+                            this.ticket.push(e);
+                        }else{
+                            this.ticket = e;
+                        }
+                    }
                 }
             });
         }
