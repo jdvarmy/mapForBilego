@@ -5,8 +5,8 @@ import {$css, Animation} from '../../styles/defaults';
 
 const Wrapper = styled(Animation)`
     width: 100%;
-    height: ${$css.sizes.containerH};
-    position: absolute;
+    height: 100%;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 1;
@@ -14,7 +14,6 @@ const Wrapper = styled(Animation)`
 const Content = styled('canvas')`
     width: 100%;
     height: 100%;
-    min-height: ${$css.sizes.containerH};
     display: block;
     opacity: 1;
     margin: 0 auto;
@@ -23,8 +22,8 @@ const Content = styled('canvas')`
 @inject('serverDataStore')
 @observer
 class Loading extends React.Component{
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.options = {
             speed: 65,
             shootNum: 0,
@@ -70,7 +69,7 @@ class Loading extends React.Component{
         img.src = this.images[loadingImage-1].src;
         this.spride = img;
     };
-    
+
     start = () => {
         const width = this.loadWrap.current.getBoundingClientRect().width,
             height = this.loadWrap.current.getBoundingClientRect().height;
@@ -84,10 +83,10 @@ class Loading extends React.Component{
         }, this.options.speed);
 
     };
-    
+
     stop = () => {
-        clearInterval(this.init);
-        clearTimeout(this.timeout);
+        // clearInterval(this.init);
+        // clearTimeout(this.timeout);
     };
 
     drawImageLoader = () => {

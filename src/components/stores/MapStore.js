@@ -150,6 +150,49 @@ class MapStore{
             document.addEventListener('touchend', this.onTouchEndZoom);
         }
     }
+    @action.bound
+    handlePressDrug(e){
+        const orig = e.touches,
+            touches = orig.length;
+
+        if (touches === 1) {
+            this.map.classList.add('dragging');
+
+            this.stopMomentum();
+            this.init1 = {
+                x: orig[0].pageX - this.x,
+                y: orig[0].pageY - this.y
+            };
+
+            this.mouse.x = this.normalizeX(orig[0].pageX - this.init1.x);
+            this.mouse.y = this.normalizeY(orig[0].pageY - this.init1.y);
+            this.momentumStep();
+
+            this.map.addEventListener('touchmove', this.onTouchMove);
+            document.addEventListener('touchend', this.onTouchEnd);
+        }
+    }
+    @action.bound
+    handlePinchZoom(e){
+        const orig = e.touches,
+            touches = orig.length;
+
+        if (touches === 2) {
+            this.map.classList.add('dragging');
+
+            this.stopMomentum();
+            this.init1 = { x: orig[0].pageX - this.x, y: orig[0].pageY - this.y };
+            this.init2 = { x: orig[1].pageX - this.x, y: orig[1].pageY - this.y };
+            this.initD = Math.sqrt(Math.pow(this.init1.x - this.init2.x, 2) + Math.pow(this.init1.y - this.init2.y, 2));
+            this.initScale = this.scale;
+
+            this.map.removeEventListener('touchmove', this.onTouchMove);
+            document.addEventListener('touchend', this.onTouchEnd);
+
+            this.map.addEventListener('touchmove', this.onTouchMoveZoom);
+            document.addEventListener('touchend', this.onTouchEndZoom);
+        }
+    }
     onTouchMove = e => {
         const orig = e.touches,
             touches = orig.length;

@@ -21,6 +21,7 @@ const Wrapper = styled(Drawer)`
         ${p=>p.width === '100%' && `padding: 0;`}
     }
 `;
+// todo переделать высоту корзины
 const Container = styled('div')`
     height: ${$css.sizes.containerH};
     position: relative;

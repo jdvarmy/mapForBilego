@@ -1,5 +1,5 @@
 import React from 'react';
-import { observer, inject } from 'mobx-react'
+import { observer, inject } from 'mobx-react';
 
 import Seats from '../Seats/Seats'
 import Paths from '../Paths/Paths'
@@ -10,10 +10,11 @@ class Svg extends React.Component{
     constructor(props){
         super(props);
 
-        this.oldSize = {w: 0, h: 0}
+        this.oldSize = {w: 0, h: 0};
+        this.element = React.createRef();
     }
 
-    componentDidMount(): void {
+    componentDidMount(){
         const { mapStore } = this.props;
         const { serverDataStore:{ data } } = this.props;
         const width = data.map_data.data.width,
@@ -26,7 +27,13 @@ class Svg extends React.Component{
         window.addEventListener('resize', this.updateResize);
         this.updateResize();
 
-        document.ondragstart = function() { return false; }
+        document.ondragstart = function() { return false; };
+
+        this.element.current.addEventListener('touchstart', mapStore.handlePressDrug);
+        this.element.current.addEventListener('touchstart', mapStore.handlePinchZoom)
+    }
+    componentWillUnmount() {
+        this.element.current.removeEventListener('touchstart')
     }
 
     render() {
@@ -45,10 +52,10 @@ class Svg extends React.Component{
             }}>
                 <div
                     className="btm-map-image"
-                    ref={(e) => (this.element = e)}
+                    ref={this.element}
                     // onWheel={mapStore.handleWheel}
                     onMouseDown={mapStore.handleMouseDown}
-                    onTouchStart={mapStore.handleTouchStart}
+                    // onTouchStart={mapStore.handleTouchStart}
                 >
                     <svg id="bts-tickets-map" {...svgData} style={{backgroundImage: `url(${backgroundImage})`}}>
                         <defs>
@@ -65,7 +72,7 @@ class Svg extends React.Component{
             </div>
         );
     }
-    
+
     updateResize = () => {
         const { mapStore } = this.props;
         mapStore.setContainerDimensions ( mapStore.container.offsetWidth, mapStore.container.offsetHeight );
