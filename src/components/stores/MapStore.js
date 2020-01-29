@@ -1,4 +1,5 @@
 import {action, observable} from 'mobx';
+import Hammer from 'hammerjs';
 
 const inverse = (x) => x * -1;
 
@@ -17,8 +18,10 @@ class MapStore{
     @observable fitscale = this.scale;
     maxscale = 4;
     zoommargin = 0;
+
     @observable container = undefined;
     @observable map = undefined;
+    @observable mapImage = undefined;
 
     // touch
     init1 = null;
@@ -40,6 +43,10 @@ class MapStore{
     @action
     setMap = element => {
         this.map = element;
+    };
+    @action
+    setImage = element => {
+        this.mapImage = element;
     };
     @action
     setContentDimensions = (w, h) => {
@@ -237,6 +244,58 @@ class MapStore{
         this.map.classList.remove('dragging');
     };
 
+    @observable status = 'null';
+    @action
+    hammerFunction = () => {
+        console.log(this.container)
+        console.log(this.map)
+        console.log(this.mapImage)
+
+        this.disableImgEventHandlers();
+
+        this.hammer = Hammer(this.mapImage, {
+            domEvents: true
+        });
+        this.hammer.get('pinch').set({
+            enable: true
+        });
+
+        this.hammer.on('doubletap', function (e) {
+            console.log(e)
+        });
+        this.hammer.on('pinch', (e) => {
+            alert(e)
+            this.status = 'this is pinch event';
+
+            // http://bl.ocks.org/redgeoff/raw/6be0295e6ebf18649966d48768398252/
+
+            // const orig = e.touches;
+            // this.map.classList.add('dragging');
+            //
+            // this.stopMomentum();
+            // this.init1 = { x: orig[0].pageX - this.x, y: orig[0].pageY - this.y };
+            // this.init2 = { x: orig[1].pageX - this.x, y: orig[1].pageY - this.y };
+            // this.initD = Math.sqrt(Math.pow(this.init1.x - this.init2.x, 2) + Math.pow(this.init1.y - this.init2.y, 2));
+            // this.initScale = this.scale;
+        });
+        this.hammer.on('pinchend', (e) => {
+            console.log(e)
+            this.status = 'this is pinchend event'
+
+            // todo hammer.off events
+        });
+    };
+    disableImgEventHandlers = () => {
+        const events = ['onclick', 'onmousedown', 'onmousemove', 'onmouseout', 'onmouseover',
+            'onmouseup', 'ondblclick', 'onfocus', 'onblur'];
+
+        events.map(event => {
+            this.mapImage[event] = function() {
+                return false;
+            };
+        });
+    };
+
     //
     momentum = null;
     current = {x: 0, y: 0};
@@ -344,6 +403,11 @@ class MapStore{
         return scale;
     };
 
+    /*
+    *
+    *
+    *
+    * */
 
     // minimap
     @observable containerMinimap = undefined;
