@@ -6,35 +6,32 @@ import MiniMap from './Minimap/Minimap';
 import ZoomButtons from './ZoomButtons/ZoomButtons';
 import ModalTickets from './ModalTickets/ModalTickets';
 
-const Container = styled('div')`
-    height: 100%;
-`;
-
-const Wrapper = styled(Container)`
-    height: 595px;
+const Wrapper = styled.div`
+    height: ${window.innerHeight}px;
     width: 100%;
-    position: relative;
     overflow: hidden;
     font-smooth: antialiased;
+    position: fixed;
+    top: 0;
+    left: 0;
 `;
 
 class Map extends React.PureComponent{
-
-    render() {
-        return (
-            <Fragment>
-                <Menu/>
-                <Wrapper id="bt--tickets-views">
-                    <Container id="bt-container" data-type="map">
-                        <Svg />
-                        <MiniMap />
-                        <ZoomButtons/>
-                    </Container>
-                </Wrapper>
-                <ModalTickets />
-            </Fragment>
-        );
-    }
+  render() {
+    return (
+        <Fragment>
+            <Menu/>
+            <Wrapper id="bt--tickets-views">
+                <div id="bt-container" data-type="map">
+                    <Svg />
+                    <MiniMap />
+                    <ZoomButtons/>
+                </div>
+            </Wrapper>
+            <ModalTickets />
+        </Fragment>
+    );
+  }
 }
 
 export default Map;

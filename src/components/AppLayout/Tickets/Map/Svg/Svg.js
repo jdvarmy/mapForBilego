@@ -1,5 +1,5 @@
 import React from 'react';
-import { observer, inject } from 'mobx-react';
+import { observer, inject } from 'mobx-react'
 
 import Seats from '../Seats/Seats'
 import Paths from '../Paths/Paths'
@@ -14,7 +14,7 @@ class Svg extends React.Component{
         this.element = React.createRef();
     }
 
-    componentDidMount(){
+    componentDidMount() {
         const { mapStore } = this.props;
         const { serverDataStore:{ data } } = this.props;
         const width = data.map_data.data.width,
@@ -72,7 +72,7 @@ class Svg extends React.Component{
             </div>
         );
     }
-
+    
     updateResize = () => {
         const { mapStore } = this.props;
         mapStore.setContainerDimensions ( mapStore.container.offsetWidth, mapStore.container.offsetHeight );

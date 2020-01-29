@@ -85,8 +85,8 @@ class Loading extends React.Component{
     };
 
     stop = () => {
-        // clearInterval(this.init);
-        // clearTimeout(this.timeout);
+        clearInterval(this.init);
+        clearTimeout(this.timeout);
     };
 
     drawImageLoader = () => {

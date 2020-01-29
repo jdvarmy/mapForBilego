@@ -14,12 +14,6 @@ const FadeInWrap = styled('div')`
     animation-name: fade-in;
 `;
 
-const Wrapper = styled('div')``;
-
-const Container = styled('div')`
-    position: relative;
-`;
-
 @inject('serverDataStore')
 @observer
 class Tickets extends React.Component{
@@ -28,12 +22,12 @@ class Tickets extends React.Component{
 
         return(
             <FadeInWrap>
-                <Wrapper data-type={data.ticket_type}>
-                    <Container>
+                <div data-type={data.ticket_type}>
+                    <div>
                         {data.ticket_type === 'map' ? <Map/> : <Set/>}
-                        <Basket />
-                    </Container>
-                </Wrapper>
+                        {/*<Basket />*/}
+                    </div>
+                </div>
                 <Layout />
                 <Cart />
             </FadeInWrap>

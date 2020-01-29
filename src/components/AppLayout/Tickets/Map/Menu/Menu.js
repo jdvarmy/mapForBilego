@@ -3,18 +3,17 @@ import styled from 'styled-components';
 import Item from './Item';
 import {inject} from "mobx-react";
 
-
 const Wrapper = styled('div')`
     display: inline-block;
     font-size: 0px;
     width: 100%;
     max-width: 360px;
     z-index: 1;
+    position: relative;
     background-color: rgb(255, 255, 255);
     user-select: none;
     padding: 0px 30px;
 `;
-
 const Container = styled('div')`
     color: rgb(51, 51, 51);
     font-size: 13px;
@@ -23,7 +22,6 @@ const Container = styled('div')`
     position: relative;
     user-select: none;
 `;
-
 const Table = styled('div')`
     width: 100%;
     display: table;

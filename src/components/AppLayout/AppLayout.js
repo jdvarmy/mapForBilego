@@ -7,10 +7,8 @@ import Tickets from './Tickets/Tickets';
 
 const Wrapper = styled('div')`
     background-color: ${$css.colors.white};
-    position:relative;
     width: 100%;
-    height: ${$css.sizes.containerH};
-    overflow: hidden;
+    height: 100%;
 `;
 
 @inject('serverDataStore')
