@@ -6,8 +6,8 @@ import styled from 'styled-components';
 const Wrapper = styled('div')`
     width: 140px;
     position: absolute;
-    top: -1px;
-    right: -1px;
+    top: 50px;
+    right: 20px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     opacity: 0;
     overflow: hidden;
@@ -54,7 +54,7 @@ const Clip = styled(Overlay)`
 @inject('mapStore', 'serverDataStore')
 @observer
 class MiniMap extends React.Component {
-    componentDidMount(): void {
+    componentDidMount() {
         const { mapStore:{ setContainerMinimap } } = this.props;
         setContainerMinimap( ReactDOM.findDOMNode(this) );
     }

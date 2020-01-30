@@ -11,6 +11,7 @@ class Basket extends React.Component{
 
         return (
             <Drawer
+              className="bilego-basket"
               placement='bottom'
               visible={productInBasket}
               zIndex={1}

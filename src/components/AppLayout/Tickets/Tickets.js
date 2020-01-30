@@ -25,7 +25,7 @@ class Tickets extends React.Component{
                 <div data-type={data.ticket_type}>
                     <div>
                         {data.ticket_type === 'map' ? <Map/> : <Set/>}
-                        {/*<Basket />*/}
+                        <Basket />
                     </div>
                 </div>
                 <Layout />

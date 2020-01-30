@@ -44,6 +44,15 @@
 @viewport {
     user-zoom: fixed;
 }
+.bilego-basket .ant-drawer-content{
+    overflow: visible;
+}
+.ant-modal-header{
+    border-radius: 0;
+}
+.ant-modal-content{
+    background: #fff;
+}
 /*@keyframes flash {*/
 /*    from,50%,to{opacity:1}*/
 /*    25%,75%{opacity:0}*/

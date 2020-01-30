@@ -81,8 +81,9 @@ class ModalTickets extends React.Component{
                 footer={null}
                 width={325}
                 title={(Array.isArray(setOfTicket) && setOfTicket.length > 0) && (setOfTicket.length===1 ? setOfTicket[0].name : 'Входные билеты')}
-                icon={<Icon type="close-circle" />}
+                icon={<Icon type="plus" />}
                 iconType='close-circle'
+                closeIcon={<Icon type="plus" style={{transform: 'rotate(45deg) scale(1.3)'}} />}
             >
                 {setOfTicket && setOfTicket.map( el => {
                     const ticket = this.getTicketById(el.id);
