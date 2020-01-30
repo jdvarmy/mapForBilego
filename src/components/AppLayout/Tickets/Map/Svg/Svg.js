@@ -72,9 +72,6 @@ class Svg extends React.Component{
                         </svg>
                     </div>
                 </div>
-                <div style={{position: 'fixed', width: '100px', height: '100px', left: 0, top: '50px'}}>
-                  {mapStore.status}
-                </div>
             </React.Fragment>
         );
     }

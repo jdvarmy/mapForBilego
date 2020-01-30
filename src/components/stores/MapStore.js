@@ -244,7 +244,6 @@ class MapStore{
         this.map.classList.remove('dragging');
     };
 
-    @observable status = 'null';
     @action
     hammerFunction = () => {
         console.log(this.container)
@@ -260,27 +259,31 @@ class MapStore{
             enable: true
         });
 
-        this.hammer.on('doubletap', function (e) {
-            console.log(e)
+        this.hammer.on('doubletap', (e) => {
+            console.log(e.pointers[0])
+            console.log({...e})
         });
         this.hammer.on('pinch', (e) => {
-            alert(e)
-            this.status = 'this is pinch event';
-
+            console.log(e)
             // http://bl.ocks.org/redgeoff/raw/6be0295e6ebf18649966d48768398252/
 
-            // const orig = e.touches;
-            // this.map.classList.add('dragging');
-            //
-            // this.stopMomentum();
-            // this.init1 = { x: orig[0].pageX - this.x, y: orig[0].pageY - this.y };
-            // this.init2 = { x: orig[1].pageX - this.x, y: orig[1].pageY - this.y };
-            // this.initD = Math.sqrt(Math.pow(this.init1.x - this.init2.x, 2) + Math.pow(this.init1.y - this.init2.y, 2));
-            // this.initScale = this.scale;
+            const orig = [e.pointers[0], e.pointers[1]];
+            this.map.classList.add('dragging');
+
+            this.stopMomentum();
+            this.init1 = { x: orig[0].pageX - this.x, y: orig[0].pageY - this.y };
+            this.init2 = { x: orig[1].pageX - this.x, y: orig[1].pageY - this.y };
+            this.initD = Math.sqrt(Math.pow(this.init1.x - this.init2.x, 2) + Math.pow(this.init1.y - this.init2.y, 2));
+            this.initScale = this.scale;
+
+            this.map.removeEventListener('touchmove', this.onTouchMove);
+            document.addEventListener('touchend', this.onTouchEnd);
+
+            this.map.addEventListener('touchmove', this.onTouchMoveZoom);
+            document.addEventListener('touchend', this.onTouchEndZoom);
         });
         this.hammer.on('pinchend', (e) => {
             console.log(e)
-            this.status = 'this is pinchend event'
 
             // todo hammer.off events
         });
