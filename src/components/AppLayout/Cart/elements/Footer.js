@@ -15,7 +15,7 @@ const Button = styled(StyledButton)`
     padding: 8px 20px;
     height: 46px;
     &.ant-btn:focus{
-        background-color: ${$css.colors.green};
+        background-color: ${$css.colors.red};
     }
 `;
 const TotalOrderWrap = styled('div')`
@@ -38,7 +38,7 @@ const Meta = styled('div')`
     line-height: 13px;
 `;
 const Link = styled('a')`
-    color: ${$css.colors.green};
+    color: ${$css.colors.red};
     text-decoration: none;
     outline: none;
     transition: color ${$css.animation.duration}ms;

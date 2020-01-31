@@ -11,7 +11,7 @@ const Wrapper = styled('div')`
 @inject('thankYouStore', 'serverDataStore')
 @observer
 class Checkout extends React.Component{
-    componentDidMount(): void {
+    componentDidMount() {
         const { serverDataStore:{ checkoutData } } = this.props;
         this.fondyFunction(checkoutData);
     }

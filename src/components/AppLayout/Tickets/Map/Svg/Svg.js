@@ -30,7 +30,7 @@ class Svg extends React.Component{
 
         document.ondragstart = function() { return false; };
 
-        this.element.current.addEventListener('touchstart', mapStore.handlePressDrug);
+        // this.element.current.addEventListener('touchstart', mapStore.handlePressDrug);
         // this.element.current.addEventListener('touchstart', mapStore.handlePinchZoom);
 
         mapStore.hammerFunction();
@@ -71,11 +71,17 @@ class Svg extends React.Component{
                             <Paths />
                         </svg>
                     </div>
+                    {/*<div style={{border: '1px solid red', position: 'absolute', top: 0, left: 0, fontSize: '76px'}}>*/}
+                    {/*    {mapStore.init1 && mapStore.init1.x} - {mapStore.init1 && mapStore.init1.y}<br/>*/}
+                    {/*    {mapStore.init2 && mapStore.init2.x} - {mapStore.init2 && mapStore.init2.y}<br/>*/}
+                    {/*    {mapStore.initD}<br/>*/}
+                    {/*    {mapStore.initScale}*/}
+                    {/*</div>*/}
                 </div>
             </React.Fragment>
         );
     }
-    
+
     updateResize = () => {
         const { mapStore } = this.props;
         mapStore.setContainerDimensions ( mapStore.container.offsetWidth, mapStore.container.offsetHeight );

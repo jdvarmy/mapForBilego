@@ -12,6 +12,7 @@ const Wrapper = styled('div')`
 `;
 const StyledBoxButtonBlock = styled(StyledBoxButton)`
     display: block;
+    margin: 8px 0;
 `;
 
 @inject('mapStore')

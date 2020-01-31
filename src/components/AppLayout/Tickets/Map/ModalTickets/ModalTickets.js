@@ -13,6 +13,8 @@ const Font = styled('div')`
 const Number = styled(Font)`
     display: inline-block;
     margin: 0 15px;
+    font-size: 20px;
+    font-weight: 600;
 `;
 const UpFont = styled(Font)`
     font-weight: 500;
@@ -87,7 +89,7 @@ class ModalTickets extends React.Component{
             >
                 {setOfTicket && setOfTicket.map( el => {
                     const ticket = this.getTicketById(el.id);
-                    const disabledMinus = el.length===0;
+                    const disabledMinus = ticket.length <= 0;
                     const disabledPlus = isFull || ticket.length >= el.stock;
 
                     return <Fragment key={el.id}>

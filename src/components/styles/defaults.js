@@ -5,18 +5,17 @@ const baseDuration = 500;
 const baseDelay = 500;
 export const $css = {
     colors: {
-        green: '#0c5a40',
+        red: '#f6255a', // red
+        orange: '#ffae19',
+
         grey: '#f7f7f7',
         darkGrey: '#676662',
         dark: '#2d3445',
         black: '#1f1f1f',
         darkCoral: '#d34c4c',
         white: '#ffffff',
-        red: '#ff0000',
-        orange: '#ffae19',
-        orangeLight: '#ffe627',
-        orangeDark: '#ff9f4c',
         rgbaGrey: 'rgba(0,0,0,0.5)',
+        rgbaGreyLight: 'rgba(0,0,0,0.01)',
         rgbaBorder: 'rgba(0,0,0,0.1)',
         rgbaOpacity: 'rgba(0,0,0,0)',
         url: {
@@ -64,7 +63,7 @@ export const StyledButton = styled(Button)`
     border: none;
     border-radius: 0;
     color: ${$css.colors.white};
-    background: ${$css.colors.green};
+    background: ${$css.colors.red};
     font-size: 15px;
     font-weight: 700;
     text-transform: uppercase;
@@ -102,33 +101,44 @@ export const StyledModal = styled(Modal)`
     }
 `;
 export const StyledBoxButton = styled(Button)`
-    width: 42px;
-    height: 42px;
+    width: 48px;
+    height: 48px;
     border: none;
-    border-radius: 0;
-    background-color: ${$css.colors.grey};
-    color: ${$css.colors.green};
+    border-radius: 100%;
+    border: 2px solid ${$css.colors.red};
+    background-color: ${$css.colors.rgbaOpacity};
+    color: ${$css.colors.red};
     &:hover{
-        color: ${$css.colors.green};
-        background-color: ${$css.colors.orange};
-        border-color: ${$css.colors.rgbaOpacity};
+        color: ${$css.colors.white};
+        background-color: ${$css.colors.red};
+        border-color: ${$css.colors.red};
     }
     &.ant-btn:active{
-        color: ${$css.colors.green};
-        background-color: ${$css.colors.white};
+        color: ${$css.colors.red};
+        background-color: ${$css.colors.rgbaOpacity};
         border-color: ${$css.colors.rgbaOpacity};
     }
     &.ant-btn:focus{
-        color: ${$css.colors.green};
-        background-color: ${$css.colors.grey};
-        border-color: ${$css.colors.rgbaOpacity};
+        color: ${$css.colors.red};
+        background-color: ${$css.colors.rgbaOpacity};
+        border-color: ${$css.colors.red};
     }
     &.ant-btn:hover{
-        background-color: ${$css.colors.orange};
+        color: ${$css.colors.white};
+        background-color: ${$css.colors.red};
+        border-color: ${$css.colors.rgbaOpacity};
     }
     &.ant-btn[disabled]{
-        background-color: ${$css.colors.white};
+        color: ${$css.colors.darkGrey};
+        background-color: ${$css.colors.rgbaOpacity};
         cursor: default;
+        border-color: ${$css.colors.rgbaOpacity};
+    }
+    &.ant-btn[disabled]:hover{
+        color: ${$css.colors.darkGrey};
+        background-color: ${$css.colors.rgbaOpacity};
+        cursor: default;
+        border-color: ${$css.colors.rgbaOpacity};
     }
 `;
 

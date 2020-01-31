@@ -24,7 +24,7 @@ const Button = styled(StyledButton)`
     padding: 8px 20px;
     height: 46px;
     &.ant-btn:focus{
-        background-color: ${$css.colors.green};
+        background-color: ${$css.colors.red};
     }
     width: 254px;
     font-size: 12px;
@@ -58,7 +58,7 @@ class Error extends React.Component{
                 <Wrapper>
                     <Container>
                         <Result
-                          icon={<Icon type="frown" style={{ color: $css.colors.red }}/>}
+                          icon={<Icon type="frown" style={{ color: $css.colors.darkCoral }}/>}
                           title={error}
                           subTitle='Произошла непредвиденная ошибка, и мы уже знаем об этом. Вы можете помочь нам исправить её быстрее, если сделаете скриншот страницы и отпраите на email support@bilego.ru и где-то в мире перестенет плакать один грустный котик.'
                           extra={

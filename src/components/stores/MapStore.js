@@ -24,10 +24,10 @@ class MapStore{
     @observable mapImage = undefined;
 
     // touch
-    init1 = null;
-    init2 = null;
-    initD = 0;
-    initScale = null;
+    @observable init1 = null;
+    @observable init2 = null;
+    @observable initD = 0;
+    @observable initScale = null;
 
     // Path store
     @observable pathDisplay = false;
@@ -246,9 +246,9 @@ class MapStore{
 
     @action
     hammerFunction = () => {
-        console.log(this.container)
-        console.log(this.map)
-        console.log(this.mapImage)
+        // console.log(this.container)
+        // console.log(this.map)
+        // console.log(this.mapImage)
 
         this.disableImgEventHandlers();
 
@@ -259,10 +259,6 @@ class MapStore{
             enable: true
         });
 
-        this.hammer.on('doubletap', (e) => {
-            console.log(e.pointers[0])
-            console.log({...e})
-        });
         this.hammer.on('pinch', (e) => {
             console.log(e)
             // http://bl.ocks.org/redgeoff/raw/6be0295e6ebf18649966d48768398252/
@@ -276,11 +272,11 @@ class MapStore{
             this.initD = Math.sqrt(Math.pow(this.init1.x - this.init2.x, 2) + Math.pow(this.init1.y - this.init2.y, 2));
             this.initScale = this.scale;
 
-            this.map.removeEventListener('touchmove', this.onTouchMove);
-            document.addEventListener('touchend', this.onTouchEnd);
-
-            this.map.addEventListener('touchmove', this.onTouchMoveZoom);
-            document.addEventListener('touchend', this.onTouchEndZoom);
+            // this.map.removeEventListener('touchmove', this.onTouchMove);
+            // document.addEventListener('touchend', this.onTouchEnd);
+            //
+            // this.map.addEventListener('touchmove', this.onTouchMoveZoom);
+            // document.addEventListener('touchend', this.onTouchEndZoom);
         });
         this.hammer.on('pinchend', (e) => {
             console.log(e)

@@ -24,7 +24,7 @@ const Button = styled(StyledButton)`
     padding: 8px 20px;
     height: 46px;
     &.ant-btn:focus{
-        background-color: ${$css.colors.green};
+        background-color: ${$css.colors.red};
     }
     width: 254px;
     font-size: 12px;
