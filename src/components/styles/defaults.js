@@ -15,6 +15,7 @@ export const $css = {
         darkCoral: '#d34c4c',
         white: '#ffffff',
         rgbaGrey: 'rgba(0,0,0,0.5)',
+        rgbaRed: 'rgba(246,37,90,0.5)',
         rgbaGreyLight: 'rgba(0,0,0,0.01)',
         rgbaBorder: 'rgba(0,0,0,0.1)',
         rgbaOpacity: 'rgba(0,0,0,0)',
@@ -58,28 +59,34 @@ export const AnimationLeft = styled('div')`
 
 
 export const StyledButton = styled(Button)`
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 0;
-    color: ${$css.colors.white};
-    background: ${$css.colors.red};
+    // width: 100%;
+    height: 62%;
+    border: 1px solid ${$css.colors.rgbaGrey};
+    // border-radius: 0;
+    color: ${$css.colors.dark};
+    background: ${$css.colors.white};
     font-size: 15px;
     font-weight: 700;
     text-transform: uppercase;
     &:hover{
         background-color: ${$css.colors.orange};
+        color: ${$css.colors.white};
+        border-color: ${$css.colors.orange};
     }
     &.ant-btn:active{
         background-color: ${$css.colors.white};
         border-color: ${$css.colors.rgbaOpacity};
+        color: ${$css.colors.dark};
     }
     &.ant-btn:focus{
-        background-color: ${$css.colors.grey};
-        border-color: ${$css.colors.rgbaOpacity};
+        background-color: ${$css.colors.white};
+        border-color: ${$css.colors.rgbaGrey};
+        color: ${$css.colors.dark};
     }
     &.ant-btn:hover{
         background-color: ${$css.colors.orange};
+        color: ${$css.colors.white};
+        border-color: ${$css.colors.orange};
     }
     &.ant-btn[disabled]{
         background-color: ${$css.colors.white};
@@ -105,13 +112,14 @@ export const StyledBoxButton = styled(Button)`
     height: 48px;
     border: none;
     border-radius: 100%;
-    border: 2px solid ${$css.colors.red};
+    border: 1px solid ${$css.colors.rgbaGrey};
     background-color: ${$css.colors.rgbaOpacity};
-    color: ${$css.colors.red};
+    color: ${$css.colors.rgbaGrey};
     &:hover{
         color: ${$css.colors.white};
-        background-color: ${$css.colors.red};
-        border-color: ${$css.colors.red};
+        background-color: ${$css.colors.orange};
+        border-color: ${$css.colors.orange};
+        box-shadow: 0 0 3px 1px ${$css.colors.orange};
     }
     &.ant-btn:active{
         color: ${$css.colors.red};
@@ -119,29 +127,28 @@ export const StyledBoxButton = styled(Button)`
         border-color: ${$css.colors.rgbaOpacity};
     }
     &.ant-btn:focus{
-        color: ${$css.colors.red};
+        color: ${$css.colors.rgbaGrey};
         background-color: ${$css.colors.rgbaOpacity};
-        border-color: ${$css.colors.red};
+        border-color: ${$css.colors.rgbaGrey};
     }
     &.ant-btn:hover{
         color: ${$css.colors.white};
-        background-color: ${$css.colors.red};
+        background-color: ${$css.colors.orange};
         border-color: ${$css.colors.rgbaOpacity};
+        box-shadow: 0 0 3px 1px ${$css.colors.orange};
     }
     &.ant-btn[disabled]{
         color: ${$css.colors.darkGrey};
         background-color: ${$css.colors.rgbaOpacity};
         cursor: default;
         border-color: ${$css.colors.rgbaOpacity};
+        box-shadow: none;
     }
     &.ant-btn[disabled]:hover{
         color: ${$css.colors.darkGrey};
         background-color: ${$css.colors.rgbaOpacity};
         cursor: default;
         border-color: ${$css.colors.rgbaOpacity};
+        box-shadow: none;
     }
-`;
-
-export const StyledPopover = styled(Popover)`
-    
 `;

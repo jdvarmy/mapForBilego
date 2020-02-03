@@ -30,7 +30,7 @@ class Svg extends React.Component{
 
         document.ondragstart = function() { return false; };
 
-        // this.element.current.addEventListener('touchstart', mapStore.handlePressDrug);
+        this.element.current.addEventListener('touchstart', mapStore.handlePressDrug);
         // this.element.current.addEventListener('touchstart', mapStore.handlePinchZoom);
 
         mapStore.hammerFunction();

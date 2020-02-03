@@ -32,7 +32,7 @@ class Map extends React.PureComponent{
             <Wrapper id="bt--tickets-views">
                 <Container id="bt-container" data-type="map">
                     <Svg />
-                    {/*<MiniMap />*/}
+                    <MiniMap />
                     <ZoomButtons/>
                 </Container>
             </Wrapper>

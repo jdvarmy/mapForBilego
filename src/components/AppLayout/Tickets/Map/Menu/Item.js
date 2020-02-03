@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Li = styled('li')`
+    text-align: center;
     list-style: none;
     width: ${ props => 100 / props.count }%;
     max-width: 70px;

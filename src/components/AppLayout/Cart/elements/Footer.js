@@ -14,9 +14,6 @@ const Wrapper = styled('div')`
 const Button = styled(StyledButton)`
     padding: 8px 20px;
     height: 46px;
-    &.ant-btn:focus{
-        background-color: ${$css.colors.red};
-    }
 `;
 const TotalOrderWrap = styled('div')`
     text-align: right;
@@ -91,7 +88,7 @@ class Footer extends React.Component{
 
     render(){
         const { cartStore:{ city, total }, dataStore: {isSmallScreen} } = this.props,
-            href = `https://${city}.bilego.ru/offer/`;
+            href = `https://bilego.ru/${city}/offer/`;
 
         return(
             <Wrapper>
