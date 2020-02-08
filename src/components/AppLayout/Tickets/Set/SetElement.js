@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import {inject, Provider} from 'mobx-react';
+import {inject, observer, Provider} from 'mobx-react';
 import { SetStore } from '../../../stores/SetStore';
 import ControlBlock from './elements/ControlsBlock';
 import NameBlock from './elements/NameBlock';
@@ -14,7 +14,7 @@ const Wrapper = styled('li')`
     grid: 42px/145px auto 25% 20%;
     grid-gap: 0;
     ${p=>p.isSmallScreen && `
-        grid: 56px/125px auto;
+        grid: 56px/150px auto;
         padding: 10px 0px;
         margin: 25px 10px;
     `};
@@ -36,6 +36,7 @@ const FlexEnd = styled(Flex)`
 `;
 
 @inject('dataStore')
+@observer
 class SetElement extends React.Component{
     constructor(props){
         super(props);
