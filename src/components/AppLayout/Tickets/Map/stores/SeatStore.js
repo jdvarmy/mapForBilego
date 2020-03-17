@@ -3,10 +3,15 @@ import { observable, action } from 'mobx';
 export class SeatStore {
     @action
     init = props => {
-        const { tickets, id } = props;
+        const { tickets, id, name } = props;
         // eslint-disable-next-line array-callback-return
         tickets.map(e => {
-            if( id === e.uid ) this.ticket = e;
+            if( id === e.uid ) {
+                this.ticket = e;
+            }else if( name === e.uid ) {
+                this.ticket = new Array();
+                this.ticket.push(e);
+            }
         });
     };
 

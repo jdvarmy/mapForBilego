@@ -35,10 +35,11 @@ class Seat extends React.Component {
         const { id, serverDataStore:{ data: { tickets, ticketcloud } }, el:{name}, row, sector } = props;
 
         this.seatStore = new SeatStore();
-        if( ticketcloud )
-            this.seatStore.initTicketCloud( { name, row, sector, tickets } );
-        else
-            this.seatStore.init( { id, tickets } );
+        if( ticketcloud ) {
+            this.seatStore.initTicketCloud({name, row, sector, tickets});
+        }else {
+            this.seatStore.init({id, name, tickets});
+        }
 
         if( this.seatStore.ticket && Array.isArray(this.seatStore.ticket) && 'with_map_sector' === this.seatStore.ticket[0].type ) {
             this.seatStore.addSpecialType();
@@ -46,7 +47,7 @@ class Seat extends React.Component {
         this.scale = 1;
     }
 
-    componentDidMount(): void {
+    componentDidMount() {
         this.el = ReactDOM.findDOMNode(this);
         const { specialType, ticket } = this.seatStore,
             el = this.el;
@@ -56,8 +57,8 @@ class Seat extends React.Component {
 
             this.tooltip = new TooltipSeat({price_regular, sector_name, row_name, seat_name, el});
         }else if(ticket && Array.isArray(ticket) && specialType){
-            const text = 'Входные билеты', ticketArr = ticket;
-            this.tooltip = new TooltipPath({el, ticketArr, text});
+            const text = 'Входные билеты';
+            this.tooltip = new TooltipPath({el, ticketArr: ticket, text});
         }
     }
 
@@ -165,10 +166,13 @@ class Seat extends React.Component {
             }
         }
 
-        const haveTickets =
-          Array.isArray(ticket)
-          ? ticket.filter(e=>e.stock>0).length>0
-          : ticket.stock>0;
+        let haveTickets;
+        if( ticket !== undefined ) {
+            haveTickets =
+              Array.isArray(ticket)
+                ? ticket.filter(e => e.stock > 0).length > 0
+                : ticket.stock > 0;
+        }
 
         if(!haveTickets){
             radius = (r*0.6).toFixed(2);
