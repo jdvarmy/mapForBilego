@@ -24,6 +24,40 @@
     to{opacity:1;transform:none;}
 }
 
+/* spinner */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+.bilego-spinner .circle:nth-of-type(0) {
+    transform: rotate(0deg);
+}
+.bilego-spinner .circle:nth-of-type(0) div {
+    animation: spin 2s infinite linear;
+}
+.bilego-spinner .circle:nth-of-type(1) {
+    transform: rotate(70deg);
+}
+.bilego-spinner .circle:nth-of-type(1) div {
+    animation: spin 2s infinite linear;
+}
+.bilego-spinner .circle:nth-of-type(2) {
+    transform: rotate(140deg);
+}
+.bilego-spinner .circle:nth-of-type(2) div {
+    animation: spin 2s infinite linear;
+}
+.bilego-spinner {
+    animation: spin 5s infinite linear;
+}
+.ant-spin-nested-loading > div .ant-spin{
+    max-height: inherit;
+}
+
 /**/
 ._visible {
     pointer-events: auto;

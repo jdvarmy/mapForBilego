@@ -9,6 +9,7 @@ import { $css } from '../../styles/defaults';
 import { getStrEnding } from '../functions/functions';
 import { Drawer, Icon, Spin } from 'antd';
 import Checkout from '../Checkout/Checkout';
+import Spinner from '../Spinner';
 
 const Wrapper = styled(Drawer)`
     color: ${$css.colors.black};
@@ -71,9 +72,10 @@ const FooterWrap = styled('div')`
     left: 0;
     right: 0;
 `;
-const Spinner = styled(Spin)`
+const SpinnerWrap = styled(Spin)`
     & .ant-spin-text{
         text-transform: uppercase;
+        color: #f6255a;
     }
 `;
 
@@ -120,15 +122,15 @@ class Cart extends React.Component{
                     width={isSmallScreen ? '100%' : 476}
                 >
                     <Container>
-                        <Spinner
-                          tip="Создание заказа..."
+                        <SpinnerWrap
+                          tip="Создание заказа"
                           delay={$css.animation.delay}
-                          indicator={<Icon type="loading" style={{ fontSize: 24, color: $css.colors.orange }} spin />}
+                          indicator={<Spinner />}
                           spinning={!checkoutData}
                           size="large"
                         >
                             {checkoutData && <Checkout />}
-                        </Spinner>
+                        </SpinnerWrap>
                     </Container>
                 </Wrapper>
             </Wrapper>
