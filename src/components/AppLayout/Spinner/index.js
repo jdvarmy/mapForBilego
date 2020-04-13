@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 export default function Spinner (props) {
-  const {leftPadding, position} = props;
+  const {leftPadding} = props;
 
   let width = window.innerWidth;
 
@@ -10,7 +10,7 @@ export default function Spinner (props) {
     width: 100px;
     height: 102px;
     border-radius: 100%;
-    position: ${position ? position : `absolute`};
+    margin: 0 0 15px 0px;
     top: ${()=>{
       const w = document.documentElement.clientHeight;
       return w - 260 - (w / 100 * 50)
