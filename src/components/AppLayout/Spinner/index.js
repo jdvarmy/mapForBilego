@@ -10,7 +10,7 @@ export default function Spinner (props) {
     width: 100px;
     height: 102px;
     border-radius: 100%;
-    margin: 0 0 15px 0px;
+    position: absolute;
     top: ${()=>{
       const w = document.documentElement.clientHeight;
       return w - 260 - (w / 100 * 50)

@@ -2,6 +2,7 @@ import { observable, action } from 'mobx';
 import { getData, getCheckout } from '../../data/fetch';
 
 class ServerDataStore{
+    @observable isLoading = false;
     @observable data = null;
     @observable checkoutData = null;
     @observable loading = true;
@@ -32,11 +33,15 @@ class ServerDataStore{
 
     @action
     getCheckoutData = (data) => {
+        this.isLoading = true;
         getCheckout(data).then( data => {
+            console.log(data)
             if( data ) {
                 if( data.code === 'error' ){
+                    this.isLoading = false;
                     this.setError(data.message);
                 }else{
+                    this.isLoading = false;
                     this.checkoutData = data;
                 }
             }

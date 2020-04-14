@@ -40,7 +40,7 @@ export function getCheckout( request ) {
             method: 'post',
             headers:{
                 'Content-Type': 'application/json',
-                'accept': 'application/json',
+                'Accept': 'application/json',
             },
             body: JSON.stringify( {'form': request, 'id': id} )
         };

@@ -83,7 +83,7 @@ const SpinnerWrap = styled(Spin)`
 @observer
 class Cart extends React.Component{
     render(){
-        const {cartStore: {showCart, showPay, tickets}, dataStore: {isSmallScreen}, serverDataStore: {checkoutData}} = this.props,
+        const {cartStore: {showCart, showPay, tickets}, dataStore: {isSmallScreen}, serverDataStore: {checkoutData, isLoading}} = this.props,
           length = tickets ? tickets.length : 0;
 
         return(
@@ -126,7 +126,7 @@ class Cart extends React.Component{
                           tip="Создание заказа"
                           delay={$css.animation.delay}
                           indicator={<Spinner />}
-                          spinning={!checkoutData}
+                          spinning={isLoading}
                           size="large"
                         >
                             {checkoutData && <Checkout />}
