@@ -35,7 +35,6 @@ class ServerDataStore{
     getCheckoutData = (data) => {
         this.isLoading = true;
         getCheckout(data).then( data => {
-            console.log(data)
             if( data ) {
                 if( data.code === 'error' ){
                     this.isLoading = false;

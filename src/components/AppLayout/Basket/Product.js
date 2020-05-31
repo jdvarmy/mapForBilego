@@ -29,7 +29,7 @@ const Container = styled('div')`
     text-align: right;
     transition: all ${$css.animation.durationfast}ms ${$css.animation.timeFunction} 0s;
     &:hover{
-        border-color: ${$css.colors.orange} ${$css.colors.orange};
+        border-color: ${$css.colors.red} ${$css.colors.red};
         margin-top: -29px;
         box-shadow: ${$css.shadow.style2};
         z-index: 1;
@@ -65,7 +65,7 @@ const Remover = styled('b')`
     width: 26px;
     height: 26px;
     display: none;
-    background-color: ${$css.colors.orange};
+    background-color: ${$css.colors.red};
     cursor: pointer;
     position: absolute;
     top: -8px;

@@ -13,7 +13,7 @@ export default function Spinner (props) {
     position: absolute;
     top: ${()=>{
       const w = document.documentElement.clientHeight;
-      return w - 260 - (w / 100 * 50)
+      return w - 50 - (w / 100 * 50)
     }}px;
       left: calc(${()=>{
       if(width !== undefined && width<1110) return 50;

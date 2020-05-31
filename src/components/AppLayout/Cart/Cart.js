@@ -7,7 +7,7 @@ import Tickets from './elements/Tickets'
 import Footer from './elements/Footer'
 import { $css } from '../../styles/defaults';
 import { getStrEnding } from '../functions/functions';
-import { Drawer, Icon, Spin } from 'antd';
+import { Drawer, Spin } from 'antd';
 import Checkout from '../Checkout/Checkout';
 import Spinner from '../Spinner';
 

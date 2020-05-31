@@ -69,9 +69,9 @@ export const StyledButton = styled(Button)`
     font-weight: 700;
     text-transform: uppercase;
     &:hover{
-        background-color: ${$css.colors.orange};
+        background-color: ${$css.colors.red};
         color: ${$css.colors.white};
-        border-color: ${$css.colors.orange};
+        border-color: ${$css.colors.red};
     }
     &.ant-btn:active{
         background-color: ${$css.colors.white};
@@ -84,9 +84,9 @@ export const StyledButton = styled(Button)`
         color: ${$css.colors.dark};
     }
     &.ant-btn:hover{
-        background-color: ${$css.colors.orange};
+        background-color: ${$css.colors.red};
         color: ${$css.colors.white};
-        border-color: ${$css.colors.orange};
+        border-color: ${$css.colors.red};
     }
     &.ant-btn[disabled]{
         background-color: ${$css.colors.white};
@@ -117,9 +117,9 @@ export const StyledBoxButton = styled(Button)`
     color: ${$css.colors.rgbaGrey};
     &:hover{
         color: ${$css.colors.white};
-        background-color: ${$css.colors.orange};
-        border-color: ${$css.colors.orange};
-        box-shadow: 0 0 3px 1px ${$css.colors.orange};
+        background-color: ${$css.colors.red};
+        border-color: ${$css.colors.red};
+        box-shadow: 0 0 3px 1px ${$css.colors.red};
     }
     &.ant-btn:active{
         color: ${$css.colors.red};
@@ -133,9 +133,9 @@ export const StyledBoxButton = styled(Button)`
     }
     &.ant-btn:hover{
         color: ${$css.colors.white};
-        background-color: ${$css.colors.orange};
+        background-color: ${$css.colors.red};
         border-color: ${$css.colors.rgbaOpacity};
-        box-shadow: 0 0 3px 1px ${$css.colors.orange};
+        box-shadow: 0 0 3px 1px ${$css.colors.red};
     }
     &.ant-btn[disabled]{
         color: ${$css.colors.darkGrey};

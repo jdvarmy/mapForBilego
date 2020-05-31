@@ -66,7 +66,7 @@ class ThankYou extends React.Component{
                 <Wrapper>
                     <Container>
                         <Result
-                            icon={<Icon type="smile" style={{ color: $css.colors.orange }}/>}
+                            icon={<Icon type="smile" style={{ color: $css.colors.red }}/>}
                             title="Наши поздравления!"
                             subTitle="Вы успешно купили билеты, и они уже ждут вас на почте. Ищите их там, ну или в папке спам. Удачного отдыха!"
                             extra={

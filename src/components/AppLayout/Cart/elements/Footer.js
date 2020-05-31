@@ -40,7 +40,7 @@ const Link = styled('a')`
     outline: none;
     transition: color ${$css.animation.duration}ms;
     &:hover{
-        color: ${$css.colors.orange}
+        color: ${$css.colors.red}
     }
 `;
 const Left = styled('div')`${p=>p.isSmallScreen && `margin-left: 15px;`}`;
