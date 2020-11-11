@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import { PathStore } from '../stores/PathStore';
 import { TooltipPath } from '../Tooltip/TooltipPath';
 
+import { $css } from '../../../../styles/defaults';
+
 const Element = styled('path')`
     fill: transparent;
     transition: all .3s;
@@ -13,7 +15,7 @@ const Element = styled('path')`
         if( props.hover ) return `
             fill:transparent;
             opacity: 1;
-            stroke: #ef5625;
+            stroke: ${$css.colors.red};
             stroke-width: 25;
             stroke-linecap: round;
             stroke-linejoin: round;
@@ -34,7 +36,7 @@ class Path extends React.Component {
         this.pathStore.init({tickets, id});
     }
 
-    componentDidMount(): void {
+    componentDidMount(){
         const { el: {text, id}, serverDataStore:{ data: { tickets } } } = this.props,
             el = ReactDOM.findDOMNode(this);
         let ticketArr = [];
