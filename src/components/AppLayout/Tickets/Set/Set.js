@@ -31,7 +31,19 @@ class Set extends React.Component{
             <Scroll>
               <Container>
                 {tickets
-                  .filter( el=>el.stock !== 0 )
+                  .filter( el=>{
+                    const date = new Date();
+                    let checkDate = true;
+                    if(el.start_date_time && el.end_date_time){
+                      checkDate = new Date(el.start_date_time) < date && new Date(el.end_date_time) > date;
+                    }else if(!el.start_date_time && el.end_date_time){
+                      checkDate = new Date(el.end_date_time) > date;
+                    }else if(el.start_date_time && !el.end_date_time){
+                      checkDate = new Date(el.start_date_time) < date;
+                    }
+
+                    return el.stock !== 0 && checkDate
+                  })
                   .map( el=>{
                     countTickets++;
                     return (<SetElement element={el} key={el.id} />)
