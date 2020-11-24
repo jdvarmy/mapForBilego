@@ -8,7 +8,7 @@ import Footer from './elements/Footer'
 import { $css } from '../../styles/defaults';
 import { getStrEnding } from '../functions/functions';
 import { Drawer, Spin } from 'antd';
-import Checkout from '../Checkout/Checkout';
+import FondyGate from '../Checkout/FondyGate';
 import Spinner from '../Spinner';
 
 const Wrapper = styled(Drawer)`
@@ -129,7 +129,7 @@ class Cart extends React.Component{
                           spinning={isLoading}
                           size="large"
                         >
-                            {checkoutData && <Checkout />}
+                            {checkoutData && <FondyGate />}
                         </SpinnerWrap>
                     </Container>
                 </Wrapper>
