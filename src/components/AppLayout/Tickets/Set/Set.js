@@ -24,34 +24,38 @@ const Container = styled('ul')`
 class Set extends React.Component{
     render() {
         const { serverDataStore:{ data:{ tickets } } } = this.props;
-        let countTickets = 0;
+        let countTickets = tickets.filter( ({end_date_time, start_date_time, stock})=>{
+          let checkDate = true,
+            newDate = new Date(),
+            start = new Date(...start_date_time.replace(/UTC/g, "-").replace(/:/g, "-").split('-')),
+            end = new Date(...end_date_time.replace(/UTC/g, "-").replace(/:/g, "-").split('-'));
+
+          start = start.setMonth(start.getMonth() - 1);
+          end = end.setMonth(end.getMonth() - 1);
+
+          if(start_date_time && end_date_time){
+            checkDate = start < newDate && end > newDate;
+          }else if(!start_date_time && end_date_time){
+            checkDate = end > newDate;
+          }else if(start_date_time && !end_date_time){
+            checkDate = start < newDate;
+          }
+
+          return stock !== 0 && checkDate
+        });
 
         return (
           <Wrapper>
             <Scroll>
               <Container>
-                {tickets
-                  .filter( el=>{
-                    const date = new Date();
-                    let checkDate = true;
-                    if(el.start_date_time && el.end_date_time){
-                      checkDate = new Date(el.start_date_time) < date && new Date(el.end_date_time) > date;
-                    }else if(!el.start_date_time && el.end_date_time){
-                      checkDate = new Date(el.end_date_time) > date;
-                    }else if(el.start_date_time && !el.end_date_time){
-                      checkDate = new Date(el.start_date_time) < date;
-                    }
-
-                    return el.stock !== 0 && checkDate
-                  })
+                {countTickets
                   .map( el=>{
-                    countTickets++;
                     return (<SetElement element={el} key={el.id} />)
                   } )
                 }
               </Container>
             </Scroll>
-            {countTickets === 0 && <NoTickets />}
+            {countTickets.length === 0 && <NoTickets />}
           </Wrapper>
         );
     }
