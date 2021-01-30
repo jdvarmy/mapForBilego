@@ -42,10 +42,10 @@ class Ticket extends React.Component{
             metaContent = sector;
         }else if( type === 'with_map_sector' ){
             nameContent = name;
-            metaContent = 'Входной билет';
+            metaContent = 'Пригласительный билет';
         }else if( type === 'without_map' ){
             nameContent = name;
-            metaContent = 'Входной билет';
+            metaContent = 'Пригласительный билет';
         }
 
         return(

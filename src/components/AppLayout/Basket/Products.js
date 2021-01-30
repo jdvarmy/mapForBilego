@@ -61,7 +61,10 @@ class Products extends React.Component{
                 <Summary mobile={isSmallScreen}>{moneyFormating(this.countSummary(), true)}</Summary>
                 <Content mobile={isSmallScreen}>
                     { isSmallScreen
-                      ? <TicketCount mobile={isSmallScreen}>{tickets.length} {getStrEnding(tickets.length, ['билет','билета','билетов'])}</TicketCount>
+                      ? <TicketCount mobile={isSmallScreen}>
+                          {tickets.length} {getStrEnding(tickets.length, ['билет','билета','билетов'])}
+                          {tickets.map((t, k) => <p key={k} style={{ fontSize: '9px', margin: 0 }}>{t.name}</p>)}
+                        </TicketCount>
                       : <ContentWidth maxWidth={maxWidth}>
                             <Table maxWidth={maxWidth}>
                                 <TableRow>

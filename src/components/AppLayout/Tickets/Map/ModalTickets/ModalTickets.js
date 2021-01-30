@@ -96,7 +96,7 @@ class ModalTickets extends React.Component{
                         <Wrapper align='middle' justify='center'>
                             <Col span={12}>
                                 <UpFont>{moneyFormating(el.price, true)}</UpFont>
-                                <LoFont>{setOfTicket.length===1 ? 'Входной билет' : el.name}</LoFont>
+                                <LoFont>{setOfTicket.length===1 ? 'Пригласительный билет' : el.name}</LoFont>
                             </Col>
                             <Col span={12}>
                                 <StyledBoxButton disabled={disabledMinus} onClick={this.minus(el)}><Icon
