@@ -5,6 +5,8 @@ import Svg from './Svg/Svg';
 import MiniMap from './Minimap/Minimap';
 import ZoomButtons from './ZoomButtons/ZoomButtons';
 import ModalTickets from './ModalTickets/ModalTickets';
+import {inject} from "mobx-react";
+import NoTickets from '../NoTickets';
 
 const Wrapper = styled.div`
     height: ${window.innerHeight}px;
@@ -24,19 +26,48 @@ const Container = styled.div`
   height: 100%;
 `;
 
+@inject('serverDataStore')
 class Map extends React.PureComponent{
   render() {
+      const { serverDataStore:{ data:{ tickets } } } = this.props;
+      let countTickets = tickets.filter( ({end_date_time, start_date_time, stock})=>{
+          let checkDate = true,
+              newDate = new Date(),
+              start = new Date(...start_date_time.replace(/UTC/g, "-").replace(/:/g, "-").split('-')),
+              end = new Date(...end_date_time.replace(/UTC/g, "-").replace(/:/g, "-").split('-'));
+
+          start = start.setMonth(start.getMonth() - 1);
+          end = end.setMonth(end.getMonth() - 1);
+
+          if(start_date_time && end_date_time){
+              checkDate = start < newDate && end > newDate;
+          }else if(!start_date_time && end_date_time){
+              checkDate = end > newDate;
+          }else if(start_date_time && !end_date_time){
+              checkDate = start < newDate;
+          }
+
+          return stock !== 0 && checkDate
+      });
+
     return (
         <Fragment>
-            <Menu/>
-            <Wrapper id="bt--tickets-views">
-                <Container id="bt-container" data-type="map">
-                    <Svg />
-                    <MiniMap />
-                    <ZoomButtons/>
-                </Container>
-            </Wrapper>
-            <ModalTickets />
+            {
+                countTickets.length === 0
+                ? <NoTickets />
+                :
+                    <Fragment>
+                        <Menu/>
+                        <Wrapper id="bt--tickets-views">
+                        <Container id="bt-container" data-type="map">
+                        <Svg />
+                        <MiniMap />
+                        <ZoomButtons/>
+                        </Container>
+                        </Wrapper>
+                        <ModalTickets />
+                    </Fragment>
+            }
         </Fragment>
     );
   }
