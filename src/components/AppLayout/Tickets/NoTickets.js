@@ -29,7 +29,7 @@ class NoTickets extends React.Component{
             <Result
               icon={<Icon type="meh" style={{ color: $css.colors.darkGrey }}/>}
               title='Все билеты на это мероприятие распроданы!'
-              subTitle='Вы можете посмотреть другие интересные события.'
+              subTitle='Уточняйте информацию у организатора.'
               status="success"
             />
           </Container>
